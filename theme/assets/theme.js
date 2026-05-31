@@ -155,11 +155,16 @@
     var action = (form.getAttribute('action') || '');
     if (action.indexOf('/cart/add') === -1) return;
     e.preventDefault();
+    e.stopImmediatePropagation();
     var idField = form.querySelector('[name="id"]');
     var qtyField = form.querySelector('[name="quantity"]');
     if (!idField) return;
-    addId(idField.value, qtyField ? parseInt(qtyField.value, 10) || 1 : 1);
-  });
+    var btn = form.querySelector('[type="submit"]');
+    if (btn) { btn.setAttribute('aria-disabled', 'true'); btn.classList.add('loading'); btn.disabled = true; }
+    addId(idField.value, qtyField ? parseInt(qtyField.value, 10) || 1 : 1).finally(function () {
+      if (btn) { btn.removeAttribute('aria-disabled'); btn.classList.remove('loading'); btn.disabled = false; }
+    });
+  }, true);
 
   /* ---------- PDP variant selection ---------- */
   function selectOption(btn) {

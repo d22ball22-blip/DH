@@ -4,7 +4,8 @@
     <h2 class="display-md">{{ section.settings.heading }}</h2>
     {% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}
   </div>
-  <div class="cmp reveal">
+  <div class="cmp reveal" style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+  <div class="cmp__inner-wrap" style="min-width:320px;">
     <div class="cmp__row cmp__head">
       <div class="cmp__feat" style="color:var(--ivory);"></div>
       <div class="cmp__us">{{ section.settings.us_label }}</div>
@@ -19,6 +20,7 @@
         </div>
       </div>
     {% endfor %}
+  </div>
   </div>
 </div></section>
 {% schema %}

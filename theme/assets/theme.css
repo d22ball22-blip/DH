@@ -303,7 +303,7 @@ a.bundle__media { display: block; cursor: pointer; }
 .ba-wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); margin-top: 56px; }
 .ba {
   position: relative; aspect-ratio: 3/2.2; border-radius: var(--radius-lg); overflow: hidden;
-  user-select: none; touch-action: none; cursor: ew-resize; box-shadow: var(--shadow-sm);
+  user-select: none; touch-action: pan-y; cursor: ew-resize; box-shadow: var(--shadow-sm);
 }
 .ba__layer { position: absolute; inset: 0; }
 .ba__layer image-slot { height: 100%; }
@@ -573,7 +573,7 @@ a.bundle__media { display: block; cursor: pointer; }
 .pdp__info .pdp__rating { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .pdp__info .pdp__rating small { font-size: 12.5px; color: var(--ink-soft); }
 .pdp__info .pdp__rating a { color: var(--bronze); text-decoration: underline; }
-.pdp__name { font-size: clamp(34px, 4.5vw, 54px); line-height: 1.02; margin-bottom: 8px; }
+.pdp__name { font-size: clamp(26px, 4.5vw, 54px); line-height: 1.02; margin-bottom: 8px; }
 .pdp__sub { font-size: 16px; color: var(--ink-soft); font-weight: 300; margin-bottom: 22px; }
 .pdp__pricerow { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
 .pdp__price { font-family: var(--display); font-size: 40px; color: var(--bronze); }
@@ -799,3 +799,89 @@ a.bundle__media{display:block}
 .ing__disclaimer { max-width: 860px; margin: 36px auto 0; font-size: 11.5px; color: var(--ink-soft); text-align: center; line-height: 1.6; padding: 0 var(--pad-x); }
 @media (max-width: 900px) { .ing-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .ing-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   MOBILE RESPONSIVENESS FIXES
+   ============================================================ */
+
+/* Hero image: reduce min-height on phones */
+@media (max-width: 760px) {
+  .hero__media img { min-height: 280px; }
+  .hero__badge { max-width: calc(100% - 40px); }
+}
+
+/* Spot float: keep within bounds at 761-900px */
+@media (max-width: 900px) {
+  .spot__float { right: 12px; left: auto; max-width: 200px; }
+  .spot--rev .spot__float { left: 12px; right: auto; }
+}
+
+/* Trust bar: stack vertically on very small screens */
+@media (max-width: 480px) {
+  .trust__item { flex-direction: column; text-align: center; gap: 6px; padding: 10px 8px; }
+  .trust__item span { font-size: 11.5px; letter-spacing: 0; }
+}
+
+/* Buy row: wrap on very narrow phones so ATC button doesn't overflow */
+@media (max-width: 420px) {
+  .buy-row { flex-wrap: wrap; }
+  .pdp-qty { width: 100%; justify-content: center; }
+  .buy-row .btn { width: 100%; flex: none; height: 52px; }
+}
+
+/* PDP thumbnails: explicit height in row layout */
+@media (max-width: 560px) {
+  .pdp__thumb { width: 64px; height: 64px; flex-shrink: 0; }
+}
+
+/* Comparison table: horizontal scroll on small screens instead of crushing */
+@media (max-width: 480px) {
+  .cmp { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cmp__inner-wrap { min-width: 360px; }
+  .cmp__head > div { font-size: 13px; padding-block: 16px; }
+}
+
+/* FBT: stack vertically on phones */
+@media (max-width: 560px) {
+  .fbt { flex-direction: column; align-items: center; }
+  .fbt__item { width: 100%; max-width: 220px; }
+  .fbt__plus { transform: rotate(90deg); }
+}
+
+/* Story stats: wrap on small screens */
+@media (max-width: 480px) {
+  .story__stats { gap: 20px; flex-wrap: wrap; justify-content: center; }
+}
+
+/* Instagram/UGC grid: 2 columns on very small screens */
+@media (max-width: 480px) {
+  .ig-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Footer newsletter: full width on small screens */
+@media (max-width: 480px) {
+  .footer__news { max-width: 100%; }
+  .footer__news input { min-width: 0; }
+}
+
+/* Guarantee section: no overflow */
+@media (max-width: 480px) {
+  .guarantee__inner { padding-inline: 4px; }
+}
+
+/* Card name/price: scale down at tablet widths */
+@media (max-width: 1024px) and (min-width: 761px) {
+  .card__name { font-size: 19px; }
+  .card__price { font-size: 18px; }
+}
+
+/* Ensure no section can ever cause horizontal scroll */
+.section, .shopify-section { max-width: 100vw; overflow-x: hidden; }
+
+/* ---- ATC loading state overrides — prevent stuck disabled/greyed states ---- */
+.pdp__form [type="submit"] { transition: opacity .2s, background .2s; }
+.pdp__form [type="submit"][aria-disabled="true"],
+.pdp__form [type="submit"].loading,
+.pdp__form [type="submit"]:disabled { opacity: .6; pointer-events: none; }
+/* Reset immediately when loading is removed */
+.pdp__form [type="submit"]:not([aria-disabled]):not(.loading):not(:disabled) { opacity: 1 !important; pointer-events: auto !important; filter: none !important; }
