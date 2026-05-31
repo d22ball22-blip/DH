@@ -134,7 +134,31 @@
         "open_first": true
       }
     },
-    "trustoo": { "type": "trustoo-reviews" }
+    "ugc": {
+      "type": "gallery",
+      "blocks": {
+        "g1": { "type": "tile", "settings": {} },
+        "g2": { "type": "tile", "settings": {} },
+        "g3": { "type": "tile", "settings": {} },
+        "g4": { "type": "tile", "settings": {} },
+        "g5": { "type": "tile", "settings": {} },
+        "g6": { "type": "tile", "settings": {} }
+      },
+      "block_order": ["g1", "g2", "g3", "g4", "g5", "g6"],
+      "settings": {
+        "eyebrow": "@auvellebeauty",
+        "heading": "Tag us to be <em class='serif-it'>featured</em>."
+      }
+    },
+    "trustoo": { "type": "trustoo-reviews" },
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Complete The Look",
+        "heading": "You might also <em class='serif-it'>love</em>.",
+        "count": 4
+      }
+    }
   },
-  "order": ["main", "benefits", "results", "how", "comparison", "fbt", "reviews", "guarantee", "faq", "trustoo"]
+  "order": ["main", "benefits", "results", "how", "comparison", "fbt", "reviews", "guarantee", "faq", "ugc", "trustoo", "related"]
 }

@@ -108,6 +108,22 @@
         "score_sub": "Based on 1,672 verified reviews"
       }
     },
+    "ingredients": {
+      "type": "product-ingredients",
+      "blocks": {
+        "i1": { "type": "ingredient", "settings": { "icon": "shield", "name": "Zinc Oxide", "origin": "Zinc Oxide", "benefit": "A mineral UV filter that shields against both UVA and UVB rays with no white cast." } },
+        "i2": { "type": "ingredient", "settings": { "icon": "star", "name": "Niacinamide", "origin": "Niacinamide", "benefit": "Visibly brightens and evens skin tone while reinforcing the moisture barrier." } },
+        "i3": { "type": "ingredient", "settings": { "icon": "leaf", "name": "Squalane", "origin": "Squalane", "benefit": "A weightless emollient derived from olives that softens without any greasiness." } },
+        "i4": { "type": "ingredient", "settings": { "icon": "shield", "name": "Vitamin C", "origin": "Ascorbyl Glucoside", "benefit": "Stabilised vitamin C that brightens dull skin and fights free-radical damage." } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "bg": "section--sand",
+        "eyebrow": "What's Inside",
+        "heading": "Protection <em class='serif-it'>that glows</em>.",
+        "sub": "Mineral SPF 50 supercharged with brightening actives."
+      }
+    },
     "guarantee": {
       "type": "guarantee",
       "settings": {
@@ -134,7 +150,31 @@
         "open_first": true
       }
     },
-    "trustoo": { "type": "trustoo-reviews" }
+    "ugc": {
+      "type": "gallery",
+      "blocks": {
+        "g1": { "type": "tile", "settings": {} },
+        "g2": { "type": "tile", "settings": {} },
+        "g3": { "type": "tile", "settings": {} },
+        "g4": { "type": "tile", "settings": {} },
+        "g5": { "type": "tile", "settings": {} },
+        "g6": { "type": "tile", "settings": {} }
+      },
+      "block_order": ["g1", "g2", "g3", "g4", "g5", "g6"],
+      "settings": {
+        "eyebrow": "@auvellebeauty",
+        "heading": "Tag us to be <em class='serif-it'>featured</em>."
+      }
+    },
+    "trustoo": { "type": "trustoo-reviews" },
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Complete The Look",
+        "heading": "You might also <em class='serif-it'>love</em>.",
+        "count": 4
+      }
+    }
   },
-  "order": ["main", "benefits", "results", "how", "comparison", "fbt", "reviews", "guarantee", "faq", "trustoo"]
+  "order": ["main", "benefits", "results", "how", "ingredients", "comparison", "fbt", "reviews", "guarantee", "faq", "ugc", "trustoo", "related"]
 }

@@ -1,0 +1,68 @@
+<section class="section {{ section.settings.bg }}" id="ingredients"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-md">{{ section.settings.heading }}</h2>
+    {% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}
+  </div>
+  <div class="ing-grid reveal">
+    {% for block in section.blocks %}
+      <div class="ing" {{ block.shopify_attributes }}>
+        <div class="ing__head">
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.name | escape }}" loading="lazy" class="ing__img">
+          {% else %}
+            <div class="ing__ico">{% render 'icon', icon: block.settings.icon | default: 'leaf' %}</div>
+          {% endif %}
+          <div>
+            <h4 class="ing__name">{{ block.settings.name }}</h4>
+            {% if block.settings.origin != blank %}<span class="ing__origin">{{ block.settings.origin }}</span>{% endif %}
+          </div>
+        </div>
+        {% if block.settings.benefit != blank %}
+          <p class="ing__benefit">{{ block.settings.benefit }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% if section.settings.disclaimer != blank %}
+    <p class="ing__disclaimer">{{ section.settings.disclaimer }}</p>
+  {% endif %}
+</div></section>
+{% schema %}
+{
+  "name": "Ingredients",
+  "tag": "section",
+  "class": "shopify-section--product-ingredients",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What's Inside" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Powered by <em class='serif-it'>nature</em>." },
+    { "type": "text", "id": "sub", "label": "Subtext", "default": "Every ingredient chosen with purpose." },
+    { "type": "textarea", "id": "disclaimer", "label": "Disclaimer / full INCI text" }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image (optional)" },
+        { "type": "select", "id": "icon", "label": "Icon (if no image)", "options": [ {"value":"leaf","label":"Leaf"},{"value":"star","label":"Star"},{"value":"check","label":"Check"},{"value":"shield","label":"Shield"} ], "default": "leaf" },
+        { "type": "text", "id": "name", "label": "Ingredient name", "default": "Hyaluronic Acid" },
+        { "type": "text", "id": "origin", "label": "Origin / INCI", "default": "Sodium Hyaluronate" },
+        { "type": "textarea", "id": "benefit", "label": "Benefit", "default": "Draws moisture into the skin for lasting hydration." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients",
+      "blocks": [
+        { "type": "ingredient", "settings": { "name": "Hyaluronic Acid", "origin": "Sodium Hyaluronate", "benefit": "Deep hydration that plumps and smooths for an all-day dewy finish." } },
+        { "type": "ingredient", "settings": { "name": "DHA", "origin": "Dihydroxyacetone", "benefit": "The active tanning agent that delivers a streak-free, natural-looking colour." } },
+        { "type": "ingredient", "settings": { "name": "Erythrulose", "origin": "Erythrulose", "benefit": "Works alongside DHA to develop a longer-lasting, more even bronze." } },
+        { "type": "ingredient", "settings": { "name": "Vitamin E", "origin": "Tocopherol", "benefit": "An antioxidant shield that protects skin from environmental stress." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
