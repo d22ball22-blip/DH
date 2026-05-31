@@ -1,0 +1,31 @@
+<section class="hero" id="hero">
+  <div class="hero__grid">
+    <div class="hero__copy">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h1 class="display-xl">{{ section.settings.heading }}</h1>
+      <p class="lede">{{ section.settings.subtext }}</p>
+      <div class="hero__cta">
+        {% if section.settings.btn_label != blank %}<a href="{{ section.settings.btn_link }}" class="btn btn--primary">{{ section.settings.btn_label }}</a>{% endif %}
+        {% if section.settings.link_label != blank %}<a href="{{ section.settings.link_link }}" class="link-underline">{{ section.settings.link_label }}</a>{% endif %}
+      </div>
+    </div>
+    <div class="hero__media">
+      <img src="{% if section.settings.image %}{{ section.settings.image | image_url: width: 1400 }}{% else %}{{ 'hero.jpg' | asset_url }}{% endif %}" alt="" {% if section.settings.image %}width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}"{% endif %}>
+      {% if section.settings.badge_num != blank %}<div class="hero__badge"><span class="num">{{ section.settings.badge_num }}</span><span class="lbl">{{ section.settings.badge_text }}</span></div>{% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Hero", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Sunless Tanning · Glow Skincare" },
+  { "type": "html", "id": "heading", "label": "Heading", "default": "Luxury Glow.<br><span class='ln2'><em class='serif-it'>Without</em> The Sun.</span>" },
+  { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "Professional-quality tanning and glow-enhancing essentials, designed for radiant, sun-kissed skin every day of the year." },
+  { "type": "text", "id": "btn_label", "label": "Button label", "default": "Shop All" },
+  { "type": "url", "id": "btn_link", "label": "Button link" },
+  { "type": "text", "id": "link_label", "label": "Text link label", "default": "Discover the Glow Drops" },
+  { "type": "url", "id": "link_link", "label": "Text link" },
+  { "type": "image_picker", "id": "image", "label": "Hero image" },
+  { "type": "text", "id": "badge_num", "label": "Badge number", "default": "4.9" },
+  { "type": "text", "id": "badge_text", "label": "Badge text", "default": "★★★★★ from 10,000+ reviews" }
+], "presets": [ { "name": "Hero" } ] }
+{% endschema %}

@@ -1,0 +1,2 @@
+<section class="page-hero"><div class="wrap"><span class="eyebrow">Auvelle</span><h1 class="display-md">{{ blog.title }}</h1></div></section>
+<section class="section"><div class="wrap"><div class="prose">{% for article in blog.articles %}<h2><a href="{{ article.url }}">{{ article.title }}</a></h2><p>{{ article.excerpt_or_content | strip_html | truncatewords: 40 }}</p>{% endfor %}</div></div></section>

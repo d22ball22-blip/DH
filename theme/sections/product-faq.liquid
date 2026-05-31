@@ -1,0 +1,40 @@
+<section class="section {{ section.settings.bg }}" id="faq"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-md">{{ section.settings.heading }}</h2>
+    {% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}
+  </div>
+  <div class="faq reveal">
+    {% for block in section.blocks %}
+      <div class="faq__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}" {{ block.shopify_attributes }}>
+        <button class="faq__q" type="button">{{ block.settings.question }}<span class="ic"></span></button>
+        <div class="faq__a"><p>{{ block.settings.answer }}</p></div>
+      </div>
+    {% endfor %}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "Product FAQ",
+  "tag": "section",
+  "class": "shopify-section--product-faq",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Good To Know" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Your questions, <em class='serif-it'>answered</em>." },
+    { "type": "text", "id": "sub", "label": "Subtext" },
+    { "type": "checkbox", "id": "open_first", "label": "Open first item by default", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How long does it take to develop?" },
+        { "type": "textarea", "id": "answer", "label": "Answer", "default": "Colour begins to develop within 4–6 hours and deepens over 24 hours." }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Product FAQ", "blocks": [ {"type":"qa"},{"type":"qa"},{"type":"qa"},{"type":"qa"} ] } ]
+}
+{% endschema %}

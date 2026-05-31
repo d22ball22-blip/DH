@@ -1,0 +1,15 @@
+<section class="section"><div class="wrap">
+  <div class="contact-grid">
+    <div class="contact-card"><div class="ico">{% render 'icon', icon: 'check' %}</div><h3>Email Us</h3><p><a href="mailto:{{ settings.support_email }}">{{ settings.support_email }}</a><br>We reply within 24 hours</p></div>
+    <div class="contact-card"><div class="ico">{% render 'icon', icon: 'shield' %}</div><h3>Call / Text</h3><p>{{ settings.support_phone }}<br>Mon–Fri, 9am–5pm</p></div>
+    <div class="contact-card"><div class="ico">{% render 'icon', icon: 'leaf' %}</div><h3>Head Office</h3><p>{{ settings.support_address }}</p></div>
+  </div>
+  {% form 'contact', class: 'contact-form' %}
+    {% if form.posted_successfully? %}<p class="footer__news-ok">Thanks — we'll be in touch soon.</p>{% endif %}
+    <div class="row2"><div class="field"><label>Name</label><input type="text" name="contact[name]" required></div><div class="field"><label>Email</label><input type="email" name="contact[email]" required></div></div>
+    <div class="field"><label>Order number (optional)</label><input type="text" name="contact[order]"></div>
+    <div class="field"><label>How can we help?</label><textarea name="contact[body]" required></textarea></div>
+    <button type="submit" class="btn btn--primary" style="justify-self:start;">Send Message</button>
+  {% endform %}
+</div></section>
+{% schema %}{ "name": "Contact form", "settings": [], "presets": [ { "name": "Contact form" } ] }{% endschema %}

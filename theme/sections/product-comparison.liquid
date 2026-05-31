@@ -1,0 +1,49 @@
+<section class="section {{ section.settings.bg }}"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-md">{{ section.settings.heading }}</h2>
+    {% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}
+  </div>
+  <div class="cmp reveal">
+    <div class="cmp__row cmp__head">
+      <div class="cmp__feat" style="color:var(--ivory);"></div>
+      <div class="cmp__us">{{ section.settings.us_label }}</div>
+      <div class="cmp__them">{{ section.settings.them_label }}</div>
+    </div>
+    {% for block in section.blocks %}
+      <div class="cmp__row" {{ block.shopify_attributes }}>
+        <div class="cmp__feat">{{ block.settings.feature }}</div>
+        <div class="cmp__us">{% render 'icon', icon: 'check' %}</div>
+        <div class="cmp__them">
+          {% if block.settings.them_has %}{% render 'icon', icon: 'check' %}{% else %}{% render 'icon', icon: 'close' %}{% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "Comparison table",
+  "tag": "section",
+  "class": "shopify-section--product-comparison",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Difference" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Why Auvelle <em class='serif-it'>wins</em>." },
+    { "type": "text", "id": "sub", "label": "Subtext" },
+    { "type": "text", "id": "us_label", "label": "Our column label", "default": "Auvelle" },
+    { "type": "text", "id": "them_label", "label": "Their column label", "default": "Others" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature", "default": "No orange tones" },
+        { "type": "checkbox", "id": "them_has", "label": "Competitor also has this", "default": false }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Comparison table", "blocks": [ {"type":"feature"},{"type":"feature"},{"type":"feature"},{"type":"feature"},{"type":"feature"} ] } ]
+}
+{% endschema %}

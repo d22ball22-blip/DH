@@ -1,0 +1,140 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a1": { "type": "assurance", "settings": { "icon": "shield", "text": "Broad-Spectrum SPF 50" } },
+        "a2": { "type": "assurance", "settings": { "icon": "leaf", "text": "Reef-Safe & Vegan" } },
+        "a3": { "type": "assurance", "settings": { "icon": "check", "text": "Dermatologist Tested" } }
+      },
+      "block_order": ["a1", "a2", "a3"],
+      "settings": {
+        "subtitle": "A weightless brightening milk that protects, hydrates and leaves skin luminous",
+        "badge": "Daily Protection",
+        "rating": "4.8",
+        "review_count": "1,672",
+        "pay_text": "or 4 interest-free payments · Klarna available",
+        "scarcity": "Best-seller — low stock in this batch",
+        "show_express": true
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "shield", "title": "SPF 50, zero white cast", "text": "Broad-spectrum UVA/UVB defence that disappears into skin." } },
+        "b2": { "type": "benefit", "settings": { "icon": "star", "title": "Instantly brightening", "text": "A luminous, lit-from-within finish — never chalky or flat." } },
+        "b3": { "type": "benefit", "settings": { "icon": "leaf", "title": "Featherlight & hydrating", "text": "A weightless milk that hydrates without grease or pilling." } },
+        "b4": { "type": "benefit", "settings": { "icon": "check", "title": "Makeup-friendly", "text": "Sits beautifully under makeup as a daily glow primer." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "Why You'll Love It",
+        "heading": "Protection that <em class='serif-it'>glows</em>.",
+        "sub": "Sun defence and skincare in one weightless step."
+      }
+    },
+    "results": {
+      "type": "before-after",
+      "blocks": {
+        "r1": { "type": "ba", "settings": { "label": "After · application" } },
+        "r2": { "type": "ba", "settings": { "label": "Under makeup" } }
+      },
+      "block_order": ["r1", "r2"],
+      "settings": {
+        "eyebrow": "Real Results",
+        "heading": "Luminous, <em class='serif-it'>never</em> chalky.",
+        "sub": "Drag to reveal the finish. Real skin, no filters."
+      }
+    },
+    "how": {
+      "type": "product-how",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Cleanse", "text": "Start with clean, moisturised skin." } },
+        "s2": { "type": "step", "settings": { "title": "Apply", "text": "Smooth a generous layer over face and neck." } },
+        "s3": { "type": "step", "settings": { "title": "Reapply", "text": "Top up every two hours of sun exposure." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "The Ritual",
+        "heading": "Your daily <em class='serif-it'>SPF</em> step."
+      }
+    },
+    "comparison": {
+      "type": "product-comparison",
+      "blocks": {
+        "c1": { "type": "feature", "settings": { "feature": "Zero white cast", "them_has": false } },
+        "c2": { "type": "feature", "settings": { "feature": "Broad-spectrum SPF 50", "them_has": true } },
+        "c3": { "type": "feature", "settings": { "feature": "Brightening glow finish", "them_has": false } },
+        "c4": { "type": "feature", "settings": { "feature": "Sits under makeup", "them_has": false } },
+        "c5": { "type": "feature", "settings": { "feature": "Reef-safe & vegan", "them_has": false } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"],
+      "settings": {
+        "eyebrow": "The Difference",
+        "heading": "Why Lumière Soleil <em class='serif-it'>wins</em>.",
+        "us_label": "Lumière Soleil",
+        "them_label": "Ordinary SPF"
+      }
+    },
+    "fbt": {
+      "type": "product-fbt",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "lumiere-soleil-spf-50", "label": "Lumière Soleil SPF 50" } },
+        "p2": { "type": "product", "settings": { "product": "radiance-glow-drops", "label": "Radiance Glow Drops" } },
+        "p3": { "type": "product", "settings": { "product": "bronze-mist", "label": "Bronze Mist" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Complete The Ritual",
+        "heading": "Better <em class='serif-it'>together</em>.",
+        "button_label": "Add all to bag"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "v1": { "type": "review", "settings": { "quote": "Finally an SPF 50 with zero white cast that sits under makeup.", "name": "Elena T.", "tag": "Verified Buyer" } },
+        "v2": { "type": "review", "settings": { "quote": "Lightweight, glowy and no greasy feel. I wear it every single day.", "name": "Carla M.", "tag": "Verified Buyer" } },
+        "v3": { "type": "review", "settings": { "quote": "My skin looks lit-from-within and protected. A genuine two-in-one.", "name": "Jade R.", "tag": "Verified Buyer" } },
+        "v4": { "type": "review", "settings": { "quote": "No pilling under foundation — this replaced my primer.", "name": "Nadia S.", "tag": "Verified Buyer" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4"],
+      "settings": {
+        "eyebrow": "Loved By Thousands",
+        "heading": "1,600+ five-star <em class='serif-it'>glow</em> stories.",
+        "score": "4.8",
+        "score_sub": "Based on 1,672 verified reviews"
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "days": "90",
+        "seal_text": "Day Glow Promise",
+        "eyebrow": "Risk-Free",
+        "heading": "Love your glow, or your money back.",
+        "text": "Try Lumière Soleil SPF 50 for a full 90 days. If you're not completely radiant, we'll refund every cent."
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "How much should I apply?", "answer": "Use roughly two finger-lengths for the face and neck to achieve the labelled SPF 50 protection." } },
+        "q2": { "type": "qa", "settings": { "question": "Does it leave a white cast?", "answer": "No. The brightening milk melts into all skin tones for a luminous, cast-free finish." } },
+        "q3": { "type": "qa", "settings": { "question": "Can I wear it under makeup?", "answer": "Absolutely. It doubles as a glow primer and sits smoothly beneath foundation without pilling." } },
+        "q4": { "type": "qa", "settings": { "question": "Is it suitable for sensitive skin?", "answer": "Yes. The formula is fragrance-light, reef-safe and dermatologist tested for daily use." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "Good To Know",
+        "heading": "Your questions, <em class='serif-it'>answered</em>.",
+        "open_first": true
+      }
+    },
+    "trustoo": { "type": "trustoo-reviews" }
+  },
+  "order": ["main", "benefits", "results", "how", "comparison", "fbt", "reviews", "guarantee", "faq", "trustoo"]
+}

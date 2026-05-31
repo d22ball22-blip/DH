@@ -1,0 +1,24 @@
+<section class="section" id="results"><div class="wrap">
+  <div class="sec-head center reveal"><span class="eyebrow">{{ section.settings.eyebrow }}</span><h2 class="display-md">{{ section.settings.heading }}</h2><p class="lede">{{ section.settings.sub }}</p></div>
+  <div class="ba-wrap reveal">
+    {% for block in section.blocks %}
+    <div class="ba" {{ block.shopify_attributes }}>
+      <div class="ba__layer ba__after"><img src="{% if block.settings.after %}{{ block.settings.after | image_url: width: 1000 }}{% else %}{{ 'ba-after-1.jpg' | asset_url }}{% endif %}" alt="After"></div>
+      <div class="ba__layer ba__before"><img src="{% if block.settings.before %}{{ block.settings.before | image_url: width: 1000 }}{% else %}{{ 'ba-before-1.jpg' | asset_url }}{% endif %}" alt="Before"></div>
+      <span class="ba__tag ba__tag--before">Before</span><span class="ba__tag ba__tag--after">{{ block.settings.label }}</span>
+      <div class="ba__handle"></div><div class="ba__knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>
+    </div>
+    {% endfor %}
+  </div>
+</div></section>
+{% schema %}
+{ "name": "Before & After", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real Results" },
+  { "type": "html", "id": "heading", "label": "Heading", "default": "The Auvelle <em class='serif-it'>transformation</em>." },
+  { "type": "text", "id": "sub", "label": "Subtext", "default": "Drag to reveal the glow. Real skin, no filters." }
+], "blocks": [ { "type": "ba", "name": "Slider", "settings": [
+  { "type": "image_picker", "id": "before", "label": "Before image" },
+  { "type": "image_picker", "id": "after", "label": "After image" },
+  { "type": "text", "id": "label", "label": "After label", "default": "After · 1 use" }
+] } ], "max_blocks": 4, "presets": [ { "name": "Before & After", "blocks": [ {"type":"ba"},{"type":"ba"} ] } ] }
+{% endschema %}

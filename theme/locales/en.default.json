@@ -1,0 +1,25 @@
+{
+  "general": {
+    "search": {
+      "search": "Search"
+    },
+    "cart": {
+      "title": "Your Bag"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "sold_out": "Sold out",
+      "regular_price": "Regular price"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your Bag",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "empty": "Your bag is empty"
+    }
+  }
+}

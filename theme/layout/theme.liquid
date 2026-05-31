@@ -1,0 +1,38 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="{{ settings.color_bg | default: '#F8F4EE' }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  {{ content_for_header }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <script>
+    window.AUVELLE = {
+      routes: {
+        cart_add: '{{ routes.cart_add_url }}',
+        cart_change: '{{ routes.cart_change_url }}',
+        cart: '{{ routes.cart_url }}'
+      },
+      freeShip: {{ settings.free_shipping_threshold | default: 50 | times: 100 }},
+      moneyFormat: {{ shop.money_format | json }}
+    };
+  </script>
+</head>
+<body class="template-{{ request.page_type }}">
+  <a class="skip-link" href="#MainContent">Skip to content</a>
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+  <main id="MainContent" role="main">
+    {{ content_for_layout }}
+  </main>
+  {% section 'footer' %}
+  {% render 'cart-drawer' %}
+  <div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg><span id="toastMsg"></span></div>
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

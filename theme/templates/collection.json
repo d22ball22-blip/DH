@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "banner": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Shop",
+        "heading": "The Collection",
+        "text": "<p>Explore the full Auvelle range.</p>"
+      }
+    },
+    "list": {
+      "type": "featured-collection",
+      "settings": {
+        "count": 8
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "list"
+  ]
+}

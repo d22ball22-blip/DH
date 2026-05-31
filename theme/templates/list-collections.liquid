@@ -1,0 +1,2 @@
+<section class="page-hero"><div class="wrap"><span class="eyebrow">Auvelle</span><h1 class="display-md">Collections</h1></div></section>
+<section class="section"><div class="wrap"><div class="prose"><div class="prod-grid">{% for collection in collections %}<a class="card" href="{{ collection.url }}"><div class="card__media"><img src="{{ collection.featured_image | image_url: width: 600 }}" alt=""></div><div class="card__body"><h3 class="card__name">{{ collection.title }}</h3></div></a>{% endfor %}</div></div></div></section>

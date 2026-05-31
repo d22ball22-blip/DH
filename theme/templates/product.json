@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product"
+    },
+    "reviews": {
+      "type": "trustoo-reviews"
+    },
+    "guarantee": {
+      "type": "guarantee"
+    }
+  },
+  "order": [
+    "main",
+    "reviews",
+    "guarantee"
+  ]
+}

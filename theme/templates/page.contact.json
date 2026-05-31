@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "hero": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "We're Here To Help",
+        "heading": "Get in touch",
+        "text": "<p>Questions about your order or your glow routine? Our team is here for you.</p>"
+      }
+    },
+    "form": {
+      "type": "contact-form"
+    }
+  },
+  "order": [
+    "hero",
+    "form"
+  ]
+}

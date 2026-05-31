@@ -1,0 +1,76 @@
+{%- liquid
+  assign total = 0
+  assign ids = ''
+  for block in section.blocks
+    assign p = all_products[block.settings.product]
+    if p != blank
+      assign vid = p.selected_or_first_available_variant.id
+      assign total = total | plus: p.price
+      if ids == ''
+        assign ids = vid | append: ''
+      else
+        assign ids = ids | append: ',' | append: vid
+      endif
+    endif
+  endfor
+-%}
+<section class="section {{ section.settings.bg }}"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-md">{{ section.settings.heading }}</h2>
+    {% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}
+  </div>
+  <div class="fbt reveal">
+    {% for block in section.blocks %}
+      {% assign p = all_products[block.settings.product] %}
+      <div class="fbt__item" {{ block.shopify_attributes }}>
+        <div class="ph">
+          {% if p.featured_image %}
+            <img src="{{ p.featured_image | image_url: width: 400 }}" alt="{{ p.title | escape }}" loading="lazy">
+          {% elsif block.settings.image %}
+            <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.label | escape }}" loading="lazy">
+          {% else %}
+            <div class="card__ph"></div>
+          {% endif %}
+        </div>
+        <b>{{ p.title | default: block.settings.label }}</b>
+        <small>{% if p != blank %}{{ p.price | money }}{% endif %}</small>
+      </div>
+      {% unless forloop.last %}<span class="fbt__plus">+</span>{% endunless %}
+    {% endfor %}
+    {% if section.blocks.size > 0 %}
+      <div class="fbt__total">
+        <div class="l">{{ section.settings.total_label }}</div>
+        <div class="p">{{ total | money }}</div>
+        <button class="btn btn--primary btn--sm" type="button" data-fbt-add data-ids="{{ ids }}">{{ section.settings.button_label }}</button>
+      </div>
+    {% endif %}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "Frequently bought together",
+  "tag": "section",
+  "class": "shopify-section--product-fbt",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Complete The Ritual" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Better <em class='serif-it'>together</em>." },
+    { "type": "text", "id": "sub", "label": "Subtext" },
+    { "type": "text", "id": "total_label", "label": "Total label", "default": "Total price" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add all to bag" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Fallback image" },
+        { "type": "text", "id": "label", "label": "Fallback label", "default": "Product" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Frequently bought together", "blocks": [ {"type":"product"},{"type":"product"},{"type":"product"} ] } ]
+}
+{% endschema %}

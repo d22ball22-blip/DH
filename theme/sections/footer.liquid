@@ -1,0 +1,46 @@
+<footer class="footer"><div class="wrap">
+  <div class="footer__top">
+    <div class="footer__col footer__col--brand">
+      <span class="brand">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></span>
+      <p class="footer__about">{{ section.settings.about }}</p>
+      {% form 'customer' %}
+        <div class="footer__news">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ section.settings.news_placeholder }}" required>
+          <button type="submit">Join</button>
+        </div>
+        {% if form.posted_successfully? %}<p class="footer__news-ok">Thanks — your 10% code is on its way.</p>{% endif %}
+      {% endform %}
+    </div>
+    {% for block in section.blocks %}
+      {% if block.type == 'menu' %}
+        <div class="footer__col" {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.heading }}</h4>
+          {% for link in block.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="footer__bottom">
+    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+    <nav class="footer__legal">
+      {%- assign pp = pages['privacy-policy'] -%}{%- assign tos = pages['terms-of-service'] -%}
+      <a href="{{ pp.url | default: '/policies/privacy-policy' }}">Privacy</a>
+      <a href="{{ tos.url | default: '/policies/terms-of-service' }}">Terms</a>
+      <a href="{{ pages.shipping.url | default: '/pages/shipping' }}">Shipping</a>
+      <a href="{{ pages.returns.url | default: '/pages/returns' }}">Refunds</a>
+    </nav>
+    <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>PAYPAL</span><span>APPLE PAY</span></div>
+  </div>
+</div></footer>
+{% schema %}
+{ "name": "Footer", "settings": [
+  { "type": "textarea", "id": "about", "label": "About text", "default": "Luxury tanning, skincare and glow-enhancing essentials for healthy, radiant, sun-kissed skin — every day of the year." },
+  { "type": "text", "id": "news_placeholder", "label": "Newsletter placeholder", "default": "Email for 10% off your first glow" }
+], "blocks": [
+  { "type": "menu", "name": "Menu column", "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+    { "type": "link_list", "id": "menu", "label": "Menu" }
+  ] }
+], "max_blocks": 4, "presets": [ { "name": "Footer", "blocks": [ { "type": "menu" }, { "type": "menu" }, { "type": "menu" } ] } ] }
+{% endschema %}

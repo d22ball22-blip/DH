@@ -1,0 +1,140 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a1": { "type": "assurance", "settings": { "icon": "shield", "text": "90-Day Guarantee" } },
+        "a2": { "type": "assurance", "settings": { "icon": "leaf", "text": "Vegan & Cruelty-Free" } },
+        "a3": { "type": "assurance", "settings": { "icon": "check", "text": "Quick-Dry Formula" } }
+      },
+      "block_order": ["a1", "a2", "a3"],
+      "settings": {
+        "subtitle": "A quick-dry sunless tanning mist for an even, sun-kissed glow on the go",
+        "badge": "On-The-Go Glow",
+        "rating": "4.8",
+        "review_count": "1,205",
+        "pay_text": "or 4 interest-free payments · Klarna available",
+        "scarcity": "A weekend-bag essential — restocks sell out fast",
+        "show_express": true
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "check", "title": "Dries in 60 seconds", "text": "A true quick-dry mist — spray, dry and dress with no waiting." } },
+        "b2": { "type": "benefit", "settings": { "icon": "star", "title": "Even 360° coverage", "text": "A fine, continuous mist that lays down streak-free colour from any angle." } },
+        "b3": { "type": "benefit", "settings": { "icon": "leaf", "title": "Featherlight feel", "text": "Non-sticky, non-tacky and never heavy on the skin." } },
+        "b4": { "type": "benefit", "settings": { "icon": "shield", "title": "Buildable & flawless", "text": "Layer for a deeper glow with zero patches or orange tones." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "Why You'll Love It",
+        "heading": "Glow in a <em class='serif-it'>flash</em>.",
+        "sub": "The fastest way to an even, sun-kissed finish."
+      }
+    },
+    "results": {
+      "type": "before-after",
+      "blocks": {
+        "r1": { "type": "ba", "settings": { "label": "After · 1 mist" } },
+        "r2": { "type": "ba", "settings": { "label": "After · 2 mists" } }
+      },
+      "block_order": ["r1", "r2"],
+      "settings": {
+        "eyebrow": "Real Results",
+        "heading": "Even, <em class='serif-it'>instant</em> bronze.",
+        "sub": "Drag to reveal the glow. Real skin, no filters."
+      }
+    },
+    "how": {
+      "type": "product-how",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Shake", "text": "Shake well and hold 15cm from skin." } },
+        "s2": { "type": "step", "settings": { "title": "Mist", "text": "Sweep in even, continuous strokes over the body." } },
+        "s3": { "type": "step", "settings": { "title": "Dry & dress", "text": "Dries in 60 seconds — colour develops over 4–6 hours." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "The Ritual",
+        "heading": "A flawless glow in <em class='serif-it'>seconds</em>."
+      }
+    },
+    "comparison": {
+      "type": "product-comparison",
+      "blocks": {
+        "c1": { "type": "feature", "settings": { "feature": "Dries in 60 seconds", "them_has": false } },
+        "c2": { "type": "feature", "settings": { "feature": "Even 360° spray", "them_has": false } },
+        "c3": { "type": "feature", "settings": { "feature": "No sticky residue", "them_has": false } },
+        "c4": { "type": "feature", "settings": { "feature": "Buildable colour", "them_has": true } },
+        "c5": { "type": "feature", "settings": { "feature": "Travel-friendly", "them_has": false } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"],
+      "settings": {
+        "eyebrow": "The Difference",
+        "heading": "Why Bronze Mist <em class='serif-it'>wins</em>.",
+        "us_label": "Bronze Mist",
+        "them_label": "Ordinary sprays"
+      }
+    },
+    "fbt": {
+      "type": "product-fbt",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "bronze-mist", "label": "Bronze Mist" } },
+        "p2": { "type": "product", "settings": { "product": "lumiere-soleil-spf-50", "label": "Lumière Soleil SPF 50" } },
+        "p3": { "type": "product", "settings": { "product": "application-set", "label": "Application Set" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Complete The Ritual",
+        "heading": "Better <em class='serif-it'>together</em>.",
+        "button_label": "Add all to bag"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "v1": { "type": "review", "settings": { "quote": "Bronze Mist lives in my weekend bag. Quick-dry is real.", "name": "Amara K.", "tag": "Verified Buyer" } },
+        "v2": { "type": "review", "settings": { "quote": "Even coverage everywhere, even my back. No streaks at all.", "name": "Olivia P.", "tag": "Verified Buyer" } },
+        "v3": { "type": "review", "settings": { "quote": "Sprays, dries, done. I'm dressed in two minutes flat.", "name": "Mia D.", "tag": "Verified Buyer" } },
+        "v4": { "type": "review", "settings": { "quote": "No orange, no smell, no sticky feeling. My go-to before events.", "name": "Lucia F.", "tag": "Verified Buyer" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4"],
+      "settings": {
+        "eyebrow": "Loved By Thousands",
+        "heading": "1,200+ five-star <em class='serif-it'>glow</em> stories.",
+        "score": "4.8",
+        "score_sub": "Based on 1,205 verified reviews"
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "days": "90",
+        "seal_text": "Day Glow Promise",
+        "eyebrow": "Risk-Free",
+        "heading": "Love your glow, or your money back.",
+        "text": "Try Bronze Mist for a full 90 days. If you're not completely radiant, we'll refund every cent."
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "How quickly does it dry?", "answer": "The mist dries to the touch in about 60 seconds so you can dress straight away. Colour then develops over 4–6 hours." } },
+        "q2": { "type": "qa", "settings": { "question": "How do I reach my back?", "answer": "The 360° continuous spray works at any angle, making hard-to-reach areas like your back easy to cover evenly." } },
+        "q3": { "type": "qa", "settings": { "question": "Will it transfer onto clothes?", "answer": "Once dry, the guide colour is touch-dry. We recommend loose, dark clothing while the tan develops." } },
+        "q4": { "type": "qa", "settings": { "question": "Can I build a deeper tan?", "answer": "Yes. Apply a second light layer once the first has dried for a deeper, still streak-free glow." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "Good To Know",
+        "heading": "Your questions, <em class='serif-it'>answered</em>.",
+        "open_first": true
+      }
+    },
+    "trustoo": { "type": "trustoo-reviews" }
+  },
+  "order": ["main", "benefits", "results", "how", "comparison", "fbt", "reviews", "guarantee", "faq", "trustoo"]
+}

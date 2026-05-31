@@ -1,0 +1,13 @@
+<section class="final"><div class="final__bg"><img src="{% if section.settings.image %}{{ section.settings.image | image_url: width: 1800 }}{% else %}{{ 'mist-life.jpg' | asset_url }}{% endif %}" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="final__scrim"></div>
+  <div class="final__inner wrap reveal"><span class="eyebrow" style="color:var(--champagne);">{{ section.settings.eyebrow }}</span><h2 class="display-lg" style="margin-top:18px;">{{ section.settings.heading }}</h2><p class="lede" style="color:rgba(248,244,238,0.9);">{{ section.settings.text }}</p>{% if section.settings.btn_label != blank %}<a href="{{ section.settings.btn_link }}" class="btn btn--light">{{ section.settings.btn_label }}</a>{% endif %}</div>
+</section>
+{% schema %}
+{ "name": "Final CTA", "settings": [
+  { "type": "image_picker", "id": "image", "label": "Background image" },
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your Glow Awaits" },
+  { "type": "html", "id": "heading", "label": "Heading", "default": "Your best glow<br>starts here." },
+  { "type": "textarea", "id": "text", "label": "Text", "default": "Join thousands who've discovered radiant, sun-kissed skin — without the sun." },
+  { "type": "text", "id": "btn_label", "label": "Button label", "default": "Shop the Collection" },
+  { "type": "url", "id": "btn_link", "label": "Button link" }
+], "presets": [ { "name": "Final CTA" } ] }
+{% endschema %}

@@ -1,0 +1,18 @@
+<div class="scrim" id="scrim" data-close-cart></div>
+<aside class="cart" id="cart" aria-label="Shopping bag">
+  <div class="cart__head"><h3>Your Bag</h3><button class="cart__close" data-close-cart aria-label="Close">{% render 'icon', icon: 'close' %}</button></div>
+  <div class="cart__free" id="cartFree"></div>
+  <div class="cart__items" id="cartItems"></div>
+  <div class="cart__foot" id="cartFoot" style="display:none;">
+    {% if settings.enable_cart_discount %}
+    <div class="cart__promo"><input id="promoInput" type="text" placeholder="Discount code" autocomplete="off"><button id="promoApply">Apply</button></div>
+    <div class="cart__promo-msg" id="promoMsg"></div>
+    {% endif %}
+    <div class="cart__row cart__row--sm"><span class="l">Subtotal</span><span class="vs" id="cartSubtotal"></span></div>
+    <div class="cart__row cart__row--sm" id="cartDiscRow" style="display:none;"><span class="l" id="cartDiscLabel">Discount</span><span class="vs" id="cartDisc"></span></div>
+    <div class="cart__row cart__row--sm"><span class="l">Shipping</span><span class="vs">Calculated at checkout</span></div>
+    <div class="cart__row cart__row--total"><span class="l">Total</span><span class="v" id="cartTotal"></span></div>
+    <form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout" class="btn btn--primary btn--block" style="padding:18px;">Secure Checkout</button></form>
+    <p class="cart__note">Taxes &amp; shipping calculated at checkout · 90-Day Guarantee</p>
+  </div>
+</aside>

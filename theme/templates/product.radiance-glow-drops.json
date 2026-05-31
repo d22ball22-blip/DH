@@ -1,0 +1,140 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a1": { "type": "assurance", "settings": { "icon": "shield", "text": "90-Day Guarantee" } },
+        "a2": { "type": "assurance", "settings": { "icon": "leaf", "text": "Vegan & Cruelty-Free" } },
+        "a3": { "type": "assurance", "settings": { "icon": "check", "text": "Dermatologist Tested" } }
+      },
+      "block_order": ["a1", "a2", "a3"],
+      "settings": {
+        "subtitle": "A customisable tanning serum you blend into your daily moisturiser",
+        "badge": "Best Seller",
+        "rating": "4.9",
+        "review_count": "2,418",
+        "pay_text": "or 4 interest-free payments · Klarna available",
+        "scarcity": "Selling fast — over 300 sold this week",
+        "show_express": true
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "leaf", "title": "Fully buildable", "text": "Layer drop by drop to your perfect shade — never streaky, never patchy." } },
+        "b2": { "type": "benefit", "settings": { "icon": "check", "title": "No orange, no smell", "text": "A true sun-kissed bronze with zero telltale self-tan scent." } },
+        "b3": { "type": "benefit", "settings": { "icon": "star", "title": "Deeply hydrating", "text": "Hyaluronic-rich formula that nourishes skin as it glows." } },
+        "b4": { "type": "benefit", "settings": { "icon": "shield", "title": "Skin-loving", "text": "Vegan, cruelty-free and dermatologist tested for daily use." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "Why You'll Love It",
+        "heading": "The glow you <em class='serif-it'>control</em>.",
+        "sub": "Mix into your moisturiser and build the exact shade you want."
+      }
+    },
+    "results": {
+      "type": "before-after",
+      "blocks": {
+        "r1": { "type": "ba", "settings": { "label": "After · 1 use" } },
+        "r2": { "type": "ba", "settings": { "label": "After · 2 uses" } }
+      },
+      "block_order": ["r1", "r2"],
+      "settings": {
+        "eyebrow": "Real Results",
+        "heading": "Buildable, <em class='serif-it'>natural</em> bronze.",
+        "sub": "Drag to reveal the glow. Real skin, no filters."
+      }
+    },
+    "how": {
+      "type": "product-how",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Blend", "text": "Add 2–4 drops into your daily moisturiser." } },
+        "s2": { "type": "step", "settings": { "title": "Apply", "text": "Smooth evenly over face and neck." } },
+        "s3": { "type": "step", "settings": { "title": "Glow", "text": "Colour develops over 4–6 hours into a natural tan." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "The Ritual",
+        "heading": "Three drops to <em class='serif-it'>radiance</em>."
+      }
+    },
+    "comparison": {
+      "type": "product-comparison",
+      "blocks": {
+        "c1": { "type": "feature", "settings": { "feature": "No orange tones", "them_has": false } },
+        "c2": { "type": "feature", "settings": { "feature": "Fully buildable shade", "them_has": false } },
+        "c3": { "type": "feature", "settings": { "feature": "No self-tan smell", "them_has": false } },
+        "c4": { "type": "feature", "settings": { "feature": "Hydrating skincare formula", "them_has": false } },
+        "c5": { "type": "feature", "settings": { "feature": "Vegan & cruelty-free", "them_has": true } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"],
+      "settings": {
+        "eyebrow": "The Difference",
+        "heading": "Why Glow Drops <em class='serif-it'>win</em>.",
+        "us_label": "Glow Drops",
+        "them_label": "Ordinary tanners"
+      }
+    },
+    "fbt": {
+      "type": "product-fbt",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "radiance-glow-drops", "label": "Radiance Glow Drops" } },
+        "p2": { "type": "product", "settings": { "product": "lumiere-soleil-spf-50", "label": "Lumière Soleil SPF 50" } },
+        "p3": { "type": "product", "settings": { "product": "application-set", "label": "Application Set" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Complete The Ritual",
+        "heading": "Better <em class='serif-it'>together</em>.",
+        "button_label": "Add all to bag"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "v1": { "type": "review", "settings": { "quote": "Genuinely the most natural tan I've ever had. No orange, no smell.", "name": "Sophia R.", "tag": "Verified Buyer" } },
+        "v2": { "type": "review", "settings": { "quote": "The Glow Drops changed my routine. I control exactly how deep I go.", "name": "Maya L.", "tag": "Verified Buyer" } },
+        "v3": { "type": "review", "settings": { "quote": "Two drops in my moisturiser and I look like I've been on holiday.", "name": "Priya N.", "tag": "Verified Buyer" } },
+        "v4": { "type": "review", "settings": { "quote": "Finally a gradual tan that doesn't cling to dry patches.", "name": "Hannah W.", "tag": "Verified Buyer" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4"],
+      "settings": {
+        "eyebrow": "Loved By Thousands",
+        "heading": "2,400+ five-star <em class='serif-it'>glow</em> stories.",
+        "score": "4.9",
+        "score_sub": "Based on 2,418 verified reviews"
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "days": "90",
+        "seal_text": "Day Glow Promise",
+        "eyebrow": "Risk-Free",
+        "heading": "Love your glow, or your money back.",
+        "text": "Try Radiance Glow Drops for a full 90 days. If you're not completely radiant, we'll refund every cent."
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "How long does the colour take to develop?", "answer": "Colour begins to develop within 4–6 hours and deepens gradually over 24 hours. Build daily until you reach your ideal shade." } },
+        "q2": { "type": "qa", "settings": { "question": "Will it look orange?", "answer": "Never. Our bronze-based formula is engineered to avoid orange tones, delivering a true sun-kissed glow." } },
+        "q3": { "type": "qa", "settings": { "question": "How often should I use it?", "answer": "Use daily to build and maintain your tan, then taper to 2–3 times a week to keep your glow topped up." } },
+        "q4": { "type": "qa", "settings": { "question": "Is it suitable for all skin tones?", "answer": "Yes. Because it's fully buildable, you control the depth — from a subtle hint to a deep bronze." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "Good To Know",
+        "heading": "Your questions, <em class='serif-it'>answered</em>.",
+        "open_first": true
+      }
+    },
+    "trustoo": { "type": "trustoo-reviews" }
+  },
+  "order": ["main", "benefits", "results", "how", "comparison", "fbt", "reviews", "guarantee", "faq", "trustoo"]
+}

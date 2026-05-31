@@ -1,0 +1,24 @@
+<header class="header is-solid" id="header" data-sticky="{{ section.settings.sticky }}">
+  <div class="header__inner">
+    <button class="burger icon-btn" data-mnav-open aria-label="Menu">{% render 'icon', icon: 'menu' %}</button>
+    <nav class="nav nav--left">
+      {% for link in section.settings.menu.links limit: 4 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+    </nav>
+    <a class="brand" href="{{ routes.root_url }}">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></a>
+    <div class="header__actions">
+      <nav class="nav nav--right"><div class="nav-links">{% for link in section.settings.menu.links offset: 4 limit: 2 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}</div></nav>
+      <button class="icon-btn" aria-label="Search">{% render 'icon', icon: 'search' %}</button>
+      <a class="icon-btn" href="{{ routes.cart_url }}" data-open-cart aria-label="Bag">{% render 'icon', icon: 'cart' %}<span class="cart-count">{{ cart.item_count }}</span></a>
+    </div>
+  </div>
+</header>
+<div class="mnav" id="mnav">
+  <div class="mnav__head"><span class="brand">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></span><button class="icon-btn" data-mnav-close aria-label="Close">{% render 'icon', icon: 'close' %}</button></div>
+  {% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+</div>
+{% schema %}
+{ "name": "Header", "settings": [
+  { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+  { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true }
+] }
+{% endschema %}

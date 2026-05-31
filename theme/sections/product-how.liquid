@@ -1,0 +1,48 @@
+<section class="section {{ section.settings.bg }}" id="how"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-md">{{ section.settings.heading }}</h2>
+    {% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}
+  </div>
+  <div class="steps reveal">
+    {% for block in section.blocks %}
+      <div class="step" {{ block.shopify_attributes }}>
+        <div class="step__media">
+          <span class="step__num">{{ forloop.index }}</span>
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="700" height="525">
+          {% else %}
+            <div class="card__ph"></div>
+          {% endif %}
+        </div>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "How it works",
+  "tag": "section",
+  "class": "shopify-section--product-how",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Ritual" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Three steps to <em class='serif-it'>radiance</em>." },
+    { "type": "text", "id": "sub", "label": "Subtext" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Blend" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Mix a few drops into your daily moisturiser." }
+      ]
+    }
+  ],
+  "presets": [ { "name": "How it works", "blocks": [ {"type":"step"},{"type":"step"},{"type":"step"} ] } ]
+}
+{% endschema %}

@@ -1,0 +1,41 @@
+<section class="section {{ section.settings.bg }}"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="display-md">{{ section.settings.heading }}</h2>
+    {% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}
+  </div>
+  <div class="ben-grid reveal">
+    {% for block in section.blocks %}
+      <div class="ben" {{ block.shopify_attributes }}>
+        <div class="ben__ico">{% render 'icon', icon: block.settings.icon %}</div>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "Product benefits",
+  "tag": "section",
+  "class": "shopify-section--product-benefits",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why You'll Love It" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Glow that <em class='serif-it'>works</em>." },
+    { "type": "text", "id": "sub", "label": "Subtext" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [ {"value":"leaf","label":"Leaf"},{"value":"check","label":"Check"},{"value":"shield","label":"Shield"},{"value":"star","label":"Star"},{"value":"cart","label":"Cart"} ], "default": "leaf" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Buildable colour" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Layer to your perfect shade — never streaky, never orange." }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Product benefits", "blocks": [ {"type":"benefit"},{"type":"benefit"},{"type":"benefit"},{"type":"benefit"} ] } ]
+}
+{% endschema %}

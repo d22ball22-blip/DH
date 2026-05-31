@@ -1,0 +1,112 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Auvelle",
+    "theme_version": "1.0.0",
+    "theme_author": "Auvelle Beauty",
+    "theme_documentation_url": "https://auvelle.co",
+    "theme_support_url": "https://auvelle.co"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Brand name",
+        "default": "Auvelle"
+      },
+      {
+        "type": "text",
+        "id": "brand_accent_char",
+        "label": "Accent character after name",
+        "default": "."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Page background",
+        "default": "#F8F4EE"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Text",
+        "default": "#2B231C"
+      },
+      {
+        "type": "color",
+        "id": "color_bronze",
+        "label": "Primary accent (bronze)",
+        "default": "#A76B3D"
+      },
+      {
+        "type": "color",
+        "id": "color_champagne",
+        "label": "Secondary accent (champagne)",
+        "default": "#D4B483"
+      },
+      {
+        "type": "color",
+        "id": "color_forest",
+        "label": "Deep accent (forest)",
+        "default": "#2D4A3E"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold ($)",
+        "default": 50
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cart_discount",
+        "label": "Show discount code field in cart",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Store info (footer & contact)",
+    "settings": [
+      {
+        "type": "text",
+        "id": "support_email",
+        "label": "Support email",
+        "default": "support@auvelle.co"
+      },
+      {
+        "type": "text",
+        "id": "support_phone",
+        "label": "Support phone",
+        "default": "+1 (555) 000-0000"
+      },
+      {
+        "type": "textarea",
+        "id": "support_address",
+        "label": "Address",
+        "default": "123 Glow Avenue, Los Angeles, CA 90001"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      }
+    ]
+  }
+]

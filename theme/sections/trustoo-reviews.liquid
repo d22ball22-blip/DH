@@ -1,0 +1,16 @@
+<section class="section trustoo-section" id="customer-reviews"><div class="wrap">
+  <div class="sec-head center reveal"><span class="eyebrow">{{ section.settings.eyebrow }}</span><h2 class="display-md">{{ section.settings.heading }}</h2>{% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}</div>
+  <div class="trustoo-mount reveal">
+    {% for block in section.blocks %}{% render block %}{% endfor %}
+    {% if section.blocks.size == 0 %}
+    <div class="trustoo-placeholder"><div class="ico">{% render 'icon', icon: 'star' %}</div><b>Add your Trustoo Reviews block</b><p>In the theme editor, click “Add block” in this section and choose the <strong>Trustoo Reviews</strong> app block. It will sync and display this product’s reviews automatically.</p></div>
+    {% endif %}
+  </div>
+</div></section>
+{% schema %}
+{ "name": "Trustoo reviews", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Verified Customer Reviews" },
+  { "type": "html", "id": "heading", "label": "Heading", "default": "Real reviews, <em class='serif-it'>verified</em>." },
+  { "type": "text", "id": "sub", "label": "Subtext", "default": "Imported automatically from Trustoo." }
+], "blocks": [ { "type": "@app" } ], "presets": [ { "name": "Trustoo reviews" } ] }
+{% endschema %}

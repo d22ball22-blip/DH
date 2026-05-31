@@ -1,0 +1,140 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a1": { "type": "assurance", "settings": { "icon": "shield", "text": "90-Day Guarantee" } },
+        "a2": { "type": "assurance", "settings": { "icon": "leaf", "text": "Reusable & Washable" } },
+        "a3": { "type": "assurance", "settings": { "icon": "check", "text": "Streak-Free Finish" } }
+      },
+      "block_order": ["a1", "a2", "a3"],
+      "settings": {
+        "subtitle": "Pro application tools for a flawless, streak-free finish — velvet mitt + precision brush",
+        "badge": "The Essentials",
+        "rating": "4.9",
+        "review_count": "938",
+        "pay_text": "or 4 interest-free payments · Klarna available",
+        "scarcity": "The finishing touch every glow needs",
+        "show_express": true
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "check", "title": "Streak-free finish", "text": "The velvet mitt buffs tan into skin for a flawless, even application." } },
+        "b2": { "type": "benefit", "settings": { "icon": "star", "title": "No stained palms", "text": "Keep colour off your hands — apply like a professional, mess-free." } },
+        "b3": { "type": "benefit", "settings": { "icon": "leaf", "title": "Precision brush", "text": "Blend around the face, hairline, hands and feet with total control." } },
+        "b4": { "type": "benefit", "settings": { "icon": "shield", "title": "Reusable & washable", "text": "Rinse clean after every use — built to last wear after wear." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "Why You'll Love It",
+        "heading": "The secret to a <em class='serif-it'>flawless</em> finish.",
+        "sub": "Pro tools that make streaks impossible."
+      }
+    },
+    "results": {
+      "type": "before-after",
+      "blocks": {
+        "r1": { "type": "ba", "settings": { "label": "By hand" } },
+        "r2": { "type": "ba", "settings": { "label": "With the mitt" } }
+      },
+      "block_order": ["r1", "r2"],
+      "settings": {
+        "eyebrow": "Real Results",
+        "heading": "Mitt vs. <em class='serif-it'>bare hands</em>.",
+        "sub": "Drag to reveal the difference. Real skin, no filters."
+      }
+    },
+    "how": {
+      "type": "product-how",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Pump", "text": "Dispense tan onto the velvet mitt — never your palm." } },
+        "s2": { "type": "step", "settings": { "title": "Sweep", "text": "Buff into skin in long, circular motions." } },
+        "s3": { "type": "step", "settings": { "title": "Blend", "text": "Use the precision brush around the face, hands and feet." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "The Ritual",
+        "heading": "Apply like a <em class='serif-it'>pro</em>."
+      }
+    },
+    "comparison": {
+      "type": "product-comparison",
+      "blocks": {
+        "c1": { "type": "feature", "settings": { "feature": "Streak-free application", "them_has": false } },
+        "c2": { "type": "feature", "settings": { "feature": "No stained palms", "them_has": false } },
+        "c3": { "type": "feature", "settings": { "feature": "Precision detail brush", "them_has": false } },
+        "c4": { "type": "feature", "settings": { "feature": "Reusable & washable", "them_has": true } },
+        "c5": { "type": "feature", "settings": { "feature": "Quick to clean", "them_has": false } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"],
+      "settings": {
+        "eyebrow": "The Difference",
+        "heading": "Why the Set <em class='serif-it'>wins</em>.",
+        "us_label": "Application Set",
+        "them_label": "Bare hands"
+      }
+    },
+    "fbt": {
+      "type": "product-fbt",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "application-set", "label": "Application Set" } },
+        "p2": { "type": "product", "settings": { "product": "radiance-glow-drops", "label": "Radiance Glow Drops" } },
+        "p3": { "type": "product", "settings": { "product": "bronze-mist", "label": "Bronze Mist" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Complete The Ritual",
+        "heading": "Better <em class='serif-it'>together</em>.",
+        "button_label": "Add all to bag"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "v1": { "type": "review", "settings": { "quote": "The mitt makes application completely streak-free. Total game changer.", "name": "Grace H.", "tag": "Verified Buyer" } },
+        "v2": { "type": "review", "settings": { "quote": "No more orange palms! The brush is perfect for my hands and feet.", "name": "Bella C.", "tag": "Verified Buyer" } },
+        "v3": { "type": "review", "settings": { "quote": "Washes clean in seconds and still looks brand new months later.", "name": "Sienna O.", "tag": "Verified Buyer" } },
+        "v4": { "type": "review", "settings": { "quote": "Wish I'd bought this sooner — my tan has never looked so even.", "name": "Ruby A.", "tag": "Verified Buyer" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4"],
+      "settings": {
+        "eyebrow": "Loved By Thousands",
+        "heading": "900+ five-star <em class='serif-it'>glow</em> stories.",
+        "score": "4.9",
+        "score_sub": "Based on 938 verified reviews"
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "days": "90",
+        "seal_text": "Day Glow Promise",
+        "eyebrow": "Risk-Free",
+        "heading": "Love your glow, or your money back.",
+        "text": "Try the Application Set for a full 90 days. If you're not completely radiant, we'll refund every cent."
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "How do I clean the mitt and brush?", "answer": "Rinse under warm water with a little soap after each use, then leave to air dry. Both are fully reusable." } },
+        "q2": { "type": "qa", "settings": { "question": "When do I use the mitt vs the brush?", "answer": "Use the velvet mitt for large areas like the body, and the precision brush for the face, hairline, hands and feet." } },
+        "q3": { "type": "qa", "settings": { "question": "Which products does it work with?", "answer": "It works with all Auvelle tanning products — the Glow Drops, Bronze Mist and any cream or mousse." } },
+        "q4": { "type": "qa", "settings": { "question": "How long does the set last?", "answer": "With proper rinsing and air-drying, the mitt and brush last for many months of regular use." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "Good To Know",
+        "heading": "Your questions, <em class='serif-it'>answered</em>.",
+        "open_first": true
+      }
+    },
+    "trustoo": { "type": "trustoo-reviews" }
+  },
+  "order": ["main", "benefits", "results", "how", "comparison", "fbt", "reviews", "guarantee", "faq", "trustoo"]
+}

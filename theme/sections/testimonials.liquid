@@ -1,0 +1,22 @@
+<section class="section section--tint" id="reviews"><div class="wrap">
+  <div class="reviews__top reveal">
+    <div class="sec-head" style="margin:0;text-align:left;"><span class="eyebrow" style="display:block;margin-bottom:14px;">{{ section.settings.eyebrow }}</span><h2 class="display-md">{{ section.settings.heading }}</h2></div>
+    <div class="reviews__score"><span class="big">{{ section.settings.score }}</span><div class="meta"><span class="stars" style="font-size:18px;">★★★★★</span><small>{{ section.settings.score_sub }}</small></div></div>
+  </div>
+  <div class="rev-track-wrap"><div class="rev-track" id="revTrack">
+    {% for block in section.blocks %}<article class="rev-card" {{ block.shopify_attributes }}><span class="stars">★★★★★</span><p class="rev-card__quote">{{ block.settings.quote }}</p><div class="rev-card__who"><span class="rev-card__av">{{ block.settings.name | slice: 0 }}</span><div><b>{{ block.settings.name }}</b><small>{{ block.settings.tag }}</small></div></div></article>{% endfor %}
+  </div></div>
+  <div class="rev-nav"><button class="rev-arrow" id="revPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m15 18-6-6 6-6"/></svg></button><div class="rev-nav" id="revDots" style="align-items:center;margin:0;"></div><button class="rev-arrow" id="revNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 18 6-6-6-6"/></svg></button></div>
+</div></section>
+{% schema %}
+{ "name": "Testimonials", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Loved By Thousands" },
+  { "type": "html", "id": "heading", "label": "Heading", "default": "100+ five-star <em class='serif-it'>glow</em> stories." },
+  { "type": "text", "id": "score", "label": "Score", "default": "4.9" },
+  { "type": "text", "id": "score_sub", "label": "Score subtext", "default": "Based on 10,000+ verified reviews" }
+], "blocks": [ { "type": "review", "name": "Review", "settings": [
+  { "type": "textarea", "id": "quote", "label": "Quote", "default": "Genuinely the most natural tan I've ever had." },
+  { "type": "text", "id": "name", "label": "Name", "default": "Sophia R." },
+  { "type": "text", "id": "tag", "label": "Tag", "default": "Verified Buyer" }
+] } ], "presets": [ { "name": "Testimonials", "blocks": [ {"type":"review"},{"type":"review"},{"type":"review"},{"type":"review"} ] } ] }
+{% endschema %}

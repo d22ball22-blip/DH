@@ -1,0 +1,33 @@
+<section class="section section--tint" id="bundles"><div class="wrap">
+  <div class="sec-head center reveal"><span class="eyebrow">{{ section.settings.eyebrow }}</span><h2 class="display-md">{{ section.settings.heading }}</h2>{% if section.settings.sub != blank %}<p class="lede">{{ section.settings.sub }}</p>{% endif %}</div>
+  <div class="bundle-grid">
+    {% for block in section.blocks %}
+      <article class="bundle {% if block.settings.best %}bundle--best{% endif %} reveal" {{ block.shopify_attributes }}>
+        {% if block.settings.best %}<span class="bundle__best-tag">★ Best Value</span>{% endif %}
+        <a class="bundle__media" href="{% if block.settings.product != blank %}{{ all_products[block.settings.product].url }}{% else %}#{% endif %}"><img src="{% if block.settings.image %}{{ block.settings.image | image_url: width: 700 }}{% else %}{{ 'bundle-every.jpg' | asset_url }}{% endif %}" alt="{{ block.settings.name | escape }}" loading="lazy"></a>
+        <h3 class="bundle__name"><a href="{% if block.settings.product != blank %}{{ all_products[block.settings.product].url }}{% else %}#{% endif %}">{{ block.settings.name }}</a></h3>
+        <p class="bundle__items">{{ block.settings.items }}</p>
+        {% assign p = all_products[block.settings.product] %}
+        <div class="bundle__pricing"><span class="bundle__price">{% if p %}{{ p.price | money }}{% else %}{{ block.settings.price }}{% endif %}</span>{% if block.settings.compare != blank %}<span class="bundle__was">{{ block.settings.compare }}</span>{% endif %}</div>
+        {% if block.settings.save != blank %}<p class="bundle__save">{{ block.settings.save }}</p>{% endif %}
+        {% if p %}{% form 'product', p %}<input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}"><button type="submit" class="btn {% if block.settings.best %}btn--primary{% else %}btn--ghost{% endif %} btn--block btn--sm" style="margin-top:18px;">Add Bundle</button>{% endform %}{% else %}<a href="#" class="btn btn--ghost btn--block btn--sm" style="margin-top:18px;">Add Bundle</a>{% endif %}
+      </article>
+    {% endfor %}
+  </div>
+</div></section>
+{% schema %}
+{ "name": "Bundles", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Curated Rituals" },
+  { "type": "html", "id": "heading", "label": "Heading", "default": "Bundle your glow &amp; <em class='serif-it'>save more</em>." },
+  { "type": "text", "id": "sub", "label": "Subtext", "default": "Thoughtfully paired sets for every routine." }
+], "blocks": [ { "type": "bundle", "name": "Bundle", "settings": [
+  { "type": "image_picker", "id": "image", "label": "Image" },
+  { "type": "text", "id": "name", "label": "Name", "default": "Everyday Glow" },
+  { "type": "text", "id": "items", "label": "Includes", "default": "Glow Drops + SPF 50" },
+  { "type": "product", "id": "product", "label": "Bundle product" },
+  { "type": "text", "id": "price", "label": "Price (if no product)", "default": "$44.99" },
+  { "type": "text", "id": "compare", "label": "Compare price", "default": "$50.98" },
+  { "type": "text", "id": "save", "label": "Save text", "default": "You save $5.99" },
+  { "type": "checkbox", "id": "best", "label": "Best value", "default": false }
+] } ], "presets": [ { "name": "Bundles", "blocks": [ {"type":"bundle"},{"type":"bundle"},{"type":"bundle"},{"type":"bundle"} ] } ] }
+{% endschema %}

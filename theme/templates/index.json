@@ -1,0 +1,311 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero"
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "cart",
+            "text": "Complimentary Shipping"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "text": "90-Day Guarantee"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "star",
+            "text": "10,000+ Happy Customers"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "text": "Dermatologist Tested"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "featured": {
+      "type": "featured-collection"
+    },
+    "spot_glow": {
+      "type": "product-spotlight",
+      "settings": {
+        "anchor": "glow",
+        "bg": "section--tint",
+        "tall": true,
+        "eyebrow": "Best Seller · The Icon",
+        "heading": "Radiance Glow Drops",
+        "text": "A customisable tanning serum you blend into your daily moisturiser. Build your perfect shade with zero streaks and no telltale self-tan scent."
+      },
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Fully buildable, never streaky"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "text": "No orange tones, no self-tan smell"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Deeply hydrating"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "spot_spf": {
+      "type": "product-spotlight",
+      "settings": {
+        "anchor": "spf",
+        "reverse": true,
+        "eyebrow": "Daily Protection",
+        "heading": "Lumière Soleil SPF 50",
+        "text": "A weightless brightening milk that protects, hydrates and leaves skin luminous — never chalky."
+      },
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Broad-spectrum SPF 50, zero white cast"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Hydrating, brightening, makeup-friendly"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2"
+      ]
+    },
+    "bundles": {
+      "type": "bundles",
+      "blocks": {
+        "u1": {
+          "type": "bundle",
+          "settings": {
+            "name": "Everyday Glow",
+            "items": "Glow Drops + SPF 50",
+            "price": "$44.99",
+            "compare": "$50.98",
+            "save": "You save $5.99"
+          }
+        },
+        "u2": {
+          "type": "bundle",
+          "settings": {
+            "name": "Bronze Perfection",
+            "items": "Glow Drops + Application Set",
+            "price": "$59.99",
+            "compare": "$67.98",
+            "save": "You save $7.99"
+          }
+        },
+        "u3": {
+          "type": "bundle",
+          "settings": {
+            "name": "Vacation Glow",
+            "items": "Bronze Mist + SPF 50",
+            "price": "$49.99",
+            "compare": "$55.98",
+            "save": "You save $5.99"
+          }
+        },
+        "u4": {
+          "type": "bundle",
+          "settings": {
+            "name": "Complete Collection",
+            "items": "All 4 hero products",
+            "price": "$99.99",
+            "compare": "$123.96",
+            "save": "You save $23.97",
+            "best": true
+          }
+        }
+      },
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4"
+      ]
+    },
+    "ba": {
+      "type": "before-after",
+      "blocks": {
+        "a": {
+          "type": "ba",
+          "settings": {
+            "label": "After · 1 use"
+          }
+        },
+        "b": {
+          "type": "ba",
+          "settings": {
+            "label": "After · 2 uses"
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b"
+      ]
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "quote": "Genuinely the most natural tan I've ever had. No orange, no smell.",
+            "name": "Sophia R.",
+            "tag": "Verified Buyer"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "quote": "The Glow Drops changed my routine. I control exactly how deep I go.",
+            "name": "Maya L.",
+            "tag": "Verified Buyer"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "quote": "Finally an SPF 50 with zero white cast that sits under makeup.",
+            "name": "Elena T.",
+            "tag": "Verified Buyer"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "quote": "Bronze Mist lives in my weekend bag. Quick-dry is real.",
+            "name": "Amara K.",
+            "tag": "Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ]
+    },
+    "story": {
+      "type": "brand-story",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "num": "2019",
+            "label": "Founded in California"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "num": "100%",
+            "label": "Vegan & cruelty-free"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "num": "10k+",
+            "label": "Five-star reviews"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "guarantee": {
+      "type": "guarantee"
+    },
+    "gallery": {
+      "type": "gallery",
+      "blocks": {
+        "g1": {
+          "type": "tile"
+        },
+        "g2": {
+          "type": "tile"
+        },
+        "g3": {
+          "type": "tile"
+        },
+        "g4": {
+          "type": "tile"
+        },
+        "g5": {
+          "type": "tile"
+        },
+        "g6": {
+          "type": "tile"
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5",
+        "g6"
+      ]
+    },
+    "cta": {
+      "type": "final-cta"
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "featured",
+    "spot_glow",
+    "spot_spf",
+    "bundles",
+    "ba",
+    "reviews",
+    "story",
+    "guarantee",
+    "gallery",
+    "cta"
+  ]
+}

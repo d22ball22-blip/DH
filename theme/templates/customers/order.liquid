@@ -1,0 +1,2 @@
+<section class="page-hero"><div class="wrap"><span class="eyebrow">Auvelle</span><h1 class="display-md">Order {{ order.name }}</h1></div></section>
+<section class="section"><div class="wrap"><div class="prose"><p>{{ order.created_at | date: '%B %d, %Y' }}</p>{% for line in order.line_items %}<p>{{ line.title }} × {{ line.quantity }} — {{ line.final_line_price | money }}</p>{% endfor %}<p><strong>Total: {{ order.total_price | money }}</strong></p></div></div></section>
