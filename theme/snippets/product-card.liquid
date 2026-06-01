@@ -4,7 +4,12 @@
     {% if card_product.featured_image %}<img src="{{ card_product.featured_image | image_url: width: 800 }}" alt="{{ card_product.title | escape }}" loading="lazy" width="800" height="1000">{% else %}<div class="card__ph"></div>{% endif %}
   </a>
   <div class="card__body">
-    <div class="card__rating"><span class="stars">★★★★★</span><small>({{ card_product.metafields.custom.review_count | default: '0' }})</small></div>
+    {%- assign _vstar = card_product.metafields.vstar.product_rating -%}
+    {%- assign _review_count = _vstar.total_reviews | default: 0 -%}
+    {%- assign _rating = _vstar.rating | default: 0 | plus: 0 -%}
+    {%- if _review_count > 0 -%}
+    <div class="card__rating" aria-label="{{ _rating }} out of 5, {{ _review_count }} reviews"><span class="stars">★★★★★</span><small>({{ _review_count }})</small></div>
+    {%- endif -%}
     <h3 class="card__name"><a href="{{ card_product.url }}">{{ card_product.title }}</a></h3>
     <p class="card__desc">{{ card_product.metafields.custom.subtitle | default: card_product.type }}</p>
     <div class="card__foot"><span class="card__price">{{ card_product.price | money }}</span>

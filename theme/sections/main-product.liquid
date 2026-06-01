@@ -8,7 +8,14 @@
       <div class="pdp__main">{% if product.metafields.custom.badge %}<span class="card__tag">{{ product.metafields.custom.badge }}</span>{% elsif section.settings.badge != blank %}<span class="card__tag">{{ section.settings.badge }}</span>{% endif %}<img id="pdpMainImg" src="{{ product.featured_image | image_url: width: 1100 }}" alt="{{ product.title | escape }}"></div>
     </div>
     <div class="pdp__info">
-      <div class="pdp__rating"><span class="stars">★★★★★</span><small><b>{{ product.metafields.custom.rating | default: section.settings.rating }}</b> · <a href="#customer-reviews">{{ product.metafields.custom.review_count | default: section.settings.review_count }} reviews</a></small></div>
+      {%- assign _vstar = product.metafields.vstar.product_rating -%}
+      {%- assign _pdp_count = _vstar.total_reviews | default: 0 -%}
+      {%- assign _pdp_rating = _vstar.rating | default: section.settings.rating -%}
+      {%- if _pdp_count == 0 -%}
+        {%- assign _pdp_count = section.settings.review_count -%}
+        {%- assign _pdp_rating = section.settings.rating -%}
+      {%- endif -%}
+      <div class="pdp__rating"><span class="stars">★★★★★</span><small><b>{{ _pdp_rating }}</b> · <a href="#customer-reviews">{{ _pdp_count }} reviews</a></small></div>
       <h1 class="pdp__name">{{ product.title }}</h1>
       {% assign sub = product.metafields.custom.subtitle | default: section.settings.subtitle %}
       {% if sub != blank %}<p class="pdp__sub">{{ sub }}</p>{% endif %}
