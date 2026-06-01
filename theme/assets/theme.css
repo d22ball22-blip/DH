@@ -544,7 +544,21 @@ a.bundle__media { display: block; cursor: pointer; }
   .reviews__top { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 480px) {
-  .prod-grid, .bundle-grid { grid-template-columns: 1fr; }
+  /* 2-column product grid on mobile */
+  .prod-grid, .bundle-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  /* Compact card text so titles/prices stay readable at ~160px card width */
+  .card__body { padding-top: 10px; }
+  .card__name { font-size: 14px; line-height: 1.2; margin: 4px 0 2px; }
+  .card__desc { font-size: 11px; }
+  .card__price { font-size: 15px; }
+  .card__rating { margin-top: 6px; gap: 3px; }
+  .card__rating .stars { font-size: 11px; }
+  .card__rating small { font-size: 10px; }
+  .card__tag { font-size: 9px; padding: 3px 7px; letter-spacing: 0.08em; }
+  .card__foot { margin-top: 8px; flex-wrap: wrap; gap: 4px; }
+
+  /* Hero CTA stack on very small screens */
   .hero__cta { flex-direction: column; align-items: stretch; }
   .hero__cta .btn { width: 100%; }
 }
