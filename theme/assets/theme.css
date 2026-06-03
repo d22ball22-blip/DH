@@ -781,3 +781,220 @@ a.bundle__media{display:block}
 .fbt__total .btn{white-space:nowrap}
 .cmp__head .cmp__feat{background:var(--forest)}
 .shopify-section--product-fbt .fbt__total b{display:block}
+
+/* ============================================================
+   MEGA-MENU NAVIGATION
+   ============================================================ */
+
+/* — Nav trigger (matches .nav a exactly, adds chevron) — */
+.nav-item { position: relative; display: flex; align-items: center; }
+
+.nav-trigger {
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+  color: var(--ink); padding: 4px 0; transition: color .3s;
+  background: none; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px; line-height: inherit;
+}
+.nav-trigger:hover,
+.nav-item.is-open .nav-trigger { color: var(--bronze); }
+
+/* Underline only under the text word, not the chevron */
+.nav-trigger__text {
+  position: relative;
+}
+.nav-trigger__text::after {
+  content: ''; position: absolute; left: 0; bottom: -2px;
+  width: 0; height: 1px; background: var(--bronze);
+  transition: width .35s var(--ease);
+}
+.nav-trigger:hover .nav-trigger__text::after,
+.nav-item.is-open .nav-trigger__text::after { width: 100%; }
+
+/* Animated chevron */
+.nav-trigger__chev {
+  transition: transform .3s var(--ease); display: block; flex: none;
+  position: relative; top: 1px;
+}
+.nav-item.is-open .nav-trigger__chev { transform: rotate(180deg); }
+
+/* — Mega-menu panel — */
+.mega {
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 0;
+  min-width: 640px;
+  background: var(--ivory);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px -20px rgba(43,35,28,0.28), 0 4px 16px -8px rgba(43,35,28,0.12);
+  padding: 28px 28px 20px;
+  /* Hidden state */
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity .22s var(--ease), transform .22s var(--ease), visibility .22s;
+  z-index: 200;
+  will-change: opacity, transform;
+}
+.nav-item.is-open .mega {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Small upward arrow notch */
+.mega::before {
+  content: ''; position: absolute;
+  top: -7px; left: 36px;
+  width: 13px; height: 13px;
+  background: var(--ivory);
+  border-left: 1px solid var(--line-soft);
+  border-top: 1px solid var(--line-soft);
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+/* — Product grid — */
+.mega__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* — Individual product card — */
+.mega__card {
+  display: block;
+  border-radius: var(--radius);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .28s var(--ease);
+}
+.mega__card:hover { transform: translateY(-4px); }
+
+.mega__img {
+  aspect-ratio: 3/4;
+  background: var(--sand);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.mega__img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s var(--ease);
+}
+.mega__card:hover .mega__img img { transform: scale(1.06); }
+.mega__img .card__ph { width: 100%; height: 100%; }
+
+.mega__name {
+  display: block;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--ink); line-height: 1.35;
+  margin-bottom: 4px;
+  transition: color .2s;
+}
+.mega__card:hover .mega__name { color: var(--bronze); }
+
+.mega__price {
+  display: block;
+  font-family: var(--display);
+  font-size: 17px; color: var(--ink-soft);
+}
+
+/* — Footer link inside mega — */
+.mega__footer-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 20px;
+  font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  font-weight: 500; color: var(--bronze);
+  border-bottom: 1px solid var(--champagne);
+  padding-bottom: 2px;
+  transition: color .25s, border-color .25s;
+}
+.mega__footer-link:hover { color: var(--bronze-deep); border-color: var(--bronze-deep); }
+.mega__footer-link svg { transition: transform .25s var(--ease); }
+.mega__footer-link:hover svg { transform: translateX(3px); }
+
+/* — Backdrop behind mega — */
+.mega-backdrop {
+  position: fixed; inset: 0; z-index: 90;
+  background: rgba(43,35,28,0.18);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .22s, visibility .22s;
+}
+.mega-backdrop.is-open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+}
+
+/* — Mobile nav accordion — */
+.mnav__acc { border-bottom: 1px solid var(--line-soft); }
+
+.mnav__acc-toggle {
+  font-family: var(--display); font-size: 30px;
+  padding: 12px 0;
+  display: flex; justify-content: space-between; align-items: center; width: 100%;
+  color: var(--ink); background: none; border: none; cursor: pointer; text-align: left;
+  line-height: 1.2;
+}
+
+.mnav__acc-chev {
+  display: inline-flex; align-items: center; color: var(--bronze);
+  transition: transform .3s var(--ease); flex: none;
+}
+.mnav__acc.is-open .mnav__acc-chev { transform: rotate(180deg); }
+
+.mnav__acc-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height .42s var(--ease), padding .42s;
+  padding: 0;
+}
+.mnav__acc.is-open .mnav__acc-body {
+  max-height: 640px;
+  padding-bottom: 14px;
+}
+
+.mnav__prod-item {
+  display: grid; grid-template-columns: 56px 1fr; gap: 14px;
+  align-items: center; padding: 11px 0;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink); text-decoration: none;
+  transition: color .2s;
+}
+.mnav__prod-item:last-of-type { border-bottom: none; }
+.mnav__prod-item:hover { color: var(--bronze); }
+
+.mnav__prod-img {
+  width: 56px; height: 56px; flex: none;
+  border-radius: var(--radius); background: var(--sand); overflow: hidden;
+}
+.mnav__prod-img img { width: 100%; height: 100%; object-fit: cover; }
+.mnav__prod-img .card__ph { width: 100%; height: 100%; }
+
+.mnav__prod-name {
+  display: block; font-size: 15px; font-weight: 500; line-height: 1.3;
+}
+.mnav__prod-price {
+  display: block; font-size: 13px; color: var(--ink-soft); margin-top: 2px;
+}
+
+.mnav__prod-all {
+  display: block; padding: 12px 0;
+  font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
+  font-weight: 500; color: var(--bronze); text-decoration: none;
+  transition: color .2s;
+}
+.mnav__prod-all:hover { color: var(--bronze-deep); }
+
+/* Remove the old .mnav a border-bottom from accordion items since .mnav__acc handles its own */
+.mnav .mnav__acc-toggle { border-bottom: none; }
+
+/* ============================================================
+   RESPONSIVE — MEGA-MENU
+   ============================================================ */
+@media (max-width: 900px) {
+  /* Hide mega-menu desktop trigger on mobile — use mnav instead */
+  .nav-item { display: none; }
+}
+@media (min-width: 901px) {
+  /* Hide mobile accordion parent wrapper from being triggered on desktop */
+  .mnav__acc .mnav__acc-toggle { pointer-events: auto; }
+}

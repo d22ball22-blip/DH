@@ -239,4 +239,67 @@
 
   /* ---------- init ---------- */
   refresh(); onScroll();
+
+  /* ---------- mega-menu ---------- */
+  (function () {
+    var shopItem     = $('#shopNavItem');
+    var shopTrigger  = $('#shopTrigger');
+    var shopMega     = $('#shopMega');
+    var backdrop     = $('#megaBackdrop');
+    var hdr          = $('#header');
+    if (!shopItem) return;
+
+    var closeTimer;
+
+    function openMega() {
+      clearTimeout(closeTimer);
+      shopItem.classList.add('is-open');
+      if (backdrop) backdrop.classList.add('is-open');
+      if (hdr) hdr.classList.add('mega-open');
+      if (shopTrigger) shopTrigger.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMega(immediate) {
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(function () {
+        shopItem.classList.remove('is-open');
+        if (backdrop) backdrop.classList.remove('is-open');
+        if (hdr) hdr.classList.remove('mega-open');
+        if (shopTrigger) shopTrigger.setAttribute('aria-expanded', 'false');
+      }, immediate ? 0 : 160);
+    }
+
+    /* Hover on trigger or panel keeps it open */
+    shopItem.addEventListener('mouseenter', openMega);
+    shopItem.addEventListener('mouseleave', closeMega);
+
+    /* Click trigger for keyboard / touch users */
+    if (shopTrigger) {
+      shopTrigger.addEventListener('click', function () {
+        shopItem.classList.contains('is-open') ? closeMega(true) : openMega();
+      });
+    }
+
+    /* Click backdrop closes */
+    if (backdrop) {
+      backdrop.addEventListener('click', function () { closeMega(true); });
+    }
+
+    /* Escape closes (augment existing handler) */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMega(true);
+    });
+
+    /* ---------- mobile accordion ---------- */
+    var acc    = $('#mnavShopAcc');
+    var toggle = $('#mnavShopToggle');
+    var body   = $('#mnavShopItems');
+    if (toggle && acc) {
+      toggle.addEventListener('click', function () {
+        var isOpen = acc.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (body) body.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      });
+    }
+  })();
 })();

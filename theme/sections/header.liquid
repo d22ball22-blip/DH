@@ -1,24 +1,156 @@
+{%- comment -%} Mega-menu product references {%- endcomment -%}
+{%- assign mp1 = all_products[section.settings.mega_p1] -%}
+{%- assign mp2 = all_products[section.settings.mega_p2] -%}
+{%- assign mp3 = all_products[section.settings.mega_p3] -%}
+{%- assign mp4 = all_products[section.settings.mega_p4] -%}
+
 <header class="header is-solid" id="header" data-sticky="{{ section.settings.sticky }}">
   <div class="header__inner">
-    <button class="burger icon-btn" data-mnav-open aria-label="Menu">{% render 'icon', icon: 'menu' %}</button>
-    <nav class="nav nav--left">
-      {% for link in section.settings.menu.links limit: 4 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+
+    {%- comment -%}— Mobile burger —{%- endcomment -%}
+    <button class="burger icon-btn" data-mnav-open aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
+      {%- render 'icon', icon: 'menu' -%}
+    </button>
+
+    {%- comment -%}— Left desktop nav —{%- endcomment -%}
+    <nav class="nav nav--left" aria-label="Primary navigation">
+      {%- for link in section.settings.menu.links limit: 4 -%}
+        {%- assign lt = link.title | downcase -%}
+        {%- if lt == 'shop' or link.url contains '/collections' -%}
+          {%- comment -%} SHOP — mega-menu trigger {%- endcomment -%}
+          <div class="nav-item" id="shopNavItem">
+            <button class="nav-trigger" id="shopTrigger" aria-expanded="false" aria-haspopup="true" aria-controls="shopMega">
+              <span class="nav-trigger__text">{{ link.title }}</span>
+              <svg class="nav-trigger__chev" viewBox="0 0 10 6" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+
+            {%- comment -%} Mega-menu panel {%- endcomment -%}
+            <div class="mega" id="shopMega" role="region" aria-label="Shop products">
+              <div class="mega__inner">
+                <div class="mega__grid">
+                  {%- assign mega_prods = mp1, mp2, mp3, mp4 -%}
+                  {%- for mp in mega_prods -%}
+                    {%- if mp != blank -%}
+                      <a href="{{ mp.url }}" class="mega__card">
+                        <div class="mega__img">
+                          {%- if mp.featured_image -%}
+                            <img
+                              src="{{ mp.featured_image | image_url: width: 400 }}"
+                              alt="{{ mp.featured_image.alt | default: mp.title | escape }}"
+                              width="200" height="267"
+                              loading="lazy">
+                          {%- else -%}
+                            <div class="card__ph"></div>
+                          {%- endif -%}
+                        </div>
+                        <span class="mega__name">{{ mp.title }}</span>
+                        <span class="mega__price">{{ mp.price | money }}</span>
+                      </a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+                <a href="{{ link.url }}" class="mega__footer-link">
+                  View all products
+                  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
     </nav>
-    <a class="brand" href="{{ routes.root_url }}">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></a>
+
+    {%- comment -%}— Centred logo —{%- endcomment -%}
+    <a class="brand" href="{{ routes.root_url }}">
+      {{- settings.brand_name -}}<span>{{ settings.brand_accent_char }}</span>
+    </a>
+
+    {%- comment -%}— Right actions —{%- endcomment -%}
     <div class="header__actions">
-      <nav class="nav nav--right"><div class="nav-links">{% for link in section.settings.menu.links offset: 4 limit: 2 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}</div></nav>
-      <button class="icon-btn" aria-label="Search">{% render 'icon', icon: 'search' %}</button>
-      <a class="icon-btn" href="{{ routes.cart_url }}" data-open-cart aria-label="Bag">{% render 'icon', icon: 'cart' %}<span class="cart-count">{{ cart.item_count }}</span></a>
+      <nav class="nav nav--right" aria-label="Secondary navigation">
+        <div class="nav-links">
+          {%- for link in section.settings.menu.links offset: 4 limit: 2 -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        </div>
+      </nav>
+      <button class="icon-btn" id="headerSearch" aria-label="Search">
+        {%- render 'icon', icon: 'search' -%}
+      </button>
+      <a class="icon-btn" href="{{ routes.cart_url }}" data-open-cart aria-label="Bag ({{ cart.item_count }} items)">
+        {%- render 'icon', icon: 'cart' -%}
+        <span class="cart-count" {% unless cart.item_count > 0 %}style="display:none"{% endunless %}>{{ cart.item_count }}</span>
+      </a>
     </div>
+
   </div>
 </header>
-<div class="mnav" id="mnav">
-  <div class="mnav__head"><span class="brand">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></span><button class="icon-btn" data-mnav-close aria-label="Close">{% render 'icon', icon: 'close' %}</button></div>
-  {% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+
+{%- comment -%}— Mega-menu backdrop —{%- endcomment -%}
+<div class="mega-backdrop" id="megaBackdrop" aria-hidden="true"></div>
+
+{%- comment -%}— Mobile nav drawer —{%- endcomment -%}
+<div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <div class="mnav__head">
+    <span class="brand">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></span>
+    <button class="icon-btn" data-mnav-close aria-label="Close menu">
+      {%- render 'icon', icon: 'close' -%}
+    </button>
+  </div>
+
+  {%- for link in section.settings.menu.links -%}
+    {%- assign lt = link.title | downcase -%}
+    {%- if lt == 'shop' or link.url contains '/collections' -%}
+      {%- comment -%} Mobile Shop accordion {%- endcomment -%}
+      <div class="mnav__acc" id="mnavShopAcc">
+        <button class="mnav__acc-toggle" id="mnavShopToggle" aria-expanded="false" aria-controls="mnavShopItems">
+          {{ link.title }}
+          <span class="mnav__acc-chev" aria-hidden="true">
+            <svg viewBox="0 0 10 6" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+          </span>
+        </button>
+        <div class="mnav__acc-body" id="mnavShopItems" aria-hidden="true">
+          {%- assign mobile_prods = mp1, mp2, mp3, mp4 -%}
+          {%- for mp in mobile_prods -%}
+            {%- if mp != blank -%}
+              <a href="{{ mp.url }}" class="mnav__prod-item" data-mnav-close>
+                <div class="mnav__prod-img">
+                  {%- if mp.featured_image -%}
+                    <img src="{{ mp.featured_image | image_url: width: 120 }}" alt="{{ mp.title | escape }}" width="56" height="56" loading="lazy">
+                  {%- else -%}
+                    <div class="card__ph"></div>
+                  {%- endif -%}
+                </div>
+                <div>
+                  <span class="mnav__prod-name">{{ mp.title }}</span>
+                  <span class="mnav__prod-price">{{ mp.price | money }}</span>
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+          <a href="{{ link.url }}" class="mnav__prod-all" data-mnav-close>View all products →</a>
+        </div>
+      </div>
+    {%- else -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endif -%}
+  {%- endfor -%}
 </div>
+
 {% schema %}
-{ "name": "Header", "settings": [
-  { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-  { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true }
-] }
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true },
+    { "type": "header", "content": "Shop mega-menu" },
+    { "type": "paragraph", "content": "Choose up to 4 products to feature in the Shop dropdown. For the mega-menu to appear, your menu must include a link whose title is 'Shop' or whose URL points to a collection." },
+    { "type": "product", "id": "mega_p1", "label": "Featured product 1" },
+    { "type": "product", "id": "mega_p2", "label": "Featured product 2" },
+    { "type": "product", "id": "mega_p3", "label": "Featured product 3" },
+    { "type": "product", "id": "mega_p4", "label": "Featured product 4" }
+  ]
+}
 {% endschema %}
