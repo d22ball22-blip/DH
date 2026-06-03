@@ -1,24 +1,209 @@
-<header class="header is-solid" id="header" data-sticky="{{ section.settings.sticky }}">
+<header class="header is-transparent" id="header">
   <div class="header__inner">
-    <button class="burger icon-btn" data-mnav-open aria-label="Menu">{% render 'icon', icon: 'menu' %}</button>
-    <nav class="nav nav--left">
-      {% for link in section.settings.menu.links limit: 4 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+
+    {%- comment -%} Burger — mobile only {%- endcomment -%}
+    <button class="burger icon-btn" data-mnav-open aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <line x1="3" y1="6"  x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    {%- comment -%} Left nav (desktop) {%- endcomment -%}
+    <nav class="nav nav--left" aria-label="Main navigation">
+      {% for link in section.settings.menu.links limit: 4 %}
+        {% if link.links.size > 0 %}
+          <div class="mega-wrap">
+            <a href="{{ link.url }}" data-mega aria-haspopup="true">
+              {{ link.title }}
+              <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+                <polyline points="2,4 6,8 10,4"/>
+              </svg>
+            </a>
+            <div class="mega-panel" role="navigation" aria-label="{{ link.title }}">
+              <div class="mega-inner">
+                <div class="mega-cats">
+                  <h3>{{ link.title }}</h3>
+                  {% for sub in link.links %}
+                    <a class="mega-cat {% if forloop.first %}is-active{% endif %}" href="{{ sub.url }}">
+                      <span class="mega-cat__ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <path d="M12 2C8 2 5 6 5 10c0 5 7 12 7 12s7-7 7-12c0-4-3-8-7-8z"/>
+                          <circle cx="12" cy="10" r="2.5"/>
+                        </svg>
+                      </span>
+                      <span class="mega-cat__info">
+                        <span class="mega-cat__name">{{ sub.title }}</span>
+                        <span class="mega-cat__desc">Explore the collection</span>
+                      </span>
+                    </a>
+                  {% endfor %}
+                  <a class="mega-cat" href="{{ link.url }}" style="margin-top:8px;">
+                    <span class="mega-cat__ico" style="background:var(--ivory)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12,5 19,12 12,19"/>
+                      </svg>
+                    </span>
+                    <span class="mega-cat__info">
+                      <span class="mega-cat__name">Shop All</span>
+                      <span class="mega-cat__desc">View the full collection</span>
+                    </span>
+                  </a>
+                </div>
+                <div class="mega-products">
+                  {% assign mega_products = section.settings.mega_product_1
+                    | append: ',' | append: section.settings.mega_product_2
+                    | append: ',' | append: section.settings.mega_product_3
+                    | append: ',' | append: section.settings.mega_product_4
+                    | split: ',' %}
+                  {% for handle in mega_products %}
+                    {% assign mprod = all_products[handle] %}
+                    {% if mprod.id %}
+                      <a class="mega-prod" href="{{ mprod.url }}">
+                        <div class="mega-prod__img">
+                          {% if mprod.featured_image %}
+                            <img src="{{ mprod.featured_image | image_url: width: 400 }}" alt="{{ mprod.title | escape }}" loading="lazy">
+                          {% endif %}
+                        </div>
+                        <div class="mega-prod__name">{{ mprod.title }}</div>
+                        <div class="mega-prod__price">{{ mprod.price | money }}</div>
+                      </a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endif %}
+      {% endfor %}
     </nav>
-    <a class="brand" href="{{ routes.root_url }}">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></a>
+
+    {%- comment -%} Centred logo {%- endcomment -%}
+    <a class="brand" href="{{ routes.root_url }}">
+      {{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span>
+    </a>
+
+    {%- comment -%} Right actions {%- endcomment -%}
     <div class="header__actions">
-      <nav class="nav nav--right"><div class="nav-links">{% for link in section.settings.menu.links offset: 4 limit: 2 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}</div></nav>
-      <button class="icon-btn" aria-label="Search">{% render 'icon', icon: 'search' %}</button>
-      <a class="icon-btn" href="{{ routes.cart_url }}" data-open-cart aria-label="Bag">{% render 'icon', icon: 'cart' %}<span class="cart-count">{{ cart.item_count }}</span></a>
+      <nav class="nav nav--right">
+        <div class="nav-links">
+          {% for link in section.settings.menu.links offset: 4 limit: 2 %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        </div>
+      </nav>
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="11" cy="11" r="7.5"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+      <a class="icon-btn" href="{{ routes.cart_url }}" data-open-cart aria-label="Shopping bag ({{ cart.item_count }} items)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        {% if cart.item_count > 0 %}
+          <span class="cart-count">{{ cart.item_count }}</span>
+        {% else %}
+          <span class="cart-count" style="display:none;">0</span>
+        {% endif %}
+      </a>
     </div>
+
   </div>
 </header>
-<div class="mnav" id="mnav">
-  <div class="mnav__head"><span class="brand">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></span><button class="icon-btn" data-mnav-close aria-label="Close">{% render 'icon', icon: 'close' %}</button></div>
-  {% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
-</div>
+
+{%- comment -%} ── Mobile Nav ── {%- endcomment -%}
+<nav class="mnav" id="mnav" aria-label="Mobile navigation">
+  <div class="mnav__head">
+    <a class="brand" href="{{ routes.root_url }}">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></a>
+    <button class="icon-btn" data-mnav-close aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mnav__links">
+    {% for link in section.settings.menu.links %}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {% endfor %}
+  </div>
+
+  {% if section.settings.mnav_prod_1 != blank or section.settings.mnav_prod_2 != blank %}
+    <div class="mnav__featured">
+      {% if section.settings.mnav_prod_1 != blank %}
+        {% assign mp1 = all_products[section.settings.mnav_prod_1] %}
+        {% if mp1.id %}
+          <a class="mnav__featured-item" href="{{ mp1.url }}">
+            <div class="img">
+              {% if mp1.featured_image %}
+                <img src="{{ mp1.featured_image | image_url: width: 400 }}" alt="{{ mp1.title | escape }}" loading="lazy">
+              {% endif %}
+            </div>
+            <div class="name">{{ mp1.title }}</div>
+            <div class="price">{{ mp1.price | money }}</div>
+          </a>
+        {% endif %}
+      {% endif %}
+      {% if section.settings.mnav_prod_2 != blank %}
+        {% assign mp2 = all_products[section.settings.mnav_prod_2] %}
+        {% if mp2.id %}
+          <a class="mnav__featured-item" href="{{ mp2.url }}">
+            <div class="img">
+              {% if mp2.featured_image %}
+                <img src="{{ mp2.featured_image | image_url: width: 400 }}" alt="{{ mp2.title | escape }}" loading="lazy">
+              {% endif %}
+            </div>
+            <div class="name">{{ mp2.title }}</div>
+            <div class="price">{{ mp2.price | money }}</div>
+          </a>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="mnav__foot">
+    <div class="mnav__foot-links">
+      <a href="{{ routes.cart_url }}" data-open-cart>Bag ({{ cart.item_count }})</a>
+      <a href="/pages/about">About</a>
+      <a href="/pages/contact">Contact</a>
+    </div>
+    <p style="font-size:11px;color:var(--ink-muted);letter-spacing:0.08em;">Free shipping over $50 · 90-Day Guarantee</p>
+  </div>
+</nav>
+
 {% schema %}
-{ "name": "Header", "settings": [
-  { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-  { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true }
-] }
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Mega menu product previews"
+    },
+    { "type": "product", "id": "mega_product_1", "label": "Featured product 1" },
+    { "type": "product", "id": "mega_product_2", "label": "Featured product 2" },
+    { "type": "product", "id": "mega_product_3", "label": "Featured product 3" },
+    { "type": "product", "id": "mega_product_4", "label": "Featured product 4" },
+    {
+      "type": "header",
+      "content": "Mobile nav featured products"
+    },
+    { "type": "product", "id": "mnav_prod_1", "label": "Mobile featured 1" },
+    { "type": "product", "id": "mnav_prod_2", "label": "Mobile featured 2" }
+  ]
+}
 {% endschema %}

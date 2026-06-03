@@ -1,0 +1,104 @@
+{%- comment -%}
+  AUVELLE BEAUTY 2026 — Email Capture Popup
+  · 10-second delay + exit-intent trigger
+  · 30-day suppression cookie after signup
+  · 1-day suppression if manually dismissed
+  · Klaviyo-compatible list ID via data-list-id
+{%- endcomment -%}
+
+<div
+  class="popup-overlay"
+  id="popupOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="popupHeading"
+  data-list-id="{{ settings.klaviyo_list_id }}"
+>
+  <div class="popup">
+
+    {%- comment -%} Close button {%- endcomment -%}
+    <button class="popup__close" data-popup-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    {%- comment -%} Product image column {%- endcomment -%}
+    <div class="popup__img" aria-hidden="true">
+      {% if settings.popup_image %}
+        <img
+          src="{{ settings.popup_image | image_url: width: 700 }}"
+          alt=""
+          loading="lazy">
+      {% else %}
+        <img src="{{ 'glow-product.jpg' | asset_url }}" alt="" loading="lazy">
+      {% endif %}
+      <div class="popup__badge">
+        <div class="off">10%</div>
+        <div class="lbl">Off Your First Order</div>
+      </div>
+    </div>
+
+    {%- comment -%} Form column {%- endcomment -%}
+    <div class="popup__body">
+
+      <div id="popupFormWrap">
+        <span class="eyebrow popup__eyebrow">Exclusive offer</span>
+
+        <h2 class="popup__head" id="popupHeading">
+          {{ settings.popup_heading | default: "Unlock Your <em>Glow</em> Ritual" }}
+        </h2>
+
+        <p class="popup__sub">
+          {{ settings.popup_subtext | default: "Join our inner circle and receive 10% off your first order, plus early access to new launches, expert glow tips, and exclusive member offers." }}
+        </p>
+
+        <form class="popup__form" id="popupForm" action="/contact#contact_form" method="post" accept-charset="UTF-8">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="contact[tags]" value="newsletter,popup">
+
+          <input
+            class="popup__input"
+            type="email"
+            id="popupEmail"
+            name="contact[email]"
+            placeholder="Your email address"
+            required
+            autocomplete="email"
+            inputmode="email"
+          >
+
+          <button type="submit" class="btn btn--primary btn--block popup__submit">
+            Get 10% Off
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <line x1="3" y1="8" x2="13" y2="8"/>
+              <polyline points="8,3 13,8 8,13"/>
+            </svg>
+          </button>
+        </form>
+
+        <p class="popup__privacy">
+          By signing up you agree to our
+          <a href="{{ pages.privacy-policy.url | default: '/policies/privacy-policy' }}">Privacy Policy</a>.
+          Unsubscribe any time.
+        </p>
+
+        <button class="popup__skip" data-popup-skip>No thanks, I'll pay full price</button>
+      </div>
+
+      {%- comment -%} Success state {%- endcomment -%}
+      <div class="popup__success" id="popupSuccess">
+        <div class="check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m5 12 5 5L20 7"/>
+          </svg>
+        </div>
+        <h3>You're in the glow!</h3>
+        <p>Check your inbox for your exclusive 10% discount code.</p>
+      </div>
+
+    </div>
+  </div>
+</div>

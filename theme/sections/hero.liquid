@@ -1,31 +1,195 @@
-<section class="hero" id="hero">
-  <div class="hero__grid">
+<section class="hero" id="hero" style="{% if section.settings.bg_color != blank %}background:{{ section.settings.bg_color }};{% endif %}">
+
+  {%- comment -%} Background media {%- endcomment -%}
+  <div class="hero__bg" aria-hidden="true">
+    {% if section.settings.image %}
+      <img
+        src="{{ section.settings.image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.image | image_url: width: 800 }} 800w,
+                {{ section.settings.image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.image | image_url: width: 1800 }} 1800w,
+                {{ section.settings.image | image_url: width: 2400 }} 2400w"
+        sizes="100vw"
+        alt=""
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        loading="eager"
+        fetchpriority="high">
+    {% else %}
+      <img src="{{ 'hero.jpg' | asset_url }}" alt="" loading="eager" fetchpriority="high">
+    {% endif %}
+  </div>
+
+  {%- comment -%} Gradient overlay for text legibility {%- endcomment -%}
+  <div class="hero__scrim" aria-hidden="true"
+    style="{% if section.settings.overlay_opacity != blank %}--scrim-opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};{% endif %}
+    {% if section.settings.overlay_opacity != blank %}background: linear-gradient(105deg, rgba(28,22,18,{{ section.settings.overlay_opacity | divided_by: 100.0 }}) 0%, rgba(28,22,18,{{ section.settings.overlay_opacity | times: 0.5 | divided_by: 100.0 }}) 55%, rgba(28,22,18,0.05) 100%);{% endif %}">
+  </div>
+
+  {%- comment -%} Copy area {%- endcomment -%}
+  <div class="hero__inner">
     <div class="hero__copy">
-      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-      <h1 class="display-xl">{{ section.settings.heading }}</h1>
-      <p class="lede">{{ section.settings.subtext }}</p>
+      {% if section.settings.eyebrow != blank %}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {% endif %}
+
+      <h1>
+        {% if section.settings.heading_line_1 != blank %}
+          <span style="display:block;">{{ section.settings.heading_line_1 }}</span>
+        {% endif %}
+        {% if section.settings.heading_line_2 != blank %}
+          <span class="accent" style="display:block;">{{ section.settings.heading_line_2 }}</span>
+        {% endif %}
+      </h1>
+
+      {% if section.settings.subtext != blank %}
+        <p class="hero__sub">{{ section.settings.subtext }}</p>
+      {% endif %}
+
       <div class="hero__cta">
-        {% if section.settings.btn_label != blank %}<a href="{{ section.settings.btn_link }}" class="btn btn--primary">{{ section.settings.btn_label }}</a>{% endif %}
-        {% if section.settings.link_label != blank %}<a href="{{ section.settings.link_link }}" class="link-underline">{{ section.settings.link_label }}</a>{% endif %}
+        {% if section.settings.btn_label != blank %}
+          <a href="{{ section.settings.btn_link }}" class="btn btn--light btn--lg">
+            {{ section.settings.btn_label }}
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <line x1="3" y1="8" x2="13" y2="8"/>
+              <polyline points="8,3 13,8 8,13"/>
+            </svg>
+          </a>
+        {% endif %}
+        {% if section.settings.link_label != blank %}
+          <a href="{{ section.settings.link_link }}" class="link-arrow" style="color:rgba(255,255,255,0.82)">
+            {{ section.settings.link_label }}
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <line x1="3" y1="8" x2="13" y2="8"/>
+              <polyline points="8,3 13,8 8,13"/>
+            </svg>
+          </a>
+        {% endif %}
       </div>
     </div>
-    <div class="hero__media">
-      <img src="{% if section.settings.image %}{{ section.settings.image | image_url: width: 1400 }}{% else %}{{ 'hero.jpg' | asset_url }}{% endif %}" alt="" {% if section.settings.image %}width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}"{% endif %}>
-      {% if section.settings.badge_num != blank %}<div class="hero__badge"><span class="num">{{ section.settings.badge_num }}</span><span class="lbl">{{ section.settings.badge_text }}</span></div>{% endif %}
-    </div>
   </div>
+
+  {%- comment -%} Floating social proof badge {%- endcomment -%}
+  {% if section.settings.badge_num != blank %}
+    <div class="hero__proof" aria-label="Social proof">
+      <div>
+        <div class="stars stars--ivory">★★★★★</div>
+        <div class="num">{{ section.settings.badge_num }}</div>
+      </div>
+      <div class="lbl">{{ section.settings.badge_text }}</div>
+    </div>
+  {% endif %}
+
+  {%- comment -%} Scroll cue {%- endcomment -%}
+  {% if section.settings.show_scroll_cue %}
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="line"></div>
+      <span>Scroll</span>
+    </div>
+  {% endif %}
+
 </section>
+
 {% schema %}
-{ "name": "Hero", "settings": [
-  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Sunless Tanning · Glow Skincare" },
-  { "type": "html", "id": "heading", "label": "Heading", "default": "Luxury Glow.<br><span class='ln2'><em class='serif-it'>Without</em> The Sun.</span>" },
-  { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "Professional-quality tanning and glow-enhancing essentials, designed for radiant, sun-kissed skin every day of the year." },
-  { "type": "text", "id": "btn_label", "label": "Button label", "default": "Shop All" },
-  { "type": "url", "id": "btn_link", "label": "Button link" },
-  { "type": "text", "id": "link_label", "label": "Text link label", "default": "Discover the Glow Drops" },
-  { "type": "url", "id": "link_link", "label": "Text link" },
-  { "type": "image_picker", "id": "image", "label": "Hero image" },
-  { "type": "text", "id": "badge_num", "label": "Badge number", "default": "4.9" },
-  { "type": "text", "id": "badge_text", "label": "Badge text", "default": "★★★★★ from 10,000+ reviews" }
-], "presets": [ { "name": "Hero" } ] }
+{
+  "name": "Hero — Cinematic",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fallback background colour"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay darkness (%)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Sunless Tanning · Glow Skincare"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Headline — line 1",
+      "default": "Luxury Glow."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Headline — line 2 (italic accent)",
+      "default": "Without the Sun."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Professional-quality tanning and glow-enhancing essentials, designed for radiant, sun-kissed skin every day of the year."
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Primary button label",
+      "default": "Shop the Collection"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Text link label",
+      "default": "Discover the Glow Drops"
+    },
+    {
+      "type": "url",
+      "id": "link_link",
+      "label": "Text link URL"
+    },
+    {
+      "type": "header",
+      "content": "Social proof badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_num",
+      "label": "Rating number",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge supporting text",
+      "default": "Based on 10,000+ verified reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_cue",
+      "label": "Show scroll indicator",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero — Cinematic"
+    }
+  ]
+}
 {% endschema %}

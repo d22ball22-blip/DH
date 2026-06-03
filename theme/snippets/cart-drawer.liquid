@@ -1,18 +1,117 @@
-<div class="scrim" id="scrim" data-close-cart></div>
-<aside class="cart" id="cart" aria-label="Shopping bag">
-  <div class="cart__head"><h3>Your Bag</h3><button class="cart__close" data-close-cart aria-label="Close">{% render 'icon', icon: 'close' %}</button></div>
-  <div class="cart__free" id="cartFree"></div>
-  <div class="cart__items" id="cartItems"></div>
-  <div class="cart__foot" id="cartFoot" style="display:none;">
-    {% if settings.enable_cart_discount %}
-    <div class="cart__promo"><input id="promoInput" type="text" placeholder="Discount code" autocomplete="off"><button id="promoApply">Apply</button></div>
-    <div class="cart__promo-msg" id="promoMsg"></div>
-    {% endif %}
-    <div class="cart__row cart__row--sm"><span class="l">Subtotal</span><span class="vs" id="cartSubtotal"></span></div>
-    <div class="cart__row cart__row--sm" id="cartDiscRow" style="display:none;"><span class="l" id="cartDiscLabel">Discount</span><span class="vs" id="cartDisc"></span></div>
-    <div class="cart__row cart__row--sm"><span class="l">Shipping</span><span class="vs">Calculated at checkout</span></div>
-    <div class="cart__row cart__row--total"><span class="l">Total</span><span class="v" id="cartTotal"></span></div>
-    <form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout" class="btn btn--primary btn--block" style="padding:18px;">Secure Checkout</button></form>
-    <p class="cart__note">Taxes &amp; shipping calculated at checkout · 90-Day Guarantee</p>
+<div class="scrim" id="scrim" data-close-cart aria-hidden="true"></div>
+
+<aside class="cart" id="cart" role="dialog" aria-modal="true" aria-label="Shopping bag">
+
+  {%- comment -%} ── Header ── {%- endcomment -%}
+  <div class="cart__head">
+    <h3>Your Bag</h3>
+    <button class="cart__close" data-close-cart aria-label="Close bag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
   </div>
+
+  {%- comment -%} ── Free shipping progress bar ── {%- endcomment -%}
+  <div class="cart__progress">
+    <div class="cart__progress-bar">
+      <div class="cart__progress-fill" id="progressFill"></div>
+    </div>
+    <p class="cart__progress-msg" id="progressMsg">Add items to unlock free shipping</p>
+  </div>
+
+  {%- comment -%} ── Line items ── {%- endcomment -%}
+  <div class="cart__items" id="cartItems">
+    <div class="cart__empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 3h2l2.4 12.3a2 2 0 0 0 2 1.7h7.7a2 2 0 0 0 2-1.6L22 7H6"/>
+        <circle cx="9.5" cy="20.5" r="1.5"/>
+        <circle cx="17.5" cy="20.5" r="1.5"/>
+      </svg>
+      <p>Your bag is empty</p>
+      <p>Discover your perfect glow ritual.</p>
+    </div>
+  </div>
+
+  {%- comment -%} ── You may also like (upsell) ── {%- endcomment -%}
+  {% if settings.cart_upsell_product_1 != blank or settings.cart_upsell_product_2 != blank %}
+    <div class="cart__upsell" id="cartUpsell">
+      <h4>Complete your ritual</h4>
+      <div class="cart__upsell-grid">
+        {% assign upsell_handles = settings.cart_upsell_product_1 | append: ',' | append: settings.cart_upsell_product_2 | split: ',' %}
+        {% for handle in upsell_handles %}
+          {% if handle != blank %}
+            {% assign up = all_products[handle] %}
+            {% if up.id %}
+              <div class="cart__upsell-item" data-upsell-id="{{ up.selected_or_first_available_variant.id }}">
+                <div class="img">
+                  {% if up.featured_image %}
+                    <img src="{{ up.featured_image | image_url: width: 160 }}" alt="{{ up.title | escape }}" loading="lazy">
+                  {% endif %}
+                </div>
+                <div class="info">
+                  <div class="name">{{ up.title }}</div>
+                  <div class="price">{{ up.price | money }}</div>
+                </div>
+                <button class="add-btn" aria-label="Add {{ up.title | escape }} to bag">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                </button>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {%- comment -%} ── Footer: totals + checkout ── {%- endcomment -%}
+  <div class="cart__foot" id="cartFoot" style="display:none;">
+
+    {% if settings.enable_cart_discount %}
+      <div class="cart__promo">
+        <input id="promoInput" type="text" placeholder="Discount code" autocomplete="off" aria-label="Discount code">
+        <button id="promoApply" type="button">Apply</button>
+      </div>
+      <div class="cart__promo-msg" id="promoMsg"></div>
+    {% endif %}
+
+    <div class="cart__row cart__row--sm">
+      <span class="l">Subtotal</span>
+      <span class="vs" id="cartSubtotal"></span>
+    </div>
+    <div class="cart__row cart__row--sm" id="cartDiscRow" style="display:none;">
+      <span class="l">Discount</span>
+      <span class="vs" id="cartDisc"></span>
+    </div>
+    <div class="cart__row cart__row--sm">
+      <span class="l">Shipping</span>
+      <span class="vs">Calculated at checkout</span>
+    </div>
+    <div class="cart__row cart__row--total">
+      <span class="l">Total</span>
+      <span class="v" id="cartTotal"></span>
+    </div>
+
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn--primary btn--block" style="padding:20px; font-size:12px; letter-spacing:0.22em;">
+        Secure Checkout
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="2" y="7" width="12" height="8" rx="1.5"/>
+          <path d="M5 7V5a3 3 0 016 0v2"/>
+        </svg>
+      </button>
+    </form>
+
+    <p class="cart__note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Taxes &amp; shipping calculated at checkout · 90-Day Guarantee
+    </p>
+  </div>
+
 </aside>

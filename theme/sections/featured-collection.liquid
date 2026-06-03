@@ -1,17 +1,60 @@
-<section class="section" id="collection"><div class="wrap">
-  <div class="sec-head center reveal"><span class="eyebrow">{{ section.settings.eyebrow }}</span><h2 class="display-md">{{ section.settings.heading }}</h2></div>
-  <div class="prod-grid">
-    {% assign coll = collections[section.settings.collection] %}
-    {% for product in coll.products limit: section.settings.count %}{% render 'product-card', card_product: product %}{% else %}
-      {% for i in (1..4) %}<article class="card"><a class="card__media"><div class="card__ph"></div></a><div class="card__body"><h3 class="card__name">Product title</h3><p class="card__desc">Select a collection in the editor</p></div></article>{% endfor %}
-    {% endfor %}
+<section class="section section--white" id="collection">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {% if section.settings.subtext != blank %}
+        <p class="lede" style="margin-top:18px;">{{ section.settings.subtext }}</p>
+      {% endif %}
+    </div>
+
+    <div class="prod-grid">
+      {%- assign coll = collections[section.settings.collection] -%}
+      {% for product in coll.products limit: section.settings.count %}
+        <div class="reveal reveal-delay-{{ forloop.index }}">
+          {% render 'product-card', card_product: product %}
+        </div>
+      {% else %}
+        {% for i in (1..4) %}
+          <div class="reveal reveal-delay-{{ forloop.index }}">
+            <article class="card">
+              <a class="card__media"><div class="card__ph"></div></a>
+              <div class="card__body">
+                <h3 class="card__name">Product title</h3>
+                <p class="card__desc">Select a collection in the editor to show products</p>
+              </div>
+            </article>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.cta_label != blank %}
+      <div style="text-align:center; margin-top:52px;">
+        <a href="{{ section.settings.cta_link | default: collections.all.url }}" class="link-arrow">
+          {{ section.settings.cta_label }}
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+            <line x1="3" y1="8" x2="13" y2="8"/>
+            <polyline points="8,3 13,8 8,13"/>
+          </svg>
+        </a>
+      </div>
+    {% endif %}
   </div>
-</div></section>
+</section>
+
 {% schema %}
-{ "name": "Featured products", "settings": [
-  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Collection" },
-  { "type": "html", "id": "heading", "label": "Heading", "default": "Four essentials for an effortless, <em class='serif-it'>year-round</em> glow." },
-  { "type": "collection", "id": "collection", "label": "Collection" },
-  { "type": "range", "id": "count", "label": "Products to show", "min": 2, "max": 8, "step": 1, "default": 4 }
-], "presets": [ { "name": "Featured products" } ] }
+{
+  "name": "Featured products",
+  "settings": [
+    { "type": "text",       "id": "eyebrow",   "label": "Eyebrow",              "default": "The Collection" },
+    { "type": "html",       "id": "heading",   "label": "Heading",              "default": "Four essentials for an effortless, <em class='serif-it'>year-round</em> glow." },
+    { "type": "text",       "id": "subtext",   "label": "Supporting text (optional)" },
+    { "type": "collection", "id": "collection","label": "Collection" },
+    { "type": "range",      "id": "count",     "label": "Products to show",     "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "text",       "id": "cta_label", "label": "View all button text", "default": "Shop All Products" },
+    { "type": "url",        "id": "cta_link",  "label": "View all button link" }
+  ],
+  "presets": [{ "name": "Featured products" }]
+}
 {% endschema %}

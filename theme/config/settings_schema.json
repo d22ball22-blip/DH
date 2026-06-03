@@ -1,8 +1,8 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Auvelle",
-    "theme_version": "1.0.0",
+    "theme_name": "Auvelle 2026",
+    "theme_version": "2.0.0",
     "theme_author": "Auvelle Beauty",
     "theme_documentation_url": "https://auvelle.co",
     "theme_support_url": "https://auvelle.co"
@@ -31,13 +31,13 @@
         "type": "color",
         "id": "color_bg",
         "label": "Page background",
-        "default": "#F8F4EE"
+        "default": "#FAFAF8"
       },
       {
         "type": "color",
         "id": "color_ink",
-        "label": "Text",
-        "default": "#2B231C"
+        "label": "Body text",
+        "default": "#1C1612"
       },
       {
         "type": "color",
@@ -49,7 +49,7 @@
         "type": "color",
         "id": "color_champagne",
         "label": "Secondary accent (champagne)",
-        "default": "#D4B483"
+        "default": "#CCAB72"
       },
       {
         "type": "color",
@@ -73,11 +73,53 @@
         "id": "enable_cart_discount",
         "label": "Show discount code field in cart",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Cart upsell products"
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_product_1",
+        "label": "Upsell product 1"
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_product_2",
+        "label": "Upsell product 2"
       }
     ]
   },
   {
-    "name": "Store info (footer & contact)",
+    "name": "Email popup",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "popup_image",
+        "label": "Popup product image"
+      },
+      {
+        "type": "text",
+        "id": "popup_heading",
+        "label": "Popup headline",
+        "default": "Unlock Your Glow Ritual"
+      },
+      {
+        "type": "textarea",
+        "id": "popup_subtext",
+        "label": "Popup supporting text",
+        "default": "Join our inner circle and receive 10% off your first order, plus early access to new launches and exclusive member offers."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_list_id",
+        "label": "Klaviyo list ID (optional)",
+        "info": "Your Klaviyo list ID for newsletter sign-ups via their JS API"
+      }
+    ]
+  },
+  {
+    "name": "Store info",
     "settings": [
       {
         "type": "text",

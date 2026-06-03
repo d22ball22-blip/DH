@@ -1,19 +1,65 @@
 <article class="card">
-  <a class="card__media" href="{{ card_product.url }}">
-    {% if card_product.metafields.custom.badge %}<span class="card__tag">{{ card_product.metafields.custom.badge }}</span>{% endif %}
-    {% if card_product.featured_image %}<img src="{{ card_product.featured_image | image_url: width: 800 }}" alt="{{ card_product.title | escape }}" loading="lazy" width="800" height="1000">{% else %}<div class="card__ph"></div>{% endif %}
+
+  {%- comment -%} Product image with optional hover swap {%- endcomment -%}
+  <a class="card__media" href="{{ card_product.url }}" aria-label="{{ card_product.title | escape }}">
+
+    {%- comment -%} Badge {%- endcomment -%}
+    {% if card_product.metafields.custom.badge != blank %}
+      <span class="card__tag">{{ card_product.metafields.custom.badge }}</span>
+    {% elsif card_product.compare_at_price > card_product.price %}
+      <span class="card__tag">Save {{ card_product.compare_at_price | minus: card_product.price | money }}</span>
+    {% endif %}
+
+    {%- comment -%} Primary image {%- endcomment -%}
+    {% if card_product.featured_image %}
+      <img
+        src="{{ card_product.featured_image | image_url: width: 800 }}"
+        alt="{{ card_product.title | escape }}"
+        loading="lazy"
+        width="800"
+        height="1000">
+    {% else %}
+      <div class="card__ph"></div>
+    {% endif %}
+
   </a>
-  <div class="card__body">
-    <div class="card__rating"><span class="stars">★★★★★</span><small>({{ card_product.metafields.custom.review_count | default: '0' }})</small></div>
-    <h3 class="card__name"><a href="{{ card_product.url }}">{{ card_product.title }}</a></h3>
-    <p class="card__desc">{{ card_product.metafields.custom.subtitle | default: card_product.type }}</p>
-    <div class="card__foot"><span class="card__price">{{ card_product.price | money }}</span>
-      <product-form>
+
+  {%- comment -%} Quick add (appears on hover) {%- endcomment -%}
+  {% if card_product.available %}
+    {% unless card_product.has_only_default_variant %}
+      <a href="{{ card_product.url }}" class="card__quick btn btn--primary btn--sm btn--block">
+        Choose options
+      </a>
+    {% else %}
+      <div class="card__quick">
         {% form 'product', card_product, class: 'card__add' %}
           <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="link-underline" {% unless card_product.available %}disabled{% endunless %}>{% if card_product.available %}Add{% else %}Sold out{% endif %}</button>
+          <button type="submit" class="btn btn--primary btn--sm btn--block">
+            Quick Add
+          </button>
         {% endform %}
-      </product-form>
+      </div>
+    {% endunless %}
+  {% else %}
+    <div class="card__quick">
+      <button class="btn btn--ghost btn--sm btn--block" disabled>Sold Out</button>
+    </div>
+  {% endif %}
+
+  {%- comment -%} Card body {%- endcomment -%}
+  <div class="card__body">
+    <div class="card__rating">
+      <span class="stars stars--sm">★★★★★</span>
+      <small>({{ card_product.metafields.custom.review_count | default: '' }})</small>
+    </div>
+    <h3 class="card__name"><a href="{{ card_product.url }}">{{ card_product.title }}</a></h3>
+    <p class="card__desc">{{ card_product.metafields.custom.subtitle | default: card_product.product_type }}</p>
+    <div class="card__foot">
+      <span class="card__price">{{ card_product.price | money }}</span>
+      {% if card_product.compare_at_price > card_product.price %}
+        <span style="font-size:13px;color:var(--ink-muted);text-decoration:line-through;">{{ card_product.compare_at_price | money }}</span>
+      {% endif %}
     </div>
   </div>
+
 </article>

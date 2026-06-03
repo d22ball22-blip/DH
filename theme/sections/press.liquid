@@ -1,0 +1,75 @@
+<div class="press">
+  <div class="press__inner">
+    <span class="press__label">{{ section.settings.label }}</span>
+    <div class="press__logos">
+      {% for block in section.blocks %}
+        {% if block.type == 'logo' %}
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="press__logo {% if block.settings.serif %}press__logo--serif{% endif %}" {{ block.shopify_attributes }} target="_blank" rel="noopener">
+              {{ block.settings.name }}
+            </a>
+          {% else %}
+            <span class="press__logo {% if block.settings.serif %}press__logo--serif{% endif %}" {{ block.shopify_attributes }}>
+              {{ block.settings.name }}
+            </span>
+          {% endif %}
+          {% unless forloop.last %}
+            <span class="press__divider" aria-hidden="true"></span>
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Press / Featured In",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "As featured in"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Publication",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Publication name",
+          "default": "Vogue"
+        },
+        {
+          "type": "checkbox",
+          "id": "serif",
+          "label": "Use serif style",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Press / Featured In",
+      "blocks": [
+        { "type": "logo", "settings": { "name": "Vogue", "serif": true } },
+        { "type": "logo", "settings": { "name": "Harper's Bazaar", "serif": true } },
+        { "type": "logo", "settings": { "name": "Allure" } },
+        { "type": "logo", "settings": { "name": "Refinery29" } },
+        { "type": "logo", "settings": { "name": "Byrdie" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

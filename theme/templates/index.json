@@ -1,7 +1,19 @@
 {
   "sections": {
     "hero": {
-      "type": "hero"
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Sunless Tanning · Glow Skincare",
+        "heading_line_1": "Luxury Glow.",
+        "heading_line_2": "Without the Sun.",
+        "subtext": "Professional-quality tanning and glow-enhancing essentials, designed for radiant, sun-kissed skin every day of the year.",
+        "btn_label": "Shop the Collection",
+        "link_label": "Discover the Glow Drops",
+        "badge_num": "4.9",
+        "badge_text": "Based on 10,000+ verified reviews",
+        "overlay_opacity": 45,
+        "show_scroll_cue": true
+      }
     },
     "trust": {
       "type": "trust-bar",
@@ -35,12 +47,21 @@
           }
         }
       },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4"
-      ]
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "press": {
+      "type": "press",
+      "settings": {
+        "label": "As featured in"
+      },
+      "blocks": {
+        "p1": { "type": "logo", "settings": { "name": "Vogue", "serif": true } },
+        "p2": { "type": "logo", "settings": { "name": "Harper's Bazaar", "serif": true } },
+        "p3": { "type": "logo", "settings": { "name": "Allure" } },
+        "p4": { "type": "logo", "settings": { "name": "Refinery29" } },
+        "p5": { "type": "logo", "settings": { "name": "Byrdie" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5"]
     },
     "featured": {
       "type": "featured-collection"
@@ -56,30 +77,11 @@
         "text": "A customisable tanning serum you blend into your daily moisturiser. Build your perfect shade with zero streaks and no telltale self-tan scent."
       },
       "blocks": {
-        "b1": {
-          "type": "benefit",
-          "settings": {
-            "text": "Fully buildable, never streaky"
-          }
-        },
-        "b2": {
-          "type": "benefit",
-          "settings": {
-            "text": "No orange tones, no self-tan smell"
-          }
-        },
-        "b3": {
-          "type": "benefit",
-          "settings": {
-            "text": "Deeply hydrating"
-          }
-        }
+        "b1": { "type": "benefit", "settings": { "text": "Fully buildable, never streaky" } },
+        "b2": { "type": "benefit", "settings": { "text": "No orange tones, no self-tan smell" } },
+        "b3": { "type": "benefit", "settings": { "text": "Deeply hydrating formula" } }
       },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3"
-      ]
+      "block_order": ["b1", "b2", "b3"]
     },
     "spot_spf": {
       "type": "product-spotlight",
@@ -91,23 +93,10 @@
         "text": "A weightless brightening milk that protects, hydrates and leaves skin luminous — never chalky."
       },
       "blocks": {
-        "b1": {
-          "type": "benefit",
-          "settings": {
-            "text": "Broad-spectrum SPF 50, zero white cast"
-          }
-        },
-        "b2": {
-          "type": "benefit",
-          "settings": {
-            "text": "Hydrating, brightening, makeup-friendly"
-          }
-        }
+        "b1": { "type": "benefit", "settings": { "text": "Broad-spectrum SPF 50, zero white cast" } },
+        "b2": { "type": "benefit", "settings": { "text": "Hydrating, brightening, makeup-friendly" } }
       },
-      "block_order": [
-        "b1",
-        "b2"
-      ]
+      "block_order": ["b1", "b2"]
     },
     "bundles": {
       "type": "bundles",
@@ -154,107 +143,34 @@
           }
         }
       },
-      "block_order": [
-        "u1",
-        "u2",
-        "u3",
-        "u4"
-      ]
+      "block_order": ["u1", "u2", "u3", "u4"]
     },
     "ba": {
       "type": "before-after",
       "blocks": {
-        "a": {
-          "type": "ba",
-          "settings": {
-            "label": "After · 1 use"
-          }
-        },
-        "b": {
-          "type": "ba",
-          "settings": {
-            "label": "After · 2 uses"
-          }
-        }
+        "a": { "type": "ba", "settings": { "label": "After · 1 use" } },
+        "b": { "type": "ba", "settings": { "label": "After · 2 uses" } }
       },
-      "block_order": [
-        "a",
-        "b"
-      ]
+      "block_order": ["a", "b"]
     },
     "reviews": {
       "type": "testimonials",
       "blocks": {
-        "r1": {
-          "type": "review",
-          "settings": {
-            "quote": "Genuinely the most natural tan I've ever had. No orange, no smell.",
-            "name": "Sophia R.",
-            "tag": "Verified Buyer"
-          }
-        },
-        "r2": {
-          "type": "review",
-          "settings": {
-            "quote": "The Glow Drops changed my routine. I control exactly how deep I go.",
-            "name": "Maya L.",
-            "tag": "Verified Buyer"
-          }
-        },
-        "r3": {
-          "type": "review",
-          "settings": {
-            "quote": "Finally an SPF 50 with zero white cast that sits under makeup.",
-            "name": "Elena T.",
-            "tag": "Verified Buyer"
-          }
-        },
-        "r4": {
-          "type": "review",
-          "settings": {
-            "quote": "Bronze Mist lives in my weekend bag. Quick-dry is real.",
-            "name": "Amara K.",
-            "tag": "Verified Buyer"
-          }
-        }
+        "r1": { "type": "review", "settings": { "quote": "Genuinely the most natural tan I've ever had. No orange, no smell.", "name": "Sophia R.", "tag": "Verified Buyer" } },
+        "r2": { "type": "review", "settings": { "quote": "The Glow Drops changed my routine. I control exactly how deep I go.", "name": "Maya L.", "tag": "Verified Buyer" } },
+        "r3": { "type": "review", "settings": { "quote": "Finally an SPF 50 with zero white cast that sits under makeup.", "name": "Elena T.", "tag": "Verified Buyer" } },
+        "r4": { "type": "review", "settings": { "quote": "Bronze Mist lives in my weekend bag. Quick-dry is real.", "name": "Amara K.", "tag": "Verified Buyer" } }
       },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3",
-        "r4"
-      ]
+      "block_order": ["r1", "r2", "r3", "r4"]
     },
     "story": {
       "type": "brand-story",
       "blocks": {
-        "s1": {
-          "type": "stat",
-          "settings": {
-            "num": "2019",
-            "label": "Founded in California"
-          }
-        },
-        "s2": {
-          "type": "stat",
-          "settings": {
-            "num": "100%",
-            "label": "Vegan & cruelty-free"
-          }
-        },
-        "s3": {
-          "type": "stat",
-          "settings": {
-            "num": "10k+",
-            "label": "Five-star reviews"
-          }
-        }
+        "s1": { "type": "stat", "settings": { "num": "2019", "label": "Founded in California" } },
+        "s2": { "type": "stat", "settings": { "num": "100%", "label": "Vegan & cruelty-free" } },
+        "s3": { "type": "stat", "settings": { "num": "10k+", "label": "Five-star reviews" } }
       },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3"
-      ]
+      "block_order": ["s1", "s2", "s3"]
     },
     "guarantee": {
       "type": "guarantee"
@@ -262,33 +178,14 @@
     "gallery": {
       "type": "gallery",
       "blocks": {
-        "g1": {
-          "type": "tile"
-        },
-        "g2": {
-          "type": "tile"
-        },
-        "g3": {
-          "type": "tile"
-        },
-        "g4": {
-          "type": "tile"
-        },
-        "g5": {
-          "type": "tile"
-        },
-        "g6": {
-          "type": "tile"
-        }
+        "g1": { "type": "tile" },
+        "g2": { "type": "tile" },
+        "g3": { "type": "tile" },
+        "g4": { "type": "tile" },
+        "g5": { "type": "tile" },
+        "g6": { "type": "tile" }
       },
-      "block_order": [
-        "g1",
-        "g2",
-        "g3",
-        "g4",
-        "g5",
-        "g6"
-      ]
+      "block_order": ["g1", "g2", "g3", "g4", "g5", "g6"]
     },
     "cta": {
       "type": "final-cta"
@@ -297,6 +194,7 @@
   "order": [
     "hero",
     "trust",
+    "press",
     "featured",
     "spot_glow",
     "spot_spf",

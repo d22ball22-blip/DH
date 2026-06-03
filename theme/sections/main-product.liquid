@@ -1,74 +1,247 @@
-<section class="pdp"><div class="wrap">
-  <div class="breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="{{ collections.all.url }}">Shop</a><span>/</span>{{ product.title }}</div>
-  <div class="pdp__grid" id="pdpBuy">
-    <div class="pdp__gallery">
-      <div class="pdp__thumbs">
-        {% for media in product.media limit: 5 %}<div class="pdp__thumb {% if forloop.first %}is-active{% endif %}" data-media="{{ media | image_url: width: 1000 }}"><img src="{{ media | image_url: width: 160 }}" alt="" loading="lazy"></div>{% endfor %}
-      </div>
-      <div class="pdp__main">{% if product.metafields.custom.badge %}<span class="card__tag">{{ product.metafields.custom.badge }}</span>{% elsif section.settings.badge != blank %}<span class="card__tag">{{ section.settings.badge }}</span>{% endif %}<img id="pdpMainImg" src="{{ product.featured_image | image_url: width: 1100 }}" alt="{{ product.title | escape }}"></div>
-    </div>
-    <div class="pdp__info">
-      <div class="pdp__rating"><span class="stars">★★★★★</span><small><b>{{ product.metafields.custom.rating | default: section.settings.rating }}</b> · <a href="#customer-reviews">{{ product.metafields.custom.review_count | default: section.settings.review_count }} reviews</a></small></div>
-      <h1 class="pdp__name">{{ product.title }}</h1>
-      {% assign sub = product.metafields.custom.subtitle | default: section.settings.subtitle %}
-      {% if sub != blank %}<p class="pdp__sub">{{ sub }}</p>{% endif %}
-      <div class="pdp__pricerow"><span class="pdp__price" id="pdpPrice">{{ product.price | money }}</span>{% if product.compare_at_price > product.price %}<span class="pdp__compare">{{ product.compare_at_price | money }}</span><span class="pdp__save-tag">Save {{ product.compare_at_price | minus: product.price | money }}</span>{% endif %}</div>
-      {% if section.settings.pay_text != blank %}<p class="pdp__pay">{{ section.settings.pay_text }}</p>{% endif %}
-      <div class="pdp__desc">{{ product.description }}</div>
+<section class="pdp">
+  <div class="wrap">
 
-      {% form 'product', product, id: 'product-form', class: 'pdp__form' %}
-        {% unless product.has_only_default_variant %}
-          {% for option in product.options_with_values %}
-            <div class="opt-group" data-option-index="{{ forloop.index0 }}">
-              <div class="opt-group__label">{{ option.name }}</div>
-              <div class="opt-row">
-                {% for value in option.values %}
-                  <button type="button" class="opt {% if option.selected_value == value %}is-active{% endif %}" data-option="{{ forloop.parentloop.index0 }}" data-value="{{ value | escape }}">{{ value }}</button>
-                {% endfor %}
-              </div>
+    {%- comment -%} Breadcrumb {%- endcomment -%}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ collections.all.url }}">Shop</a>
+      <span aria-hidden="true">/</span>
+      <span>{{ product.title }}</span>
+    </nav>
+
+    <div class="pdp__grid" id="pdpBuy">
+
+      {%- comment -%} ── GALLERY ── {%- endcomment -%}
+      <div class="pdp__gallery">
+        <div class="pdp__thumbs">
+          {% for media in product.media limit: 6 %}
+            <div
+              class="pdp__thumb {% if forloop.first %}is-active{% endif %}"
+              data-media="{{ media | image_url: width: 1100 }}"
+              role="button"
+              tabindex="0"
+              aria-label="View image {{ forloop.index }}">
+              <img
+                src="{{ media | image_url: width: 160 }}"
+                alt="{{ product.title | escape }} – image {{ forloop.index }}"
+                loading="lazy">
             </div>
           {% endfor %}
-        {% endunless %}
-        <select name="id" id="variantSelect" class="visually-hidden" style="display:none;">
-          {% for variant in product.variants %}<option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %} data-price="{{ variant.price | money }}">{{ variant.title }}</option>{% endfor %}
-        </select>
-        <div class="buy-row">
-          <div class="pdp-qty"><button type="button" data-pqty="dec" aria-label="Decrease">−</button><input type="number" name="quantity" id="pdpQtyVal" value="1" min="1" inputmode="numeric"><button type="button" data-pqty="inc" aria-label="Increase">+</button></div>
-          <button type="submit" class="btn btn--primary" id="pdpAdd" {% unless product.available %}disabled{% endunless %}>{% if product.available %}Add to Bag — {{ product.price | money }}{% else %}Sold Out{% endif %}</button>
         </div>
-        {% if section.settings.show_express %}<button type="submit" name="checkout" class="pdp__express">Buy It Now</button>{% endif %}
-      {% endform %}
-      {% assign scar = product.metafields.custom.scarcity | default: section.settings.scarcity %}
-      {% if scar != blank %}<div class="pdp__scarcity scarcity"><span class="dot"></span>{{ scar }}</div>{% endif %}
-      <div class="pdp__assure">
-        {% for block in section.blocks %}
-          <div {{ block.shopify_attributes }}>{% render 'icon', icon: block.settings.icon %}<span>{{ block.settings.text }}</span></div>
-        {% endfor %}
+
+        <div class="pdp__main">
+          {% if product.metafields.custom.badge != blank %}
+            <span class="card__tag">{{ product.metafields.custom.badge }}</span>
+          {% elsif section.settings.badge != blank %}
+            <span class="card__tag">{{ section.settings.badge }}</span>
+          {% endif %}
+          <img
+            id="pdpMainImg"
+            src="{{ product.featured_image | image_url: width: 1100 }}"
+            alt="{{ product.title | escape }}"
+            width="{{ product.featured_image.width }}"
+            height="{{ product.featured_image.height }}"
+            loading="eager"
+            fetchpriority="high">
+        </div>
+      </div>
+
+      {%- comment -%} ── PRODUCT INFO ── {%- endcomment -%}
+      <div class="pdp__info">
+
+        {%- comment -%} Stars + review count {%- endcomment -%}
+        <div class="pdp__rating">
+          <span class="stars">★★★★★</span>
+          <small>
+            <b>{{ product.metafields.custom.rating | default: section.settings.rating }}</b>
+            &nbsp;·&nbsp;
+            <a href="#customer-reviews">
+              {{ product.metafields.custom.review_count | default: section.settings.review_count }} reviews
+            </a>
+          </small>
+        </div>
+
+        <h1 class="pdp__name">{{ product.title }}</h1>
+
+        {%- assign sub = product.metafields.custom.subtitle | default: section.settings.subtitle -%}
+        {% if sub != blank %}
+          <p class="pdp__sub">{{ sub }}</p>
+        {% endif %}
+
+        {%- comment -%} Price row {%- endcomment -%}
+        <div class="pdp__pricerow">
+          <span class="pdp__price" id="pdpPrice">{{ product.price | money }}</span>
+          {% if product.compare_at_price > product.price %}
+            <span class="pdp__compare">{{ product.compare_at_price | money }}</span>
+            <span class="pdp__save-tag">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+          {% endif %}
+        </div>
+
+        {% if section.settings.pay_text != blank %}
+          <p class="pdp__pay">{{ section.settings.pay_text }}</p>
+        {% endif %}
+
+        {%- comment -%} Short description {%- endcomment -%}
+        <div class="pdp__desc">{{ product.description }}</div>
+
+        {%- comment -%} ── FORM ── {%- endcomment -%}
+        {% form 'product', product, id: 'product-form', class: 'pdp__form' %}
+
+          {%- comment -%} Variants {%- endcomment -%}
+          {% unless product.has_only_default_variant %}
+            {% for option in product.options_with_values %}
+              <div class="opt-group" data-option-index="{{ forloop.index0 }}">
+                <div class="opt-group__label">
+                  {{ option.name }}
+                  <span id="optVal_{{ forloop.index0 }}">— {{ option.selected_value }}</span>
+                </div>
+                <div class="opt-row">
+                  {% for value in option.values %}
+                    <button
+                      type="button"
+                      class="opt {% if option.selected_value == value %}is-active{% endif %}"
+                      data-option="{{ forloop.parentloop.index0 }}"
+                      data-value="{{ value | escape }}">
+                      {{ value }}
+                    </button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          {% endunless %}
+
+          <select name="id" id="variantSelect" class="visually-hidden">
+            {% for variant in product.variants %}
+              <option
+                value="{{ variant.id }}"
+                {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                {% unless variant.available %}disabled{% endunless %}
+                data-price="{{ variant.price | money }}">
+                {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+
+          {%- comment -%} Subscription option (if metafield set) {%- endcomment -%}
+          {% if section.settings.show_subscription %}
+            <div class="opt-group">
+              <div class="opt-group__label">Purchase option</div>
+              <div class="opt-row">
+                <button type="button" class="opt is-active" data-sub="one">One-time</button>
+                <button type="button" class="opt" data-sub="sub">
+                  Subscribe &amp; Save 15%
+                  <span style="font-size:10px;background:var(--forest);color:var(--white);padding:3px 8px;border-radius:3px;margin-left:4px;letter-spacing:0.06em;">BEST VALUE</span>
+                </button>
+              </div>
+            </div>
+          {% endif %}
+
+          {%- comment -%} Qty + Add to cart {%- endcomment -%}
+          <div class="buy-row">
+            <div class="pdp-qty">
+              <button type="button" data-pqty="dec" aria-label="Decrease quantity">−</button>
+              <input type="number" name="quantity" id="pdpQtyVal" value="1" min="1" inputmode="numeric" aria-label="Quantity">
+              <button type="button" data-pqty="inc" aria-label="Increase quantity">+</button>
+            </div>
+            <button
+              type="submit"
+              class="btn btn--primary"
+              id="pdpAdd"
+              {% unless product.available %}disabled{% endunless %}>
+              {% if product.available %}
+                Add to Bag — {{ product.price | money }}
+              {% else %}
+                Sold Out
+              {% endif %}
+            </button>
+          </div>
+
+          {% if section.settings.show_express %}
+            <button type="submit" name="checkout" class="pdp__express">
+              Buy It Now
+            </button>
+          {% endif %}
+
+        {% endform %}
+
+        {%- comment -%} Scarcity indicator {%- endcomment -%}
+        {%- assign scar = product.metafields.custom.scarcity | default: section.settings.scarcity -%}
+        {% if scar != blank %}
+          <div class="pdp__scarcity scarcity">
+            <span class="dot" aria-hidden="true"></span>
+            {{ scar }}
+          </div>
+        {% endif %}
+
+        {%- comment -%} Assurance badges {%- endcomment -%}
+        {% if section.blocks.size > 0 %}
+          <div class="pdp__assure">
+            {% for block in section.blocks %}
+              <div {{ block.shopify_attributes }}>
+                {% render 'icon', icon: block.settings.icon %}
+                <span>{{ block.settings.text }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
       </div>
     </div>
   </div>
-</div></section>
-<div class="sticky-atc" id="stickyAtc"><div class="sticky-atc__info"><b>{{ product.title }}</b><span class="p">{{ product.price | money }}</span></div><button class="btn btn--primary btn--sm" data-sticky-add>Add to Bag</button></div>
+</section>
+
+{%- comment -%} Sticky add-to-cart bar {%- endcomment -%}
+<div class="sticky-atc" id="stickyAtc" aria-hidden="true">
+  <div class="sticky-atc__info">
+    {% if product.featured_image %}
+      <div class="sticky-atc__img">
+        <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy">
+      </div>
+    {% endif %}
+    <div>
+      <b>{{ product.title }}</b>
+      <div class="p">{{ product.price | money }}</div>
+    </div>
+  </div>
+  <button class="btn btn--primary btn--sm" data-sticky-add>Add to Bag</button>
+</div>
+
 {% schema %}
 {
   "name": "Product",
   "tag": "section",
   "settings": [
-    { "type": "header", "content": "Supporting copy (product metafields override these when set)" },
-    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Customisable glow serum" },
-    { "type": "text", "id": "badge", "label": "Image badge", "default": "Best Seller" },
-    { "type": "text", "id": "rating", "label": "Rating fallback", "default": "4.9" },
-    { "type": "text", "id": "review_count", "label": "Review count fallback", "default": "2,418" },
-    { "type": "text", "id": "pay_text", "label": "Payment line", "default": "or 4 interest-free payments · Klarna available" },
-    { "type": "text", "id": "scarcity", "label": "Scarcity line", "default": "Selling fast — limited stock" },
-    { "type": "checkbox", "id": "show_express", "label": "Show express \"Buy It Now\" button", "default": true }
+    {
+      "type": "header",
+      "content": "Supporting copy (product metafields override when set)"
+    },
+    { "type": "text",     "id": "subtitle",      "label": "Subtitle",                "default": "Customisable glow serum" },
+    { "type": "text",     "id": "badge",          "label": "Image badge",             "default": "Best Seller" },
+    { "type": "text",     "id": "rating",         "label": "Rating (fallback)",       "default": "4.9" },
+    { "type": "text",     "id": "review_count",   "label": "Review count (fallback)", "default": "2,418" },
+    { "type": "text",     "id": "pay_text",       "label": "Payment line",            "default": "or 4 interest-free payments · Klarna available" },
+    { "type": "text",     "id": "scarcity",       "label": "Scarcity line",           "default": "Selling fast — limited stock remaining" },
+    { "type": "checkbox", "id": "show_express",   "label": "Show Buy It Now button",  "default": true },
+    { "type": "checkbox", "id": "show_subscription", "label": "Show subscription option UI", "default": false }
   ],
   "blocks": [
     {
       "type": "assurance",
       "name": "Assurance badge",
       "settings": [
-        { "type": "select", "id": "icon", "label": "Icon", "options": [ {"value":"shield","label":"Shield"},{"value":"leaf","label":"Leaf"},{"value":"check","label":"Check"},{"value":"star","label":"Star"} ], "default": "shield" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "leaf",   "label": "Leaf" },
+            { "value": "check",  "label": "Check" },
+            { "value": "star",   "label": "Star" }
+          ],
+          "default": "shield"
+        },
         { "type": "text", "id": "text", "label": "Text", "default": "90-Day Guarantee" }
       ]
     }

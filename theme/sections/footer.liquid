@@ -1,46 +1,124 @@
-<footer class="footer"><div class="wrap">
-  <div class="footer__top">
-    <div class="footer__col footer__col--brand">
-      <span class="brand">{{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span></span>
-      <p class="footer__about">{{ section.settings.about }}</p>
-      {% form 'customer' %}
-        <div class="footer__news">
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <input type="email" name="contact[email]" placeholder="{{ section.settings.news_placeholder }}" required>
-          <button type="submit">Join</button>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+
+      {%- comment -%} Brand column {%- endcomment -%}
+      <div class="footer__col footer__col--brand">
+        <a class="brand" href="{{ routes.root_url }}">
+          {{ settings.brand_name }}<span>{{ settings.brand_accent_char }}</span>
+        </a>
+        <p class="footer__about">{{ section.settings.about }}</p>
+
+        {%- comment -%} Social links {%- endcomment -%}
+        <div style="display:flex; gap:14px; margin-top:22px;">
+          {% if settings.social_instagram != blank %}
+            <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram" style="color:rgba(250,250,248,0.6); transition:color .3s;" onmouseenter="this.style.color='var(--champagne)'" onmouseleave="this.style.color='rgba(250,250,248,0.6)'">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+          {% endif %}
+          {% if settings.social_tiktok != blank %}
+            <a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok" style="color:rgba(250,250,248,0.6); transition:color .3s;" onmouseenter="this.style.color='var(--champagne)'" onmouseleave="this.style.color='rgba(250,250,248,0.6)'">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.18a8.19 8.19 0 004.79 1.53V7.27a4.85 4.85 0 01-1.02-.58z"/>
+              </svg>
+            </a>
+          {% endif %}
         </div>
-        {% if form.posted_successfully? %}<p class="footer__news-ok">Thanks — your 10% code is on its way.</p>{% endif %}
-      {% endform %}
+
+        {%- comment -%} Newsletter {%- endcomment -%}
+        {% form 'customer' %}
+          <div class="footer__news">
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="{{ section.settings.news_placeholder }}"
+              required
+              aria-label="Email for newsletter">
+            <button type="submit">Join</button>
+          </div>
+          {% if form.posted_successfully? %}
+            <p class="footer__news-ok">Thanks — your 10% code is on its way.</p>
+          {% endif %}
+        {% endform %}
+      </div>
+
+      {%- comment -%} Link columns {%- endcomment -%}
+      {% for block in section.blocks %}
+        {% if block.type == 'menu' %}
+          <div class="footer__col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.heading }}</h4>
+            {% for link in block.settings.menu.links %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
     </div>
-    {% for block in section.blocks %}
-      {% if block.type == 'menu' %}
-        <div class="footer__col" {{ block.shopify_attributes }}>
-          <h4>{{ block.settings.heading }}</h4>
-          {% for link in block.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
-        </div>
-      {% endif %}
-    {% endfor %}
+
+    <div class="footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+      <nav class="footer__legal" aria-label="Legal navigation">
+        {%- assign pp  = pages['privacy-policy'] -%}
+        {%- assign tos = pages['terms-of-service'] -%}
+        <a href="{{ pp.url  | default: '/policies/privacy-policy' }}">Privacy</a>
+        <a href="{{ tos.url | default: '/policies/terms-of-service' }}">Terms</a>
+        <a href="{{ pages.shipping.url | default: '/pages/shipping' }}">Shipping</a>
+        <a href="{{ pages.returns.url  | default: '/pages/returns' }}">Refunds</a>
+      </nav>
+      <div class="pay" aria-label="Accepted payment methods">
+        <span>VISA</span>
+        <span>MASTERCARD</span>
+        <span>AMEX</span>
+        <span>PAYPAL</span>
+        <span>APPLE PAY</span>
+      </div>
+    </div>
   </div>
-  <div class="footer__bottom">
-    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
-    <nav class="footer__legal">
-      {%- assign pp = pages['privacy-policy'] -%}{%- assign tos = pages['terms-of-service'] -%}
-      <a href="{{ pp.url | default: '/policies/privacy-policy' }}">Privacy</a>
-      <a href="{{ tos.url | default: '/policies/terms-of-service' }}">Terms</a>
-      <a href="{{ pages.shipping.url | default: '/pages/shipping' }}">Shipping</a>
-      <a href="{{ pages.returns.url | default: '/pages/returns' }}">Refunds</a>
-    </nav>
-    <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>PAYPAL</span><span>APPLE PAY</span></div>
-  </div>
-</div></footer>
+</footer>
+
 {% schema %}
-{ "name": "Footer", "settings": [
-  { "type": "textarea", "id": "about", "label": "About text", "default": "Luxury tanning, skincare and glow-enhancing essentials for healthy, radiant, sun-kissed skin — every day of the year." },
-  { "type": "text", "id": "news_placeholder", "label": "Newsletter placeholder", "default": "Email for 10% off your first glow" }
-], "blocks": [
-  { "type": "menu", "name": "Menu column", "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
-    { "type": "link_list", "id": "menu", "label": "Menu" }
-  ] }
-], "max_blocks": 4, "presets": [ { "name": "Footer", "blocks": [ { "type": "menu" }, { "type": "menu" }, { "type": "menu" } ] } ] }
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "about",
+      "label": "Brand description",
+      "default": "Luxury tanning, skincare and glow-enhancing essentials for healthy, radiant, sun-kissed skin — every day of the year."
+    },
+    {
+      "type": "text",
+      "id": "news_placeholder",
+      "label": "Newsletter placeholder text",
+      "default": "Your email for 10% off your first glow"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "settings": [
+        { "type": "text",      "id": "heading", "label": "Column heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu",    "label": "Menu" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "menu" },
+        { "type": "menu" },
+        { "type": "menu" }
+      ]
+    }
+  ]
+}
 {% endschema %}
