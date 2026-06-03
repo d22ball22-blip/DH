@@ -1,0 +1,139 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a1": { "type": "assurance", "settings": { "icon": "shield", "text": "30-Day Money-Back Guarantee" } },
+        "a2": { "type": "assurance", "settings": { "icon": "star", "text": "Salon Results at Home" } },
+        "a3": { "type": "assurance", "settings": { "icon": "check", "text": "Free Shipping Over $50" } }
+      },
+      "block_order": ["a1", "a2", "a3"],
+      "settings": {
+        "subtitle": "Salon-smooth feet. At home, in minutes.",
+        "badge": "New Arrival",
+        "rating": "4.8",
+        "review_count": "1,247",
+        "pay_text": "or 4 interest-free payments · Klarna available",
+        "scarcity": "Selling fast — over 200 sold this week",
+        "show_express": true
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "star", "title": "Instant Softness", "text": "High-speed micro-exfoliation dissolves calluses, rough patches, and dry skin in under 5 minutes." } },
+        "b2": { "type": "benefit", "settings": { "icon": "leaf", "title": "Gentle & Safe", "text": "Precision-engineered roller is non-abrasive — powerful enough to smooth, gentle enough for daily use." } },
+        "b3": { "type": "benefit", "settings": { "icon": "check", "title": "Cordless Freedom", "text": "Battery-powered portability means you can use it anywhere — your bathroom, bedroom, or travel bag." } },
+        "b4": { "type": "benefit", "settings": { "icon": "shield", "title": "Easy Maintenance", "text": "Detachable, replaceable grinding head keeps the wand hygienic and performing like new, long-term." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "Why You'll Love It",
+        "heading": "The ritual your feet <em class='serif-it'>deserve</em>.",
+        "sub": "Professional-grade exfoliation — without the salon price tag or the appointment."
+      }
+    },
+    "how": {
+      "type": "product-how",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Prep", "text": "Ensure feet are dry. Power on the Lumière Sole Wand and select your preferred speed." } },
+        "s2": { "type": "step", "settings": { "title": "Glide", "text": "Move the rotating head gently over rough areas — heels, balls of feet, and any callused zones." } },
+        "s3": { "type": "step", "settings": { "title": "Reveal", "text": "Wipe clean and moisturise. Feel the immediate transformation — impossibly smooth, touchably soft." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "The Ritual",
+        "heading": "Three steps to <em class='serif-it'>silky</em> feet."
+      }
+    },
+    "spotlight": {
+      "type": "product-spotlight",
+      "blocks": {
+        "sp1": { "type": "benefit", "settings": { "text": "Works on dry skin — no soaking needed" } },
+        "sp2": { "type": "benefit", "settings": { "text": "Professional results in under 5 minutes" } },
+        "sp3": { "type": "benefit", "settings": { "text": "Cordless, portable & travel-friendly" } }
+      },
+      "block_order": ["sp1", "sp2", "sp3"],
+      "settings": {
+        "anchor": "transformation",
+        "bg": "section--sand",
+        "reverse": true,
+        "tall": false,
+        "eyebrow": "The Transformation",
+        "heading": "Before meets <em class='serif-it'>after</em>.",
+        "text": "Rough, cracked heels transformed into smooth, touchable softness — in a single session. No soaking, no scrubbing, no salon required. The Lumière Sole Wand delivers visible results from the very first use.",
+        "product": "lumiere-sole-exfoliating-wand"
+      }
+    },
+    "comparison": {
+      "type": "product-comparison",
+      "blocks": {
+        "c1": { "type": "feature", "settings": { "feature": "Works on dry skin — no soaking required", "them_has": false } },
+        "c2": { "type": "feature", "settings": { "feature": "Cordless, portable design", "them_has": false } },
+        "c3": { "type": "feature", "settings": { "feature": "Professional results in under 5 minutes", "them_has": false } },
+        "c4": { "type": "feature", "settings": { "feature": "Replaceable grinding head included", "them_has": false } },
+        "c5": { "type": "feature", "settings": { "feature": "Ergonomic non-slip grip", "them_has": true } },
+        "c6": { "type": "feature", "settings": { "feature": "Safe for sensitive skin", "them_has": false } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"],
+      "settings": {
+        "eyebrow": "The Difference",
+        "heading": "Why Lumière Sole <em class='serif-it'>wins</em>.",
+        "us_label": "Lumière Sole Wand",
+        "them_label": "Pumice & manual tools"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "v1": { "type": "review", "settings": { "quote": "My heels were embarrassingly rough. After one use with this wand, they feel like I just had a professional pedicure. Absolutely obsessed.", "name": "Chloe M.", "tag": "Verified Buyer" } },
+        "v2": { "type": "review", "settings": { "quote": "I've tried pumice stones, foot files, everything. Nothing comes close to how smooth this leaves my feet. And it takes literally 3 minutes.", "name": "Natalie B.", "tag": "Verified Buyer" } },
+        "v3": { "type": "review", "settings": { "quote": "Gifted this to my mum and she calls it her favourite purchase of the year. The results are genuinely impressive — salon quality at home.", "name": "Priya S.", "tag": "Verified Buyer" } },
+        "v4": { "type": "review", "settings": { "quote": "So compact and easy to use. I keep it in my bathroom and use it twice a week. My feet have never been softer — and my partner noticed too!", "name": "Emma T.", "tag": "Verified Buyer" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4"],
+      "settings": {
+        "eyebrow": "Loved By Thousands",
+        "heading": "1,200+ five-star <em class='serif-it'>transformations</em>.",
+        "score": "4.8",
+        "score_sub": "Based on 1,247 verified reviews"
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "days": "30",
+        "seal_text": "Day Sole Promise",
+        "eyebrow": "Risk-Free",
+        "heading": "Love your results, or your money back.",
+        "text": "Try the Lumière Sole Exfoliating Wand for a full 30 days. If your feet aren't noticeably smoother and softer, we'll refund every cent — no questions asked."
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "Do my feet need to be wet or dry before using?", "answer": "Dry. The Lumière Sole Wand is designed for use on dry skin — no soaking or pre-treatment required. This makes it faster and more convenient than traditional foot baths." } },
+        "q2": { "type": "qa", "settings": { "question": "Will it hurt or damage my skin?", "answer": "Not at all. The precision-engineered grinding head is calibrated to remove only dead, hardened skin — it stops naturally at the healthy skin layer, so there's no risk of irritation or over-exfoliation." } },
+        "q3": { "type": "qa", "settings": { "question": "How long does one session take?", "answer": "Most people see full results in 3–5 minutes per foot. For heavily calloused areas, you may want a second pass — but the transformation is visible from session one." } },
+        "q4": { "type": "qa", "settings": { "question": "How often should I use it?", "answer": "For best results, use 2–3 times per week initially to remove built-up skin. Once your feet are smooth, once a week is sufficient for maintenance." } },
+        "q5": { "type": "qa", "settings": { "question": "Is it suitable for all skin types?", "answer": "Yes. The gentle yet effective action is suitable for all skin types, including sensitive skin. If you have diabetes or circulation issues, consult your doctor before use." } },
+        "q6": { "type": "qa", "settings": { "question": "What batteries does it take?", "answer": "The Lumière Sole Wand runs on standard AA batteries (included). Battery life is excellent — most customers report months of regular use before needing a replacement." } },
+        "q7": { "type": "qa", "settings": { "question": "Can I replace the grinding head?", "answer": "Yes. The grinding head is detachable and fully replaceable. Replacement heads are available separately, ensuring your wand performs like new indefinitely." } },
+        "q8": { "type": "qa", "settings": { "question": "How do I clean it?", "answer": "Simply detach the grinding head and rinse under warm water. Allow to air dry completely before reattaching. Do not submerge the main body of the device." } },
+        "q9": { "type": "qa", "settings": { "question": "Is this the same quality as a professional pedicure tool?", "answer": "Many of our customers say it outperforms their salon tools at a fraction of the cost. The rotating mechanism delivers consistent, controlled exfoliation that manual tools simply can't replicate." } },
+        "q10": { "type": "qa", "settings": { "question": "What is your return policy?", "answer": "We offer a full 30-day money-back guarantee. If you're not completely satisfied with your results, contact us and we'll arrange a full refund — no questions asked." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "Good To Know",
+        "heading": "Your questions, <em class='serif-it'>answered</em>.",
+        "open_first": true
+      }
+    },
+    "trustoo": { "type": "trustoo-reviews" }
+  },
+  "order": ["main", "benefits", "how", "spotlight", "comparison", "reviews", "guarantee", "faq", "trustoo"]
+}
