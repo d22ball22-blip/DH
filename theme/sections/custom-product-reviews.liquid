@@ -1,0 +1,518 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pf-green: #2F7D4F;
+    --pf-deep: #235E3A;
+    --pf-soft: #D8E9DD;
+    --pf-cream: #EAF2EC;
+    --pf-sand: #F5F4EF;
+    --pf-ink: #141414;
+    --pf-muted: #6e6e68;
+    --pf-star: #E0A93B;
+  }
+
+  #shopify-section-{{ section.id }} .pf-reviews-section {
+    padding: 80px 24px;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .pf-reviews-section.bg-ivory {
+    background: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .pf-reviews-section.bg-tint {
+    background: var(--pf-cream);
+  }
+
+  #shopify-section-{{ section.id }} .pf-reviews-section.bg-sand {
+    background: var(--pf-sand);
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pf-reviews-section {
+      padding: 48px 0;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-reviews-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 16px;
+    padding: 0 24px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-reviews-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pf-green);
+    margin: 0 0 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-reviews-heading {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    color: var(--pf-ink);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-score-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0 40px;
+    padding: 0 24px;
+    flex-wrap: wrap;
+  }
+
+  #shopify-section-{{ section.id }} .pf-score-number {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--pf-ink);
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .pf-score-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-score-stars {
+    color: var(--pf-star);
+    font-size: 22px;
+    letter-spacing: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-score-sub {
+    font-size: 14px;
+    color: var(--pf-muted);
+  }
+
+  /* Carousel */
+  #shopify-section-{{ section.id }} .pf-carousel-outer {
+    position: relative;
+    padding: 0 24px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-viewport {
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.4s ease;
+    will-change: transform;
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-card {
+    flex: 0 0 calc(33.333% - 14px);
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 280px;
+  }
+
+  @media (max-width: 900px) {
+    #shopify-section-{{ section.id }} .pf-review-card {
+      flex: 0 0 calc(50% - 10px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} .pf-review-card {
+      flex: 0 0 calc(100% - 0px);
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-stars {
+    color: var(--pf-star);
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-quote {
+    font-size: 15px;
+    color: var(--pf-ink);
+    line-height: 1.65;
+    flex: 1;
+    margin: 0;
+    font-style: italic;
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-quote::before {
+    content: '\201C';
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-quote::after {
+    content: '\201D';
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0ea;
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--pf-soft);
+    color: var(--pf-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pf-ink);
+  }
+
+  #shopify-section-{{ section.id }} .pf-review-tag {
+    font-size: 12px;
+    color: var(--pf-green);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* Nav */
+  #shopify-section-{{ section.id }} .pf-carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--pf-soft);
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--pf-ink);
+    transition: background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-arrow:hover {
+    background: var(--pf-soft);
+    border-color: var(--pf-green);
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d0d0ca;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  #shopify-section-{{ section.id }} .pf-carousel-dot.active {
+    background: var(--pf-green);
+    transform: scale(1.3);
+  }
+{%- endstyle -%}
+
+<div class="pf-reviews-section bg-{{ section.settings.bg }}">
+  <div class="pf-reviews-header">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="pf-reviews-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pf-reviews-heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.score != blank -%}
+    <div class="pf-score-row">
+      <div class="pf-score-number">{{ section.settings.score }}</div>
+      <div class="pf-score-details">
+        <div class="pf-score-stars">★★★★★</div>
+        {%- if section.settings.score_sub != blank -%}
+          <div class="pf-score-sub">{{ section.settings.score_sub }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+  {%- if review_blocks.size > 0 -%}
+    <div class="pf-carousel-outer">
+      <div class="pf-carousel-viewport" id="pf-carousel-vp-{{ section.id }}">
+        <div class="pf-carousel-track" id="pf-carousel-track-{{ section.id }}">
+          {%- for block in review_blocks -%}
+            <div {{ block.shopify_attributes }} class="pf-review-card">
+              <div class="pf-review-stars">
+                {%- assign star_count = block.settings.star_count | default: 5 -%}
+                {%- for i in (1..star_count) -%}★{%- endfor -%}
+                {%- assign empty_stars = 5 | minus: star_count -%}
+                {%- if empty_stars > 0 -%}
+                  {%- for i in (1..empty_stars) -%}<span style="color:#e0e0da;">★</span>{%- endfor -%}
+                {%- endif -%}
+              </div>
+              <p class="pf-review-quote">{{ block.settings.quote }}</p>
+              <div class="pf-review-footer">
+                <div class="pf-review-avatar">{{ block.settings.name | slice: 0, 1 | upcase }}</div>
+                <div>
+                  <div class="pf-review-name">{{ block.settings.name }}</div>
+                  {%- if block.settings.tag != blank -%}
+                    <div class="pf-review-tag">{{ block.settings.tag }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="pf-carousel-nav">
+        <button class="pf-carousel-arrow" id="pf-prev-{{ section.id }}" aria-label="Previous reviews">&#8592;</button>
+        <div class="pf-carousel-dots" id="pf-dots-{{ section.id }}">
+          {%- for block in review_blocks -%}
+            <button class="pf-carousel-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to review {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+        <button class="pf-carousel-arrow" id="pf-next-{{ section.id }}" aria-label="Next reviews">&#8594;</button>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+(function() {
+  var sectionId = '{{ section.id }}';
+  var track = document.getElementById('pf-carousel-track-' + sectionId);
+  var viewport = document.getElementById('pf-carousel-vp-' + sectionId);
+  var prevBtn = document.getElementById('pf-prev-' + sectionId);
+  var nextBtn = document.getElementById('pf-next-' + sectionId);
+  var dotsWrap = document.getElementById('pf-dots-' + sectionId);
+
+  if (!track || !viewport) return;
+
+  var cards = track.querySelectorAll('.pf-review-card');
+  var dots = dotsWrap ? dotsWrap.querySelectorAll('.pf-carousel-dot') : [];
+  var totalCards = cards.length;
+  var currentIndex = 0;
+
+  function getVisibleCount() {
+    var vw = window.innerWidth;
+    if (vw <= 600) return 1;
+    if (vw <= 900) return 2;
+    return 3;
+  }
+
+  function getMaxIndex() {
+    return Math.max(0, totalCards - getVisibleCount());
+  }
+
+  function goTo(index) {
+    var max = getMaxIndex();
+    currentIndex = Math.max(0, Math.min(index, max));
+    var cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 0;
+    track.style.transform = 'translateX(-' + (currentIndex * cardWidth) + 'px)';
+
+    dots.forEach(function(dot, i) {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentIndex >= max;
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() { goTo(currentIndex - 1); });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() { goTo(currentIndex + 1); });
+  }
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      goTo(parseInt(dot.getAttribute('data-index'), 10));
+    });
+  });
+
+  // Touch swipe support
+  var startX = 0;
+  track.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+  track.addEventListener('touchend', function(e) {
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) goTo(currentIndex + 1);
+      else goTo(currentIndex - 1);
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', function() { goTo(currentIndex); });
+
+  goTo(0);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "PawFile – Reviews",
+  "tag": "section",
+  "class": "pf-reviews-section-wrap",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Background",
+      "options": [
+        { "value": "ivory", "label": "White / Ivory" },
+        { "value": "tint", "label": "Soft Green Tint" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "tint"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Real Dog Parents, Real Results"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Over 2,400 happy pups — and counting"
+    },
+    {
+      "type": "text",
+      "id": "score",
+      "label": "Score display",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "score_sub",
+      "label": "Score sub-text",
+      "default": "out of 5 · 2,400+ verified reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "star_count",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review quote",
+          "default": "My dog used to run the second he heard the clippers come out. With PawFile, he actually runs TO the board. I couldn't believe it. His nails are shorter than they've ever been."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag (e.g. Verified Buyer)",
+          "default": "Verified Buyer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PawFile – Reviews",
+      "settings": {
+        "bg": "tint",
+        "eyebrow": "Real Dog Parents, Real Results",
+        "heading": "Over 2,400 happy pups — and counting",
+        "score": "4.9",
+        "score_sub": "out of 5 · 2,400+ verified reviews"
+      },
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "star_count": 5,
+            "quote": "My dog used to run the second he heard the clippers come out. With PawFile, he actually runs TO the board. I couldn't believe it. His nails are shorter than they've ever been.",
+            "name": "Sarah M.",
+            "tag": "Verified Buyer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_count": 5,
+            "quote": "We've been to three different groomers who said our shepherd was 'too difficult.' First week with PawFile and he scratched on it for five minutes straight. Nails look great.",
+            "name": "James R.",
+            "tag": "Verified Buyer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_count": 5,
+            "quote": "Our vet actually asked us what we were doing differently — said the nails looked perfectly smooth. Told her about PawFile and she said she wished more clients used it.",
+            "name": "Priya K.",
+            "tag": "Verified Buyer · Golden Retriever Mom"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_count": 4,
+            "quote": "Took about 10 days to train my poodle to use it consistently, but now she does it on her own. Wish I'd found this years ago. The replacement strips are easy to swap too.",
+            "name": "Tom B.",
+            "tag": "Verified Buyer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

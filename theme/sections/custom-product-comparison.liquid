@@ -1,0 +1,388 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pf-green: #2F7D4F;
+    --pf-deep: #235E3A;
+    --pf-soft: #D8E9DD;
+    --pf-cream: #EAF2EC;
+    --pf-sand: #F5F4EF;
+    --pf-ink: #141414;
+    --pf-muted: #6e6e68;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-section {
+    padding: 80px 24px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-section.bg-ivory {
+    background: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-section.bg-tint {
+    background: var(--pf-cream);
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-section.bg-sand {
+    background: var(--pf-sand);
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pf-comparison-section {
+      padding: 48px 16px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 48px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pf-green);
+    margin: 0 0 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-heading {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    color: var(--pf-ink);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    overflow-x: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    min-width: 480px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table thead th {
+    padding: 18px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table thead th.pf-col-feature {
+    text-align: left;
+    background: #fff;
+    color: var(--pf-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table thead th.pf-col-ours {
+    color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table thead th.pf-col-theirs {
+    background: #f0f0ea;
+    color: var(--pf-muted);
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table tbody tr {
+    border-top: 1px solid #f0f0ea;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table tbody tr:nth-child(even) {
+    background: #fafaf8;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table tbody tr:nth-child(even) td.pf-col-ours {
+    background: var(--pf-cream);
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table tbody td {
+    padding: 16px 20px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table tbody td.pf-col-feature {
+    text-align: left;
+    font-weight: 600;
+    color: var(--pf-ink);
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table tbody td.pf-col-ours {
+    background: var(--pf-soft);
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .pf-comparison-table tbody td.pf-col-theirs {
+    color: var(--pf-muted);
+  }
+
+  #shopify-section-{{ section.id }} .pf-check {
+    color: var(--pf-green);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .pf-cross {
+    color: #c0bfb8;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .pf-custom-val {
+    color: var(--pf-ink);
+  }
+
+  #shopify-section-{{ section.id }} .pf-custom-val.is-positive {
+    color: var(--pf-green);
+  }
+
+  #shopify-section-{{ section.id }} .pf-custom-val.is-negative {
+    color: var(--pf-muted);
+  }
+{%- endstyle -%}
+
+{%- assign our_header_bg = section.settings.our_header_bg | default: '#235E3A' -%}
+
+<div class="pf-comparison-section bg-{{ section.settings.bg }}">
+  <div class="pf-comparison-header">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="pf-comparison-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pf-comparison-heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+  </div>
+
+  <div class="pf-comparison-wrap">
+    <table class="pf-comparison-table">
+      <thead>
+        <tr>
+          <th class="pf-col-feature"></th>
+          <th class="pf-col-ours" style="background-color: {{ our_header_bg }};">
+            {{ section.settings.our_label }}
+          </th>
+          <th class="pf-col-theirs">{{ section.settings.their_label }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'row' -%}
+            <tr {{ block.shopify_attributes }}>
+              <td class="pf-col-feature">{{ block.settings.feature }}</td>
+              <td class="pf-col-ours">
+                {%- if block.settings.we_have -%}
+                  {%- if block.settings.we_value != blank -%}
+                    <span class="pf-custom-val is-positive">{{ block.settings.we_value }}</span>
+                  {%- else -%}
+                    <span class="pf-check">✓</span>
+                  {%- endif -%}
+                {%- else -%}
+                  {%- if block.settings.we_value != blank -%}
+                    <span class="pf-custom-val">{{ block.settings.we_value }}</span>
+                  {%- else -%}
+                    <span class="pf-cross">✕</span>
+                  {%- endif -%}
+                {%- endif -%}
+              </td>
+              <td class="pf-col-theirs">
+                {%- if block.settings.they_have -%}
+                  {%- if block.settings.they_value != blank -%}
+                    <span class="pf-custom-val is-positive">{{ block.settings.they_value }}</span>
+                  {%- else -%}
+                    <span class="pf-check">✓</span>
+                  {%- endif -%}
+                {%- else -%}
+                  {%- if block.settings.they_value != blank -%}
+                    <span class="pf-custom-val is-negative">{{ block.settings.they_value }}</span>
+                  {%- else -%}
+                    <span class="pf-cross">✕</span>
+                  {%- endif -%}
+                {%- endif -%}
+              </td>
+            </tr>
+          {%- endif -%}
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PawFile – Comparison",
+  "tag": "section",
+  "class": "pf-comparison-section-wrap",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Background",
+      "options": [
+        { "value": "ivory", "label": "White / Ivory" },
+        { "value": "tint", "label": "Soft Green Tint" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "sand"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "How We Stack Up"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "PawFile vs. Traditional Nail Clippers"
+    },
+    {
+      "type": "text",
+      "id": "our_label",
+      "label": "Our column label",
+      "default": "PawFile"
+    },
+    {
+      "type": "text",
+      "id": "their_label",
+      "label": "Competitor column label",
+      "default": "Clippers / Groomer"
+    },
+    {
+      "type": "color",
+      "id": "our_header_bg",
+      "label": "Our column header background",
+      "default": "#235E3A"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature",
+          "label": "Feature name",
+          "default": "Stress-free for dogs"
+        },
+        {
+          "type": "checkbox",
+          "id": "we_have",
+          "label": "We have this",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "we_value",
+          "label": "Our custom value (overrides ✓/✕)",
+          "default": ""
+        },
+        {
+          "type": "checkbox",
+          "id": "they_have",
+          "label": "They have this",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "they_value",
+          "label": "Their custom value (overrides ✓/✕)",
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PawFile – Comparison",
+      "settings": {
+        "bg": "sand",
+        "eyebrow": "How We Stack Up",
+        "heading": "PawFile vs. Traditional Nail Clippers",
+        "our_label": "PawFile",
+        "their_label": "Clippers / Groomer",
+        "our_header_bg": "#235E3A"
+      },
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Stress-free for dogs",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Often traumatic"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "No risk of cutting the quick",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Common mistake"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Works with dog's natural behavior",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": ""
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Use at home anytime",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Appointment needed"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "One-time purchase",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Recurring cost"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Vet recommended",
+            "we_have": true,
+            "we_value": "",
+            "they_have": true,
+            "they_value": "With caution"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

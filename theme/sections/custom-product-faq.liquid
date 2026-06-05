@@ -1,0 +1,274 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pf-green: #2F7D4F;
+    --pf-deep: #235E3A;
+    --pf-soft: #D8E9DD;
+    --pf-cream: #EAF2EC;
+    --pf-sand: #F5F4EF;
+    --pf-ink: #141414;
+    --pf-muted: #6e6e68;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-section {
+    padding: 80px 24px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-section.bg-ivory {
+    background: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-section.bg-tint {
+    background: var(--pf-cream);
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-section.bg-sand {
+    background: var(--pf-sand);
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pf-faq-section {
+      padding: 48px 16px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pf-green);
+    margin: 0 0 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-heading {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    color: var(--pf-ink);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  /* Details / Summary */
+  #shopify-section-{{ section.id }} .pf-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid #e8e8e2;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-item {
+    border-bottom: 1px solid #e8e8e2;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-item details {
+    padding: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-item details summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    cursor: pointer;
+    gap: 16px;
+    user-select: none;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-item details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-question {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--pf-ink);
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--pf-soft);
+    color: var(--pf-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.25s;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-item details[open] summary .pf-faq-toggle {
+    background: var(--pf-green);
+    color: #fff;
+    transform: rotate(45deg);
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-answer {
+    font-size: 15px;
+    color: var(--pf-muted);
+    line-height: 1.75;
+    padding: 0 0 20px;
+    margin: 0;
+    white-space: pre-line;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-answer p {
+    margin: 0 0 8px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+{%- endstyle -%}
+
+<div class="pf-faq-section bg-{{ section.settings.bg }}">
+  <div class="pf-faq-inner">
+    <div class="pf-faq-header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pf-faq-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pf-faq-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="pf-faq-list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'qa' -%}
+          <div {{ block.shopify_attributes }} class="pf-faq-item">
+            <details{% if section.settings.open_first and forloop.first %} open{% endif %}>
+              <summary>
+                <span class="pf-faq-question">{{ block.settings.question }}</span>
+                <span class="pf-faq-toggle" aria-hidden="true">+</span>
+              </summary>
+              <p class="pf-faq-answer">{{ block.settings.answer }}</p>
+            </details>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PawFile – FAQ",
+  "tag": "section",
+  "class": "pf-faq-section-wrap",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Background",
+      "options": [
+        { "value": "ivory", "label": "White / Ivory" },
+        { "value": "tint", "label": "Soft Green Tint" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "ivory"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Got Questions?"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question by default",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question & Answer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does PawFile work?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "PawFile is a textured scratch board that files your dog's nails as they naturally scratch. You apply peanut butter or a treat to the board to encourage your dog to scratch, and the grit gently shortens and smooths nails over time. Most dogs pick it up within a week."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PawFile – FAQ",
+      "settings": {
+        "bg": "ivory",
+        "eyebrow": "Got Questions?",
+        "heading": "Frequently Asked Questions",
+        "open_first": true
+      },
+      "blocks": [
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How does PawFile work?",
+            "answer": "PawFile is a textured scratch board that files your dog's nails as they naturally scratch. You apply peanut butter or a treat to the board to encourage your dog to scratch, and the grit gently shortens and smooths nails over time. Most dogs pick it up within a week."
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Is it safe for all dog breeds and sizes?",
+            "answer": "Yes. PawFile uses an 80-grit surface that's gentle enough for small breeds and effective for large dogs. The board dimensions (12\" × 9\") accommodate all paw sizes. Veterinarians recommend it as a safe, low-stress alternative to traditional clippers."
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How long does it take to see results?",
+            "answer": "Most dog owners see noticeably shorter nails within 2–3 weeks of consistent use. We recommend 2–3 short sessions per week. Some eager dogs show results in just a few days, while more cautious dogs may take a few weeks to build the habit."
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "When do the grit strips need to be replaced?",
+            "answer": "Depending on usage, replacement strips typically last 2–4 months. You'll notice when the texture starts to feel smoother — that's your cue to swap in a fresh strip. Replacement 3-packs are available in our store."
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "What if my dog isn't interested in the board?",
+            "answer": "We include a training guide with every order with tips to encourage engagement. Spreading a thin layer of peanut butter or wet food on the board works for most dogs. If after 30 days you're not satisfied, our money-back guarantee covers a full refund — no questions asked."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

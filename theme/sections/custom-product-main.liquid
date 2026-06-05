@@ -1,0 +1,1279 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pf-green: #2F7D4F;
+    --pf-deep: #235E3A;
+    --pf-soft: #D8E9DD;
+    --pf-cream: #EAF2EC;
+    --pf-sand: #F5F4EF;
+    --pf-ink: #141414;
+    --pf-muted: #6e6e68;
+    --pf-star: #E0A93B;
+    font-family: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .pf-countdown-bar {
+    background: var(--pf-deep);
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  #shopify-section-{{ section.id }} .pf-countdown-badge {
+    background: var(--pf-star);
+    color: #141414;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .pf-countdown-timer {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+  }
+
+  #shopify-section-{{ section.id }} .pf-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pf-main-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 24px 16px;
+    }
+  }
+
+  /* Gallery */
+  #shopify-section-{{ section.id }} .pf-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-gallery-main {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--pf-cream);
+    aspect-ratio: 1 / 1;
+  }
+
+  #shopify-section-{{ section.id }} .pf-gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .pf-gallery-thumbs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  #shopify-section-{{ section.id }} .pf-thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-thumb.active,
+  #shopify-section-{{ section.id }} .pf-thumb:hover {
+    border-color: var(--pf-green);
+  }
+
+  #shopify-section-{{ section.id }} .pf-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Buy Box */
+  #shopify-section-{{ section.id }} .pf-buybox {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-stars-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-stars {
+    color: var(--pf-star);
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-rating-text {
+    font-weight: 700;
+    color: var(--pf-ink);
+  }
+
+  #shopify-section-{{ section.id }} .pf-rating-note {
+    color: var(--pf-muted);
+  }
+
+  #shopify-section-{{ section.id }} .pf-product-title {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 800;
+    color: var(--pf-ink);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-subheading {
+    font-size: 15px;
+    color: var(--pf-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  #shopify-section-{{ section.id }} .pf-price-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  #shopify-section-{{ section.id }} .pf-price {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--pf-deep);
+  }
+
+  #shopify-section-{{ section.id }} .pf-compare {
+    font-size: 18px;
+    color: var(--pf-muted);
+    text-decoration: line-through;
+  }
+
+  #shopify-section-{{ section.id }} .pf-save-pill {
+    background: var(--pf-soft);
+    color: var(--pf-deep);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .pf-social-proof {
+    font-size: 13px;
+    color: var(--pf-green);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-social-proof::before {
+    content: '🔥';
+  }
+
+  #shopify-section-{{ section.id }} .pf-bullets {
+    font-size: 14px;
+    color: var(--pf-ink);
+    line-height: 1.7;
+  }
+
+  #shopify-section-{{ section.id }} .pf-bullets ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-bullets li {
+    margin-bottom: 4px;
+  }
+
+  /* Pack Selector */
+  #shopify-section-{{ section.id }} .pf-pack-label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--pf-muted);
+    margin-bottom: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-packs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-option {
+    border: 2px solid #e0e0da;
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-option.selected {
+    border-color: var(--pf-green);
+    background: var(--pf-cream);
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-option:hover {
+    border-color: var(--pf-green);
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-option.selected .pf-pack-radio {
+    border-color: var(--pf-green);
+    background: var(--pf-green);
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-option.selected .pf-pack-radio::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-info {
+    flex: 1;
+    padding: 0 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--pf-ink);
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-sub {
+    font-size: 13px;
+    color: var(--pf-muted);
+    margin-top: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-pack-tag {
+    background: var(--pf-star);
+    color: #141414;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* Order Bump */
+  #shopify-section-{{ section.id }} .pf-order-bump {
+    border: 2px dashed var(--pf-green);
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: var(--pf-cream);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  #shopify-section-{{ section.id }} .pf-bump-checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid var(--pf-green);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  #shopify-section-{{ section.id }} .pf-order-bump.checked .pf-bump-checkbox {
+    background: var(--pf-green);
+  }
+
+  #shopify-section-{{ section.id }} .pf-order-bump.checked .pf-bump-checkbox::after {
+    content: '✓';
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .pf-bump-img {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-bump-text .pf-bump-add {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--pf-green);
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .pf-bump-text .pf-bump-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pf-ink);
+  }
+
+  #shopify-section-{{ section.id }} .pf-bump-text .pf-bump-sub {
+    font-size: 13px;
+    color: var(--pf-muted);
+    margin-top: 2px;
+  }
+
+  /* Qty + ATC */
+  #shopify-section-{{ section.id }} .pf-qty-atc {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .pf-qty-wrap {
+    display: flex;
+    align-items: center;
+    border: 2px solid #e0e0da;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .pf-qty-btn {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 48px;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--pf-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+
+  #shopify-section-{{ section.id }} .pf-qty-btn:hover {
+    background: var(--pf-soft);
+  }
+
+  #shopify-section-{{ section.id }} .pf-qty-val {
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--pf-ink);
+  }
+
+  #shopify-section-{{ section.id }} .pf-atc-btn {
+    flex: 1;
+    background: var(--pf-green);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    height: 52px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  #shopify-section-{{ section.id }} .pf-atc-btn:hover {
+    background: var(--pf-deep);
+    transform: translateY(-1px);
+  }
+
+  #shopify-section-{{ section.id }} .pf-atc-btn:active {
+    transform: translateY(0);
+  }
+
+  #shopify-section-{{ section.id }} .pf-atc-btn.loading {
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .pf-total-line {
+    font-size: 13px;
+    color: var(--pf-muted);
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .pf-total-line strong {
+    color: var(--pf-ink);
+  }
+
+  /* Trust Strip */
+  #shopify-section-{{ section.id }} .pf-trust-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding-top: 4px;
+  }
+
+  @media (max-width: 480px) {
+    #shopify-section-{{ section.id }} .pf-trust-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    padding: 10px 4px;
+    background: var(--pf-cream);
+    border-radius: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-trust-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .pf-trust-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--pf-ink);
+    line-height: 1.3;
+  }
+
+  /* Update Note */
+  #shopify-section-{{ section.id }} .pf-update-note {
+    background: var(--pf-soft);
+    border-left: 4px solid var(--pf-green);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--pf-deep);
+    font-weight: 500;
+  }
+
+  /* Accordion */
+  #shopify-section-{{ section.id }} .pf-accordion {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #e0e0da;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-item {
+    border-bottom: 1px solid #e0e0da;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pf-ink);
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-icon {
+    font-size: 18px;
+    color: var(--pf-green);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-body {
+    font-size: 14px;
+    color: var(--pf-muted);
+    line-height: 1.7;
+    padding-bottom: 14px;
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-body p {
+    margin: 0 0 8px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-item.open .pf-accordion-body {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .pf-accordion-item.open .pf-accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  /* Marquee */
+  #shopify-section-{{ section.id }} .pf-marquee-bar {
+    background: var(--pf-deep);
+    color: #fff;
+    overflow: hidden;
+    padding: 10px 0;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .pf-marquee-track {
+    display: inline-flex;
+    animation: pf-marquee-scroll 22s linear infinite;
+  }
+
+  #shopify-section-{{ section.id }} .pf-marquee-segment {
+    padding-right: 60px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @keyframes pf-marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+{%- endstyle -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+{%- if section.settings.show_countdown -%}
+<div class="pf-countdown-bar">
+  {%- if section.settings.save_badge != blank -%}
+    <span class="pf-countdown-badge">{{ section.settings.save_badge }}</span>
+  {%- endif -%}
+  <span>Offer ends in&nbsp;<span class="pf-countdown-timer" id="pf-timer-{{ section.id }}">--:--:--</span></span>
+</div>
+{%- endif -%}
+
+<div class="pf-main-grid">
+  <!-- Gallery -->
+  <div class="pf-gallery">
+    <div class="pf-gallery-main">
+      {%- if product.media.size > 0 -%}
+        {%- assign first_media = product.media.first -%}
+        <img
+          id="pf-main-img-{{ section.id }}"
+          src="{{ first_media | image_url: width: 900 }}"
+          alt="{{ first_media.alt | escape }}"
+          width="900"
+          height="900"
+          loading="eager"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+
+    {%- if product.media.size > 1 -%}
+    <div class="pf-gallery-thumbs" id="pf-thumbs-{{ section.id }}">
+      {%- for media in product.media -%}
+        <div class="pf-thumb{% if forloop.first %} active{% endif %}" data-src="{{ media | image_url: width: 900 }}" data-index="{{ forloop.index0 }}">
+          <img
+            src="{{ media | image_url: width: 150 }}"
+            alt="{{ media.alt | escape }}"
+            width="72"
+            height="72"
+            loading="lazy"
+          >
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Buy Box -->
+  <div class="pf-buybox">
+
+    <!-- Stars -->
+    <div class="pf-stars-row">
+      <span class="pf-stars">★★★★★</span>
+      <span class="pf-rating-text">{{ section.settings.rating_text }}</span>
+      {%- if section.settings.rating_note != blank -%}
+        <span class="pf-rating-note">{{ section.settings.rating_note }}</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Title -->
+    <h1 class="pf-product-title">
+      {%- if section.settings.heading != blank -%}
+        {{ section.settings.heading }}
+      {%- else -%}
+        {{ product.title }}
+      {%- endif -%}
+    </h1>
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="pf-subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <!-- Price -->
+    <div class="pf-price-row">
+      <span class="pf-price" id="pf-display-price-{{ section.id }}">
+        {{ current_variant.price | money }}
+      </span>
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        <span class="pf-compare">{{ current_variant.compare_at_price | money }}</span>
+        {%- assign save_pct = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
+        <span class="pf-save-pill">Save {{ save_pct }}%</span>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.orders_text != blank -%}
+      <div class="pf-social-proof">{{ section.settings.orders_text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.bullets != blank -%}
+      <div class="pf-bullets">{{ section.settings.bullets }}</div>
+    {%- endif -%}
+
+    <!-- Pack Selector -->
+    {%- assign pack_blocks = section.blocks | where: 'type', 'pack' -%}
+    {%- if pack_blocks.size > 0 -%}
+      <div>
+        <div class="pf-pack-label">Choose Your Pack</div>
+        <div class="pf-packs" id="pf-packs-{{ section.id }}">
+          {%- for block in pack_blocks -%}
+            <div {{ block.shopify_attributes }} class="pf-pack-option{% if forloop.first %} selected{% endif %}" data-qty="{{ forloop.index }}" data-index="{{ forloop.index0 }}">
+              <div class="pf-pack-radio"></div>
+              <div class="pf-pack-info">
+                <div class="pf-pack-name">{{ block.settings.pack_label }}</div>
+                {%- if block.settings.pack_sub != blank -%}
+                  <div class="pf-pack-sub">{{ block.settings.pack_sub }}</div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.pack_tag != blank -%}
+                <span class="pf-pack-tag">{{ block.settings.pack_tag }}</span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <!-- Order Bump -->
+    {%- if section.settings.bump_product != blank -%}
+      {%- assign bump_product = all_products[section.settings.bump_product] -%}
+      {%- if bump_product != blank -%}
+        <div class="pf-order-bump" id="pf-bump-{{ section.id }}">
+          <div class="pf-bump-checkbox"></div>
+          {%- if bump_product.featured_image -%}
+            <img
+              class="pf-bump-img"
+              src="{{ bump_product.featured_image | image_url: width: 120 }}"
+              alt="{{ bump_product.featured_image.alt | escape }}"
+              width="56"
+              height="56"
+              loading="lazy"
+            >
+          {%- endif -%}
+          <div class="pf-bump-text">
+            <div class="pf-bump-add">
+              {%- if section.settings.bump_label != blank -%}{{ section.settings.bump_label }}{%- else -%}Add-On{%- endif -%}
+            </div>
+            <div class="pf-bump-label">{{ bump_product.title }}</div>
+            {%- if section.settings.bump_sub != blank -%}
+              <div class="pf-bump-sub">{{ section.settings.bump_sub }}</div>
+            {%- else -%}
+              <div class="pf-bump-sub">+ {{ bump_product.price | money }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    <!-- Qty + ATC -->
+    <form id="pf-form-{{ section.id }}">
+      <input type="hidden" name="id" id="pf-variant-id-{{ section.id }}" value="{{ current_variant.id }}">
+      <div class="pf-qty-atc">
+        <div class="pf-qty-wrap">
+          <button type="button" class="pf-qty-btn" id="pf-qty-minus-{{ section.id }}">−</button>
+          <span class="pf-qty-val" id="pf-qty-val-{{ section.id }}">1</span>
+          <button type="button" class="pf-qty-btn" id="pf-qty-plus-{{ section.id }}">+</button>
+        </div>
+        <button type="submit" class="pf-atc-btn" id="pf-atc-{{ section.id }}">
+          <span>🛒</span>
+          <span id="pf-atc-text-{{ section.id }}">Add to Cart</span>
+        </button>
+      </div>
+      <div class="pf-total-line" id="pf-total-line-{{ section.id }}" style="margin-top:8px;"></div>
+    </form>
+
+    <!-- Trust Strip -->
+    {%- assign trust_blocks = section.blocks | where: 'type', 'trust' -%}
+    {%- if trust_blocks.size > 0 -%}
+      <div class="pf-trust-strip">
+        {%- for block in trust_blocks -%}
+          <div {{ block.shopify_attributes }} class="pf-trust-item">
+            <span class="pf-trust-icon">{{ block.settings.icon }}</span>
+            <span class="pf-trust-label">{{ block.settings.label }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Update Note -->
+    {%- if section.settings.update_note != blank -%}
+      <div class="pf-update-note">{{ section.settings.update_note }}</div>
+    {%- endif -%}
+
+    <!-- Accordion -->
+    <div class="pf-accordion" id="pf-accordion-{{ section.id }}">
+      {%- if section.settings.spec_text != blank -%}
+        <div class="pf-accordion-item">
+          <button type="button" class="pf-accordion-trigger">
+            <span>Product Details</span>
+            <span class="pf-accordion-icon">+</span>
+          </button>
+          <div class="pf-accordion-body">{{ section.settings.spec_text }}</div>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.ship_text != blank -%}
+        <div class="pf-accordion-item">
+          <button type="button" class="pf-accordion-trigger">
+            <span>Shipping Info</span>
+            <span class="pf-accordion-icon">+</span>
+          </button>
+          <div class="pf-accordion-body">{{ section.settings.ship_text }}</div>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.return_text != blank -%}
+        <div class="pf-accordion-item">
+          <button type="button" class="pf-accordion-trigger">
+            <span>Returns &amp; Guarantee</span>
+            <span class="pf-accordion-icon">+</span>
+          </button>
+          <div class="pf-accordion-body">{{ section.settings.return_text }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div><!-- /buybox -->
+</div><!-- /pf-main-grid -->
+
+<!-- Marquee Bar -->
+{%- if section.settings.marquee_text != blank -%}
+<div class="pf-marquee-bar">
+  <div class="pf-marquee-track">
+    <span class="pf-marquee-segment">{{ section.settings.marquee_text }}</span>
+    <span class="pf-marquee-segment">{{ section.settings.marquee_text }}</span>
+    <span class="pf-marquee-segment">{{ section.settings.marquee_text }}</span>
+    <span class="pf-marquee-segment">{{ section.settings.marquee_text }}</span>
+  </div>
+</div>
+{%- endif -%}
+
+<script>
+(function() {
+  var sectionId = '{{ section.id }}';
+  var variantPrice = {{ current_variant.price }};
+  var variantCompare = {{ current_variant.compare_at_price | default: 0 }};
+  var bumpProductHandle = '{{ section.settings.bump_product }}';
+  var bumpVariantId = null;
+  var bumpPrice = 0;
+
+  {%- if section.settings.bump_product != blank -%}
+    {%- assign bump_prod = all_products[section.settings.bump_product] -%}
+    {%- if bump_prod != blank -%}
+      bumpVariantId = {{ bump_prod.selected_or_first_available_variant.id }};
+      bumpPrice = {{ bump_prod.price }};
+    {%- endif -%}
+  {%- endif -%}
+
+  var qty = 1;
+  var packQty = 1;
+  var bumpChecked = false;
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+
+  function updateTotalLine() {
+    var totalEl = document.getElementById('pf-total-line-' + sectionId);
+    if (!totalEl) return;
+    var mainTotal = variantPrice * packQty * qty;
+    var bumpTotal = bumpChecked && bumpVariantId ? bumpPrice : 0;
+    var grand = mainTotal + bumpTotal;
+    if (grand > 0) {
+      totalEl.innerHTML = 'Order total: <strong>' + formatMoney(grand) + '</strong>';
+    } else {
+      totalEl.innerHTML = '';
+    }
+  }
+
+  // Gallery
+  var thumbsWrap = document.getElementById('pf-thumbs-' + sectionId);
+  var mainImg = document.getElementById('pf-main-img-' + sectionId);
+  if (thumbsWrap && mainImg) {
+    var thumbs = thumbsWrap.querySelectorAll('.pf-thumb');
+    thumbs.forEach(function(thumb) {
+      thumb.addEventListener('click', function() {
+        thumbs.forEach(function(t) { t.classList.remove('active'); });
+        thumb.classList.add('active');
+        var src = thumb.getAttribute('data-src');
+        mainImg.style.opacity = '0';
+        setTimeout(function() {
+          mainImg.src = src;
+          mainImg.style.opacity = '1';
+        }, 150);
+      });
+    });
+  }
+
+  // Pack Selector
+  var packsWrap = document.getElementById('pf-packs-' + sectionId);
+  if (packsWrap) {
+    var packOptions = packsWrap.querySelectorAll('.pf-pack-option');
+    packOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        packOptions.forEach(function(p) { p.classList.remove('selected'); });
+        opt.classList.add('selected');
+        packQty = parseInt(opt.getAttribute('data-qty'), 10) || 1;
+        updateTotalLine();
+      });
+    });
+  }
+
+  // Qty +/-
+  var qtyVal = document.getElementById('pf-qty-val-' + sectionId);
+  var qtyMinus = document.getElementById('pf-qty-minus-' + sectionId);
+  var qtyPlus = document.getElementById('pf-qty-plus-' + sectionId);
+
+  if (qtyMinus && qtyPlus && qtyVal) {
+    qtyMinus.addEventListener('click', function() {
+      if (qty > 1) {
+        qty--;
+        qtyVal.textContent = qty;
+        updateTotalLine();
+      }
+    });
+    qtyPlus.addEventListener('click', function() {
+      qty++;
+      qtyVal.textContent = qty;
+      updateTotalLine();
+    });
+  }
+
+  // Order Bump
+  var bumpEl = document.getElementById('pf-bump-' + sectionId);
+  if (bumpEl) {
+    bumpEl.addEventListener('click', function() {
+      bumpChecked = !bumpChecked;
+      bumpEl.classList.toggle('checked', bumpChecked);
+      updateTotalLine();
+    });
+  }
+
+  updateTotalLine();
+
+  // Add to Cart
+  var form = document.getElementById('pf-form-' + sectionId);
+  var atcBtn = document.getElementById('pf-atc-' + sectionId);
+  var atcText = document.getElementById('pf-atc-text-' + sectionId);
+  var variantIdInput = document.getElementById('pf-variant-id-' + sectionId);
+
+  if (form && atcBtn) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var variantId = variantIdInput ? parseInt(variantIdInput.value, 10) : null;
+      if (!variantId) {
+        window.location = '/cart';
+        return;
+      }
+
+      var items = [{ id: variantId, quantity: packQty * qty }];
+      if (bumpChecked && bumpVariantId) {
+        items.push({ id: bumpVariantId, quantity: 1 });
+      }
+
+      atcBtn.classList.add('loading');
+      if (atcText) atcText.textContent = 'Adding...';
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ items: items })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        atcBtn.classList.remove('loading');
+        if (atcText) atcText.textContent = 'Add to Cart';
+
+        // Try cart drawer or notification
+        var cartDrawer = document.querySelector('cart-drawer');
+        var cartNotification = document.querySelector('cart-notification');
+
+        if (cartDrawer && typeof cartDrawer.open === 'function') {
+          cartDrawer.open();
+        } else if (cartNotification && typeof cartNotification.open === 'function') {
+          cartNotification.open();
+        } else {
+          // Dispatch event for theme cart handlers
+          document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+          // Fallback: check if any cart drawer element responds
+          var drawerEl = document.getElementById('CartDrawer') || document.getElementById('cart-drawer');
+          if (drawerEl) {
+            drawerEl.setAttribute('open', '');
+          } else {
+            window.location = '/cart';
+          }
+        }
+      })
+      .catch(function(err) {
+        atcBtn.classList.remove('loading');
+        if (atcText) atcText.textContent = 'Add to Cart';
+        console.error('Cart add error:', err);
+        window.location = '/cart';
+      });
+    });
+  }
+
+  // Accordion
+  var accordionEl = document.getElementById('pf-accordion-' + sectionId);
+  if (accordionEl) {
+    accordionEl.querySelectorAll('.pf-accordion-trigger').forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var item = trigger.closest('.pf-accordion-item');
+        if (!item) return;
+        var isOpen = item.classList.contains('open');
+        accordionEl.querySelectorAll('.pf-accordion-item').forEach(function(i) { i.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  }
+
+  // Countdown Timer
+  {%- if section.settings.show_countdown -%}
+  (function() {
+    var hoursToRun = {{ section.settings.countdown_hours | default: 4 }};
+    var storageKey = 'pf_countdown_end_' + sectionId;
+    var timerEl = document.getElementById('pf-timer-' + sectionId);
+    if (!timerEl) return;
+
+    var endTime;
+    var stored = localStorage.getItem(storageKey);
+    if (stored) {
+      endTime = parseInt(stored, 10);
+      if (Date.now() > endTime) {
+        endTime = Date.now() + hoursToRun * 3600 * 1000;
+        localStorage.setItem(storageKey, endTime);
+      }
+    } else {
+      endTime = Date.now() + hoursToRun * 3600 * 1000;
+      localStorage.setItem(storageKey, endTime);
+    }
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function tick() {
+      var diff = endTime - Date.now();
+      if (diff <= 0) {
+        timerEl.textContent = '00:00:00';
+        return;
+      }
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      timerEl.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+      setTimeout(tick, 1000);
+    }
+    tick();
+  })();
+  {%- endif -%}
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "PawFile – Main Product",
+  "tag": "section",
+  "class": "pf-main-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Countdown Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "Show countdown bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "save_badge",
+      "label": "Countdown badge text",
+      "default": "Limited Time Offer"
+    },
+    {
+      "type": "range",
+      "id": "countdown_hours",
+      "min": 1,
+      "max": 24,
+      "step": 1,
+      "unit": "hr",
+      "label": "Countdown duration (hours)",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Star Rating"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "rating_note",
+      "label": "Rating note",
+      "default": "(2,400+ Reviews)"
+    },
+    {
+      "type": "header",
+      "content": "Product Info"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (blank = product title)",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "The stress-free way to keep your dog's nails short — no clippers, no anxiety."
+    },
+    {
+      "type": "text",
+      "id": "orders_text",
+      "label": "Social proof line",
+      "default": "127 people bought this today"
+    },
+    {
+      "type": "richtext",
+      "id": "bullets",
+      "label": "Bullet points",
+      "default": "<ul><li>Naturally files nails as your dog scratches</li><li>Vet-approved, safe for all breeds</li><li>No stress, no clippers, no struggle</li><li>Durable board lasts months</li></ul>"
+    },
+    {
+      "type": "header",
+      "content": "Order Bump"
+    },
+    {
+      "type": "product",
+      "id": "bump_product",
+      "label": "Bump product"
+    },
+    {
+      "type": "text",
+      "id": "bump_label",
+      "label": "Bump add-on label",
+      "default": "Add to Order — Special Price"
+    },
+    {
+      "type": "text",
+      "id": "bump_sub",
+      "label": "Bump sub-text",
+      "default": "Replacement Grit Strips (3-pack) — usually $12.99"
+    },
+    {
+      "type": "header",
+      "content": "Update Note"
+    },
+    {
+      "type": "text",
+      "id": "update_note",
+      "label": "Update note bar text",
+      "default": "🌿 New formula: now with ultra-grip base — stays in place on any surface."
+    },
+    {
+      "type": "header",
+      "content": "Accordion Details"
+    },
+    {
+      "type": "richtext",
+      "id": "spec_text",
+      "label": "Product Details content",
+      "default": "<p>Board dimensions: 12\" × 9\" × 0.75\"</p><p>Grit surface: 80 grit (gentle on paw pads)</p><p>Material: FSC-certified wood with replaceable grit sheets</p><p>Compatible with all dog breeds and sizes</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "ship_text",
+      "label": "Shipping Info content",
+      "default": "<p>Free standard shipping on all US orders.</p><p>Orders ship within 1–2 business days. Delivery in 3–7 business days.</p><p>Expedited options available at checkout.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "return_text",
+      "label": "Returns & Guarantee content",
+      "default": "<p>We offer a 30-day money-back guarantee. If your dog doesn't take to the PawFile board, return it for a full refund — no questions asked.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Marquee Bar"
+    },
+    {
+      "type": "text",
+      "id": "marquee_text",
+      "label": "Marquee text",
+      "default": "✦ Free US Shipping ✦ 30-Day Money-Back Guarantee ✦ Vet Approved ✦ 2,400+ Happy Pups ✦ Easy Scratch-to-File Method ✦ No More Nail Anxiety"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pack",
+      "name": "Pack Option",
+      "settings": [
+        {
+          "type": "text",
+          "id": "pack_label",
+          "label": "Pack label",
+          "default": "1 Board"
+        },
+        {
+          "type": "text",
+          "id": "pack_sub",
+          "label": "Pack sub-text",
+          "default": "Great for trying it out"
+        },
+        {
+          "type": "text",
+          "id": "pack_tag",
+          "label": "Pack tag (badge)",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or text)",
+          "default": "🚚"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Free US Shipping"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PawFile – Main Product",
+      "blocks": [
+        {
+          "type": "pack",
+          "settings": {
+            "pack_label": "1 Board",
+            "pack_sub": "Perfect for first-timers",
+            "pack_tag": ""
+          }
+        },
+        {
+          "type": "pack",
+          "settings": {
+            "pack_label": "2 Boards",
+            "pack_sub": "One for home, one for travel",
+            "pack_tag": "Most Popular"
+          }
+        },
+        {
+          "type": "pack",
+          "settings": {
+            "pack_label": "3 Boards",
+            "pack_sub": "Best value — save 25%",
+            "pack_tag": "Best Value"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "🚚",
+            "label": "Free US Shipping"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "🛡️",
+            "label": "30-Day Guarantee"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "🔒",
+            "label": "Secure Checkout"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "💬",
+            "label": "7-Day Support"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

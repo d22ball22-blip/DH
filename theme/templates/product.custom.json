@@ -1,0 +1,290 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-product-main",
+      "settings": {
+        "show_countdown": true,
+        "save_badge": "Limited Time Offer",
+        "countdown_hours": 4,
+        "rating_text": "4.9",
+        "rating_note": "(2,400+ Reviews)",
+        "heading": "",
+        "subheading": "The stress-free way to keep your dog's nails short — no clippers, no anxiety.",
+        "orders_text": "127 people bought this today",
+        "bullets": "<ul><li>Naturally files nails as your dog scratches</li><li>Vet-approved, safe for all breeds & sizes</li><li>No stress, no clippers, no struggle</li><li>Durable board lasts months — strips are replaceable</li></ul>",
+        "bump_product": "",
+        "bump_label": "Add to Order — Special Price",
+        "bump_sub": "Replacement Grit Strips (3-pack) — only $9.99 when added here",
+        "update_note": "🌿 New formula: now with ultra-grip base — stays in place on any surface.",
+        "spec_text": "<p>Board dimensions: 12\" × 9\" × 0.75\"</p><p>Grit surface: 80 grit (gentle on paw pads)</p><p>Material: FSC-certified wood with replaceable grit sheets</p><p>Compatible with all dog breeds and sizes</p><p>Includes training guide and 1 starter grit sheet</p>",
+        "ship_text": "<p>Free standard shipping on all US orders.</p><p>Orders ship within 1–2 business days. Delivery in 3–7 business days.</p><p>Expedited options available at checkout.</p>",
+        "return_text": "<p>We offer a 30-day money-back guarantee. If your dog doesn't take to the PawFile board, return it for a full refund — no questions asked. Just contact our support team.</p>",
+        "marquee_text": "✦ Free US Shipping ✦ 30-Day Money-Back Guarantee ✦ Vet Approved ✦ 2,400+ Happy Pups ✦ Easy Scratch-to-File Method ✦ No More Nail Anxiety ✦ Works for All Breeds"
+      },
+      "blocks": {
+        "pack-1": {
+          "type": "pack",
+          "settings": {
+            "pack_label": "1 Board",
+            "pack_sub": "Perfect for first-timers",
+            "pack_tag": ""
+          }
+        },
+        "pack-2": {
+          "type": "pack",
+          "settings": {
+            "pack_label": "2 Boards",
+            "pack_sub": "One for home, one for travel",
+            "pack_tag": "Most Popular"
+          }
+        },
+        "pack-3": {
+          "type": "pack",
+          "settings": {
+            "pack_label": "3 Boards",
+            "pack_sub": "Best value — save 25%",
+            "pack_tag": "Best Value"
+          }
+        },
+        "trust-1": {
+          "type": "trust",
+          "settings": {
+            "icon": "🚚",
+            "label": "Free US Shipping"
+          }
+        },
+        "trust-2": {
+          "type": "trust",
+          "settings": {
+            "icon": "🛡️",
+            "label": "30-Day Guarantee"
+          }
+        },
+        "trust-3": {
+          "type": "trust",
+          "settings": {
+            "icon": "🔒",
+            "label": "Secure Checkout"
+          }
+        },
+        "trust-4": {
+          "type": "trust",
+          "settings": {
+            "icon": "💬",
+            "label": "7-Day Support"
+          }
+        }
+      },
+      "block_order": ["pack-1", "pack-2", "pack-3", "trust-1", "trust-2", "trust-3", "trust-4"]
+    },
+    "benefits": {
+      "type": "custom-product-benefits",
+      "settings": {
+        "bg": "ivory",
+        "section_eyebrow": "Why PawFile Works",
+        "section_heading": "The natural nail care solution your dog will actually love"
+      },
+      "blocks": {
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "eyebrow": "Stress-Free",
+            "heading": "No More Nail Anxiety",
+            "body": "Most dogs hate nail clippers — the sound, the sensation, the risk of cutting the quick. PawFile lets your dog file their own nails by scratching a textured board. It works with their natural instinct, not against it.",
+            "reverse": false
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "eyebrow": "Vet Approved",
+            "heading": "Safe for All Breeds & Sizes",
+            "body": "From tiny Chihuahuas to massive Great Danes, PawFile is designed with the right grit level to smooth nails gently without causing pain or damage to the paw pad. Veterinarians recommend it as a low-stress alternative.",
+            "reverse": true
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "eyebrow": "Long Lasting",
+            "heading": "Replaceable Grit Sheets, Zero Waste",
+            "body": "The solid wood base lasts years. When the grit wears down, simply peel off the old sheet and attach a fresh one. It's sustainable, economical, and your dog barely notices the difference.",
+            "reverse": false
+          }
+        }
+      },
+      "block_order": ["row-1", "row-2", "row-3"]
+    },
+    "comparison": {
+      "type": "custom-product-comparison",
+      "settings": {
+        "bg": "sand",
+        "eyebrow": "How We Stack Up",
+        "heading": "PawFile vs. Traditional Nail Clippers",
+        "our_label": "PawFile",
+        "their_label": "Clippers / Groomer",
+        "our_header_bg": "#235E3A"
+      },
+      "blocks": {
+        "comp-1": {
+          "type": "row",
+          "settings": {
+            "feature": "Stress-free for dogs",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Often traumatic"
+          }
+        },
+        "comp-2": {
+          "type": "row",
+          "settings": {
+            "feature": "No risk of cutting the quick",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Common mistake"
+          }
+        },
+        "comp-3": {
+          "type": "row",
+          "settings": {
+            "feature": "Works with dog's natural instinct",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": ""
+          }
+        },
+        "comp-4": {
+          "type": "row",
+          "settings": {
+            "feature": "Use at home anytime",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Appointment needed"
+          }
+        },
+        "comp-5": {
+          "type": "row",
+          "settings": {
+            "feature": "One-time purchase",
+            "we_have": true,
+            "we_value": "",
+            "they_have": false,
+            "they_value": "Recurring grooming cost"
+          }
+        },
+        "comp-6": {
+          "type": "row",
+          "settings": {
+            "feature": "Vet recommended",
+            "we_have": true,
+            "we_value": "",
+            "they_have": true,
+            "they_value": "With caution"
+          }
+        }
+      },
+      "block_order": ["comp-1", "comp-2", "comp-3", "comp-4", "comp-5", "comp-6"]
+    },
+    "reviews": {
+      "type": "custom-product-reviews",
+      "settings": {
+        "bg": "tint",
+        "eyebrow": "Real Dog Parents, Real Results",
+        "heading": "Over 2,400 happy pups — and counting",
+        "score": "4.9",
+        "score_sub": "out of 5 · 2,400+ verified reviews"
+      },
+      "blocks": {
+        "rev-1": {
+          "type": "review",
+          "settings": {
+            "star_count": 5,
+            "quote": "My dog used to run the second he heard the clippers come out. With PawFile, he actually runs TO the board. I couldn't believe it. His nails are shorter than they've ever been.",
+            "name": "Sarah M.",
+            "tag": "Verified Buyer"
+          }
+        },
+        "rev-2": {
+          "type": "review",
+          "settings": {
+            "star_count": 5,
+            "quote": "We've been to three different groomers who said our shepherd was 'too difficult.' First week with PawFile and he scratched on it for five minutes straight. Nails look great.",
+            "name": "James R.",
+            "tag": "Verified Buyer"
+          }
+        },
+        "rev-3": {
+          "type": "review",
+          "settings": {
+            "star_count": 5,
+            "quote": "Our vet actually asked us what we were doing differently — said the nails looked perfectly smooth. Told her about PawFile and she said she wished more clients used it.",
+            "name": "Priya K.",
+            "tag": "Verified Buyer · Golden Retriever Mom"
+          }
+        },
+        "rev-4": {
+          "type": "review",
+          "settings": {
+            "star_count": 4,
+            "quote": "Took about 10 days to train my poodle to use it consistently, but now she does it on her own. Wish I'd found this years ago. The replacement strips are easy to swap too.",
+            "name": "Tom B.",
+            "tag": "Verified Buyer"
+          }
+        }
+      },
+      "block_order": ["rev-1", "rev-2", "rev-3", "rev-4"]
+    },
+    "faq": {
+      "type": "custom-product-faq",
+      "settings": {
+        "bg": "ivory",
+        "eyebrow": "Got Questions?",
+        "heading": "Frequently Asked Questions",
+        "open_first": true
+      },
+      "blocks": {
+        "faq-1": {
+          "type": "qa",
+          "settings": {
+            "question": "How does PawFile work?",
+            "answer": "PawFile is a textured scratch board that files your dog's nails as they naturally scratch. You apply peanut butter or a treat to the board to encourage your dog to scratch, and the grit gently shortens and smooths nails over time. Most dogs pick it up within a week."
+          }
+        },
+        "faq-2": {
+          "type": "qa",
+          "settings": {
+            "question": "Is it safe for all dog breeds and sizes?",
+            "answer": "Yes. PawFile uses an 80-grit surface that's gentle enough for small breeds and effective for large dogs. The board dimensions (12\" × 9\") accommodate all paw sizes. Veterinarians recommend it as a safe, low-stress alternative to traditional clippers."
+          }
+        },
+        "faq-3": {
+          "type": "qa",
+          "settings": {
+            "question": "How long does it take to see results?",
+            "answer": "Most dog owners see noticeably shorter nails within 2–3 weeks of consistent use. We recommend 2–3 short sessions per week. Some eager dogs show results in just a few days, while more cautious dogs may take a few weeks to build the habit."
+          }
+        },
+        "faq-4": {
+          "type": "qa",
+          "settings": {
+            "question": "When do the grit strips need to be replaced?",
+            "answer": "Depending on usage, replacement strips typically last 2–4 months. You'll notice when the texture starts to feel smoother — that's your cue to swap in a fresh strip. Replacement 3-packs are available in our store."
+          }
+        },
+        "faq-5": {
+          "type": "qa",
+          "settings": {
+            "question": "What if my dog isn't interested in the board?",
+            "answer": "We include a training guide with every order with tips to encourage engagement. Spreading a thin layer of peanut butter or wet food on the board works for most dogs. If after 30 days you're not satisfied, our money-back guarantee covers a full refund — no questions asked."
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"]
+    }
+  },
+  "order": ["main", "benefits", "comparison", "reviews", "faq"]
+}

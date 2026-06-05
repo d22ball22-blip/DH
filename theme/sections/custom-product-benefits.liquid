@@ -1,0 +1,310 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pf-green: #2F7D4F;
+    --pf-deep: #235E3A;
+    --pf-soft: #D8E9DD;
+    --pf-cream: #EAF2EC;
+    --pf-sand: #F5F4EF;
+    --pf-ink: #141414;
+    --pf-muted: #6e6e68;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-section {
+    padding: 80px 24px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-section.bg-ivory {
+    background: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-section.bg-tint {
+    background: var(--pf-cream);
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-section.bg-sand {
+    background: var(--pf-sand);
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pf-benefits-section {
+      padding: 48px 16px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 64px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pf-green);
+    margin: 0 0 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-heading {
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 800;
+    color: var(--pf-ink);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefits-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pf-benefits-rows {
+      gap: 48px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-row.reverse .pf-benefit-img-wrap {
+    order: 2;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-row.reverse .pf-benefit-text {
+    order: 1;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pf-benefit-row {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    #shopify-section-{{ section.id }} .pf-benefit-row.reverse .pf-benefit-img-wrap {
+      order: 0;
+    }
+
+    #shopify-section-{{ section.id }} .pf-benefit-row.reverse .pf-benefit-text {
+      order: 0;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-img-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 5 / 4;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+    background: var(--pf-cream);
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-img-wrap .pf-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pf-soft);
+    color: var(--pf-green);
+    font-size: 48px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--pf-green);
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-heading {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 800;
+    color: var(--pf-ink);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pf-benefit-body {
+    font-size: 16px;
+    color: var(--pf-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+{%- endstyle -%}
+
+<div class="pf-benefits-section bg-{{ section.settings.bg }}">
+  {%- if section.settings.section_eyebrow != blank or section.settings.section_heading != blank -%}
+    <div class="pf-benefits-header">
+      {%- if section.settings.section_eyebrow != blank -%}
+        <p class="pf-benefits-eyebrow">{{ section.settings.section_eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="pf-benefits-heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="pf-benefits-rows">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'row' -%}
+        <div {{ block.shopify_attributes }} class="pf-benefit-row{% if block.settings.reverse %} reverse{% endif %}">
+          <div class="pf-benefit-img-wrap">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 900 }}"
+                alt="{{ block.settings.image.alt | escape }}"
+                width="900"
+                height="720"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="pf-placeholder">🐾</div>
+            {%- endif -%}
+          </div>
+          <div class="pf-benefit-text">
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="pf-benefit-eyebrow">{{ block.settings.eyebrow }}</span>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h3 class="pf-benefit-heading">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <p class="pf-benefit-body">{{ block.settings.body }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PawFile – Benefits",
+  "tag": "section",
+  "class": "pf-benefits-section-wrap",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Background",
+      "options": [
+        { "value": "ivory", "label": "White / Ivory" },
+        { "value": "tint", "label": "Soft Green Tint" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "ivory"
+    },
+    {
+      "type": "text",
+      "id": "section_eyebrow",
+      "label": "Section eyebrow",
+      "default": "Why PawFile Works"
+    },
+    {
+      "type": "html",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "The natural nail care solution your dog will actually love"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Feature Row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow text",
+          "default": "Stress-Free"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "No More Nail Anxiety"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text",
+          "default": "Most dogs hate nail clippers — the sound, the sensation, the risk of cutting the quick. PawFile lets your dog file their own nails by scratching a textured board. It works with their natural instinct, not against it."
+        },
+        {
+          "type": "checkbox",
+          "id": "reverse",
+          "label": "Reverse layout (image on right)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PawFile – Benefits",
+      "settings": {
+        "bg": "ivory",
+        "section_eyebrow": "Why PawFile Works",
+        "section_heading": "The natural nail care solution your dog will actually love"
+      },
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "eyebrow": "Stress-Free",
+            "heading": "No More Nail Anxiety",
+            "body": "Most dogs hate nail clippers — the sound, the sensation, the risk of cutting the quick. PawFile lets your dog file their own nails by scratching a textured board. It works with their natural instinct, not against it.",
+            "reverse": false
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "eyebrow": "Vet Approved",
+            "heading": "Safe for All Breeds & Sizes",
+            "body": "From tiny Chihuahuas to massive Great Danes, PawFile is designed with the right grit level to smooth nails gently without causing pain or damage to the paw pad. Veterinarians recommend it as a low-stress alternative.",
+            "reverse": true
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "eyebrow": "Long Lasting",
+            "heading": "Replaceable Grit Sheets, Zero Waste",
+            "body": "The solid wood base lasts years. When the grit wears down, simply peel off the old sheet and attach a fresh one. It's sustainable, economical, and your dog barely notices the difference.",
+            "reverse": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
