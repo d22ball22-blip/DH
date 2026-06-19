@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: "Inter", system-ui, sans-serif;
+    --font-display: "Fraunces", Georgia, serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Offset anchor scrolling for the sticky header */
+  section[id],
+  div[id] {
+    scroll-margin-top: 90px;
+  }
+
+  body {
+    @apply bg-white text-bark antialiased;
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  ::selection {
+    @apply bg-forest-600 text-white;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-cream;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-forest-700 rounded-full;
+  }
+}
+
+@layer components {
+  .container-tight {
+    @apply container max-w-6xl;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-forest-600;
+  }
+
+  .heading-display {
+    @apply font-display font-semibold leading-[1.05] tracking-tight text-forest-900;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-forest-600 text-white shadow-cta hover:bg-forest-700 hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply btn border border-white/40 bg-white/10 text-white backdrop-blur-sm hover:bg-white hover:text-forest-900;
+  }
+
+  .btn-outline {
+    @apply btn border border-forest-200 bg-white text-forest-800 hover:border-forest-600 hover:bg-forest-50;
+  }
+
+  .link-underline {
+    @apply relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-forest-500 after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  .form-input {
+    @apply w-full rounded-xl border border-forest-100 bg-cream/60 px-4 py-3 text-sm text-bark shadow-sm outline-none transition placeholder:text-bark/40 focus:border-forest-500 focus:bg-white focus:ring-2 focus:ring-forest-500/20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
