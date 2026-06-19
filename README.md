@@ -1,65 +1,82 @@
-# Auvelle — Per-Product Online Store 2.0 Templates
+# Hollett Landscaping — Premium Landscaping & Property Maintenance Website
 
-This theme adds a **dedicated OS 2.0 product template for every product** in the
-Auvelle catalogue. Each template recreates the original landing-page-style
-product design (gallery + buy box, benefits, before/after, how-it-works,
-comparison table, frequently-bought-together, reviews, guarantee, FAQ) and is
-**fully editable in the Shopify Theme Editor**.
+A complete, production-ready marketing website for a premium landscaping &
+property maintenance company, built to build trust, rank locally, and convert
+visitors into quote requests.
 
-No product data is hardcoded. Title, price, compare-at price, description,
-images, media gallery and variants all render from the live Shopify
-`product` object. Only marketing copy (benefit text, FAQ, comparison rows,
-etc.) is stored as editable section/block settings inside each template JSON.
+> **Rebranding?** Almost everything (company name, phone, email, services,
+> testimonials, FAQs, service areas, social links) lives in
+> [`lib/site.ts`](lib/site.ts). Change it there once and it updates everywhere.
 
-## Products & templates
+## Tech Stack
 
-| Product | Handle | Template file |
-|---|---|---|
-| Radiance Glow Drops | `radiance-glow-drops` | `templates/product.radiance-glow-drops.json` |
-| Lumière Soleil SPF 50 | `lumiere-soleil-spf-50` | `templates/product.lumiere-soleil-spf-50.json` |
-| Bronze Mist | `bronze-mist` | `templates/product.bronze-mist.json` |
-| Application Set | `application-set` | `templates/product.application-set.json` |
+- **Next.js 15** (App Router) + **React 19**
+- **TypeScript** (strict)
+- **Tailwind CSS** with a custom forest-green / earth-tone design system
+- **Framer Motion** for scroll reveals, counters, and micro-interactions
+- `next/font` (Inter + Fraunces) and `next/image` for optimized Core Web Vitals
 
-`templates/product.json` remains as the default fallback template.
+## Getting Started
 
-## How to assign a template
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm start        # serve the production build
+```
 
-1. In Shopify admin go to **Products → [product]**.
-2. In the **Theme template** card (right column), pick the matching template,
-   e.g. `radiance-glow-drops`.
-3. Save. The product now renders its dedicated design.
+## Page Sections
 
-> Shopify maps `product.<suffix>.json` to the dropdown entry `<suffix>`.
+1. **Hero** — full-bleed photo, headline, dual CTAs, trust badges
+2. **Services** — six premium service cards with imagery & feature lists
+3. **Why Choose Us** — six differentiators + animated stat counters
+4. **Before & After Gallery** — hover-to-reveal transformations
+5. **Process** — four-step timeline
+6. **Service Areas** — map-style grid with local-SEO copy
+7. **Testimonials** — six 5-star reviews
+8. **Commercial Services** — HOAs, property managers, retail, office, industrial
+9. **About** — family-owned brand story
+10. **FAQ** — 15-question accordion (also emits FAQ schema)
+11. **Final CTA** — conversion-focused closer
+12. **Footer** — contact, quick links, services, areas, social
 
-## Reusable product sections (added)
+## Lead-Generation Features
 
-| Section | Type | Design component | Editable blocks |
-|---|---|---|---|
-| Product buy box | `main-product` | `.pdp` gallery + ATC | Assurance badges |
-| Product benefits | `product-benefits` | `.ben-grid` | Benefit (icon/title/text) |
-| How it works | `product-how` | `.steps` | Step (image/title/text) |
-| Comparison table | `product-comparison` | `.cmp` | Feature row (label + competitor toggle) |
-| Frequently bought together | `product-fbt` | `.fbt` | Product (dynamic product picker) |
-| Product FAQ | `product-faq` | `.faq` accordion | Question/answer |
+- Sticky mobile **click-to-call** + **floating quote** bar
+- Desktop **floating quote button** (appears on scroll)
+- **Exit-intent** offer modal (session-aware, mobile fallback included)
+- **Quote modal** wired to every CTA via a shared React context
+  ([`components/providers/QuoteProvider.tsx`](components/providers/QuoteProvider.tsx))
+- Contact CTAs throughout
 
-Reused from the existing theme: `before-after`, `testimonials`, `guarantee`,
-`trustoo-reviews`.
+> The quote form uses a demo submit handler. Wire `handleSubmit` in
+> [`components/QuoteModal.tsx`](components/QuoteModal.tsx) to your CRM,
+> email service, or form backend.
 
-## Dynamic data notes
+## SEO
 
-- **Prices** in the buy box and Frequently-Bought-Together total come from the
-  selected variant — never typed in.
-- **Subtitle / badge / rating / review count** prefer product metafields
-  (`custom.subtitle`, `custom.badge`, `custom.rating`, `custom.review_count`,
-  `custom.scarcity`) and fall back to editable section settings.
-- **Frequently bought together** uses product pickers; the "Add all to bag"
-  button posts every selected variant to `/cart/add.js` in one request
-  (handled in `assets/theme.js`).
+- Rich metadata + Open Graph / Twitter cards ([`app/layout.tsx`](app/layout.tsx))
+- **JSON-LD schema**: `LandscapingBusiness` (LocalBusiness) with geo, hours,
+  areas served, aggregate rating & service catalog; plus `FAQPage` and `WebSite`
+- `app/sitemap.ts` and `app/robots.ts`
+- Semantic H1/H2/H3 hierarchy and descriptive image alt text
 
-## CSS / JS
+## Customization Cheat Sheet
 
-- All product-page styling lives in `assets/theme.css` (existing design system
-  plus a small `PRODUCT TEMPLATE SECTIONS` block at the end).
-- `assets/theme.js` handles the FAQ accordion, gallery thumbnails, variant
-  selection, before/after sliders, sticky ATC, and the new multi-item
-  Frequently-Bought-Together add-to-cart.
+| Want to change…        | Edit…                                    |
+| ---------------------- | ---------------------------------------- |
+| Name / phone / email   | `lib/site.ts` → `site`                   |
+| Services & copy        | `lib/site.ts` → `services`               |
+| Testimonials           | `lib/site.ts` → `testimonials`           |
+| FAQs                   | `lib/site.ts` → `faqs`                   |
+| Service areas          | `lib/site.ts` → `serviceAreas`           |
+| Colors / fonts         | `tailwind.config.ts`, `app/globals.css`  |
+| Gallery images         | `components/Gallery.tsx`                  |
+
+Photography is loaded from Unsplash for the demo (configured in
+`next.config.mjs`). Swap in your own images/CDN for production.
+
+---
+
+> _Note: the `theme/` directory contains an unrelated legacy Shopify theme and
+> is excluded from the Next.js build._
