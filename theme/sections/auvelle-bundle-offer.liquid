@@ -1,0 +1,192 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-bundles">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="lede">{{ section.settings.sub }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="abundle-grid reveal">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bundle' -%}
+          {%- assign bp = all_products[block.settings.product] -%}
+          <article class="abundle {% if block.settings.featured %}abundle--featured{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.featured -%}
+              <span class="abundle__best-tag">{{ block.settings.featured_label | default: '★ Best Value' }}</span>
+            {%- endif -%}
+
+            <div class="abundle__media">
+              {%- if block.settings.image -%}
+                <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.name | escape }}" loading="lazy" width="700" height="525">
+              {%- elsif bp -%}
+                <img src="{{ bp.featured_image | image_url: width: 700 }}" alt="{{ bp.title | escape }}" loading="lazy" width="700" height="525">
+              {%- else -%}
+                <div class="abundle__ph"></div>
+              {%- endif -%}
+            </div>
+
+            <div class="abundle__body">
+              <h3 class="abundle__name">{{ block.settings.name }}</h3>
+              {%- if block.settings.items != blank -%}
+                <p class="abundle__items">{{ block.settings.items }}</p>
+              {%- endif -%}
+
+              <ul class="abundle__perks">
+                {%- if block.settings.perk_1 != blank -%}<li>{{ block.settings.perk_1 }}</li>{%- endif -%}
+                {%- if block.settings.perk_2 != blank -%}<li>{{ block.settings.perk_2 }}</li>{%- endif -%}
+                {%- if block.settings.perk_3 != blank -%}<li>{{ block.settings.perk_3 }}</li>{%- endif -%}
+              </ul>
+
+              <div class="abundle__pricing">
+                <span class="abundle__price">
+                  {%- if bp -%}{{ bp.price | money }}{%- else -%}{{ block.settings.price }}{%- endif -%}
+                </span>
+                {%- if block.settings.compare != blank -%}
+                  <span class="abundle__was">{{ block.settings.compare }}</span>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.save != blank -%}
+                <p class="abundle__save">{{ block.settings.save }}</p>
+              {%- endif -%}
+
+              {%- if bp -%}
+                {%- form 'product', bp -%}
+                  <input type="hidden" name="id" value="{{ bp.selected_or_first_available_variant.id }}">
+                  <button type="submit"
+                          class="btn {% if block.settings.featured %}btn--primary{% else %}btn--dark{% endif %} btn--block"
+                          style="margin-top:20px;"
+                          {% unless bp.available %}disabled{% endunless %}>
+                    {%- if bp.available -%}
+                      {{ block.settings.cta_label | default: 'Add Bundle to Cart' }}
+                    {%- else -%}
+                      Sold Out
+                    {%- endif -%}
+                  </button>
+                {%- endform -%}
+              {%- else -%}
+                <a href="{{ block.settings.cta_link | default: '#' }}"
+                   class="btn {% if block.settings.featured %}btn--primary{% else %}btn--dark{% endif %} btn--block"
+                   style="margin-top:20px;">
+                  {{ block.settings.cta_label | default: 'Add Bundle to Cart' }}
+                </a>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .abundle-grid { display: grid; grid-template-columns: 1fr; gap: clamp(16px, 2vw, 24px); margin-top: clamp(36px, 5vw, 56px); }
+  @media (min-width: 640px) { .abundle-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .abundle-grid { grid-template-columns: repeat(3, 1fr); } }
+  .abundle { position: relative; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; background: var(--ivory); transition: box-shadow .3s, transform .3s; }
+  .abundle:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+  .abundle--featured { border-color: var(--bronze); border-width: 2px; }
+  .abundle__best-tag { position: absolute; top: 14px; right: 14px; background: var(--bronze); color: var(--ivory); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; z-index: 1; }
+  .abundle__media { overflow: hidden; }
+  .abundle__media img { width: 100%; height: 220px; object-fit: cover; display: block; transition: transform .5s var(--ease); }
+  .abundle:hover .abundle__media img { transform: scale(1.04); }
+  .abundle__ph { height: 220px; background: var(--sand); }
+  .abundle__body { padding: clamp(20px, 2.5vw, 28px); display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .abundle__name { font-family: var(--display); font-size: clamp(19px, 2.2vw, 24px); font-weight: 500; }
+  .abundle__items { font-size: 13px; color: var(--ink-soft); }
+  .abundle__perks { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .abundle__perks li { font-size: 13px; color: var(--ink-soft); display: flex; align-items: flex-start; gap: 7px; }
+  .abundle__perks li::before { content: '✓'; color: var(--forest); font-weight: 700; flex-shrink: 0; }
+  .abundle__pricing { display: flex; align-items: baseline; gap: 10px; margin-top: 4px; }
+  .abundle__price { font-family: var(--display); font-size: 26px; font-weight: 500; }
+  .abundle__was { font-size: 15px; color: var(--ink-soft); text-decoration: line-through; opacity: .7; }
+  .abundle__save { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--forest); }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — Bundle Offer",
+  "tag": "section",
+  "class": "shopify-section--auvelle-bundles",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Complete the Ritual" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Bundle up &amp; <em class='serif-it'>save more</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "Pair your Auvelle Tooth Cleaner with our whitening essentials for a complete oral beauty routine." }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Bundle",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Bundle image (overrides product image)" },
+        { "type": "product", "id": "product", "label": "Bundle product" },
+        { "type": "text", "id": "name", "label": "Bundle name", "default": "Starter Kit" },
+        { "type": "text", "id": "items", "label": "What's included", "default": "Tooth Cleaner + 1 brush head" },
+        { "type": "text", "id": "perk_1", "label": "Perk 1" },
+        { "type": "text", "id": "perk_2", "label": "Perk 2" },
+        { "type": "text", "id": "perk_3", "label": "Perk 3" },
+        { "type": "text", "id": "price", "label": "Price (if no product linked)", "default": "$79.99" },
+        { "type": "text", "id": "compare", "label": "Compare-at price" },
+        { "type": "text", "id": "save", "label": "Save text", "default": "You save $15" },
+        { "type": "text", "id": "cta_label", "label": "Button label", "default": "Add Bundle to Cart" },
+        { "type": "url", "id": "cta_link", "label": "Button link (if no product linked)" },
+        { "type": "checkbox", "id": "featured", "label": "Featured (highlighted border)", "default": false },
+        { "type": "text", "id": "featured_label", "label": "Featured badge text", "default": "★ Best Value" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Bundle Offer",
+      "blocks": [
+        {
+          "type": "bundle",
+          "settings": {
+            "name": "Starter Kit",
+            "items": "Tooth Cleaner + 1 replacement head",
+            "perk_1": "Daily Clean & Sensitive modes",
+            "price": "$79.99",
+            "compare": "$94.99",
+            "save": "You save $15"
+          }
+        },
+        {
+          "type": "bundle",
+          "settings": {
+            "name": "Whitening Bundle",
+            "items": "Tooth Cleaner + Whitening Gel (3×) + 2 heads",
+            "perk_1": "5 shades whiter in 14 days",
+            "perk_2": "Includes premium whitening mode",
+            "price": "$119.99",
+            "compare": "$149.97",
+            "save": "You save $30",
+            "featured": true,
+            "featured_label": "★ Most Popular"
+          }
+        },
+        {
+          "type": "bundle",
+          "settings": {
+            "name": "Pro Complete Kit",
+            "items": "Tooth Cleaner + 6 heads + travel case + whitening gel",
+            "perk_1": "1-year supply of brush heads",
+            "perk_2": "Premium travel case included",
+            "perk_3": "Priority customer support",
+            "price": "$179.99",
+            "compare": "$239.94",
+            "save": "You save $60"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

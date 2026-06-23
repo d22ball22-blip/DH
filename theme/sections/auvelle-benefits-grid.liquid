@@ -1,0 +1,145 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-benefits">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="lede">{{ section.settings.sub }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_stat_bar -%}
+      <div class="ben-stats reveal">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="ben-stat" {{ block.shopify_attributes }}>
+              <span class="ben-stat__num">{{ block.settings.number }}</span>
+              <span class="ben-stat__label">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="aben-grid reveal">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'benefit' -%}
+          <div class="aben {% if block.settings.featured %}aben--featured{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image -%}
+              <div class="aben__img">
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="600" height="400">
+              </div>
+            {%- else -%}
+              <div class="aben__ico">
+                {%- render 'icon', icon: block.settings.icon -%}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="eyebrow">{{ block.settings.eyebrow }}</span>
+            {%- endif -%}
+            <h3>{{ block.settings.title }}</h3>
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text }}</p>
+            {%- endif -%}
+            {%- if block.settings.badge != blank -%}
+              <span class="aben__badge">{{ block.settings.badge }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Stat bar */
+  .ben-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; margin-top: clamp(32px, 4vw, 48px); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .ben-stat { flex: 1; min-width: 140px; padding: clamp(20px, 2.5vw, 32px) 24px; text-align: center; border-right: 1px solid var(--line); }
+  .ben-stat:last-child { border-right: none; }
+  .ben-stat__num { display: block; font-family: var(--display); font-size: clamp(28px, 4vw, 44px); font-weight: 500; color: var(--bronze); }
+  .ben-stat__label { display: block; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin-top: 4px; }
+
+  /* Benefits grid */
+  .aben-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 2vw, 24px); margin-top: clamp(36px, 5vw, 56px); }
+  @media (min-width: 768px) { .aben-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1100px) { .aben-grid { grid-template-columns: repeat(4, 1fr); } }
+  .aben { background: var(--ivory); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(20px, 2.5vw, 32px); display: flex; flex-direction: column; gap: 12px; transition: box-shadow .3s, transform .3s; }
+  .aben:hover { box-shadow: var(--shadow-sm); transform: translateY(-3px); }
+  .aben--featured { background: var(--forest); color: var(--ivory); border-color: transparent; }
+  .aben--featured .eyebrow { color: var(--champagne); }
+  .aben__ico { width: 44px; height: 44px; background: rgba(167,107,61,.1); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--bronze); }
+  .aben--featured .aben__ico { background: rgba(255,255,255,.1); color: var(--champagne); }
+  .aben__ico svg { width: 22px; height: 22px; }
+  .aben__img { border-radius: var(--radius); overflow: hidden; margin-bottom: 4px; }
+  .aben__img img { width: 100%; height: 180px; object-fit: cover; }
+  .aben h3 { font-family: var(--display); font-size: clamp(17px, 2vw, 22px); font-weight: 500; }
+  .aben p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+  .aben--featured p { color: rgba(248,244,238,.78); }
+  .aben__badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; background: var(--champagne); color: var(--ink); padding: 4px 10px; border-radius: 20px; }
+  .aben--featured .aben__badge { background: rgba(255,255,255,.15); color: var(--ivory); }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — Benefits Grid",
+  "tag": "section",
+  "class": "shopify-section--auvelle-benefits",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why It Works" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Everything your smile <em class='serif-it'>deserves</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext" },
+    { "type": "checkbox", "id": "show_stat_bar", "label": "Show stats bar", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "99.9%" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Plaque removed" }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit card",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon (if no image)", "options": [
+            { "value": "star", "label": "Star" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "check", "label": "Check" }
+          ], "default": "star" },
+        { "type": "image_picker", "id": "image", "label": "Image (overrides icon)" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (optional)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Sonic vibration" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "31,000 strokes per minute for a deep, professional clean." },
+        { "type": "text", "id": "badge", "label": "Badge label (optional)" },
+        { "type": "checkbox", "id": "featured", "label": "Featured style (dark background)", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Benefits Grid",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "99.9%", "label": "Plaque removed" } },
+        { "type": "stat", "settings": { "number": "5x", "label": "Whiter in 14 days" } },
+        { "type": "stat", "settings": { "number": "31K", "label": "Sonic strokes/min" } },
+        { "type": "stat", "settings": { "number": "#1", "label": "DTC Oral Care 2025" } },
+        { "type": "benefit", "settings": { "icon": "star", "title": "5 Smart Modes", "text": "Whitening, Daily Clean, Sensitive, Gum Care & Tongue mode. One device, every need." } },
+        { "type": "benefit", "settings": { "icon": "shield", "title": "Pressure Sensor", "text": "Real-time alert when you're brushing too hard — protects enamel and gums." } },
+        { "type": "benefit", "settings": { "icon": "leaf", "title": "30-Day Battery", "text": "Charge once, use every day for a month. Travel-ready and USB-C." } },
+        { "type": "benefit", "settings": { "icon": "check", "title": "2-Min Timer", "text": "Built-in quadrant pacer guides you to a complete clean, every time." } },
+        { "type": "benefit", "settings": { "icon": "star", "title": "Waterproof IPX7", "text": "Fully waterproof — brush in the shower, clean under the tap." }, "settings": { "featured": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

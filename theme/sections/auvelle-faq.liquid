@@ -1,0 +1,161 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-faq">
+  <div class="wrap">
+    <div class="afaq-layout">
+      <div class="afaq-intro reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="display-md">{{ section.settings.heading }}</h2>
+        {%- if section.settings.sub != blank -%}
+          <p class="lede">{{ section.settings.sub }}</p>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_link }}" class="btn btn--primary" style="margin-top:24px;">{{ section.settings.cta_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.support_text != blank -%}
+          <p class="afaq-support">{{ section.settings.support_text }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="afaq-list reveal">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'question' -%}
+            <div class="afaq__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}" {{ block.shopify_attributes }}>
+              <button class="afaq__q" type="button" aria-expanded="{% if forloop.first and section.settings.open_first %}true{% else %}false{% endif %}">
+                <span>{{ block.settings.question }}</span>
+                <span class="afaq__ic" aria-hidden="true"></span>
+              </button>
+              <div class="afaq__a" {% unless forloop.first and section.settings.open_first %}hidden{% endunless %}>
+                <div class="afaq__a-inner">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .afaq-layout { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 5vw, 64px); }
+  @media (min-width: 900px) { .afaq-layout { grid-template-columns: 340px 1fr; align-items: start; } }
+  .afaq-intro { display: flex; flex-direction: column; gap: 16px; }
+  @media (min-width: 900px) { .afaq-intro { position: sticky; top: 100px; } }
+  .afaq-support { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+
+  .afaq-list { display: flex; flex-direction: column; }
+  .afaq__item { border-bottom: 1px solid var(--line); }
+  .afaq__item:first-child { border-top: 1px solid var(--line); }
+  .afaq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(16px, 2vw, 22px) 0; font-size: 15px; font-weight: 500; text-align: left; background: none; border: none; cursor: pointer; color: var(--ink); }
+  .afaq__q:hover { color: var(--bronze); }
+  .afaq__ic { flex-shrink: 0; width: 20px; height: 20px; position: relative; }
+  .afaq__ic::before, .afaq__ic::after { content: ''; position: absolute; background: currentColor; border-radius: 2px; transition: transform .3s var(--ease), opacity .3s; }
+  .afaq__ic::before { top: 50%; left: 50%; width: 12px; height: 1.5px; transform: translate(-50%, -50%); }
+  .afaq__ic::after { top: 50%; left: 50%; width: 1.5px; height: 12px; transform: translate(-50%, -50%); }
+  .afaq__item.is-open .afaq__ic::after { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+  .afaq__a { overflow: hidden; }
+  .afaq__a[hidden] { display: none; }
+  .afaq__a-inner { padding-bottom: clamp(14px, 1.8vw, 20px); font-size: 14.5px; color: var(--ink-soft); line-height: 1.75; }
+  .afaq__a-inner p { margin-top: 8px; }
+  .afaq__a-inner p:first-child { margin-top: 0; }
+</style>
+
+<script>
+(function(){
+  document.querySelectorAll('.afaq__q').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = this.closest('.afaq__item');
+      var answer = item.querySelector('.afaq__a');
+      var isOpen = item.classList.contains('is-open');
+      item.classList.toggle('is-open', !isOpen);
+      this.setAttribute('aria-expanded', !isOpen);
+      if(isOpen){
+        answer.setAttribute('hidden', '');
+      } else {
+        answer.removeAttribute('hidden');
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Auvelle — FAQ",
+  "tag": "section",
+  "class": "shopify-section--auvelle-faq",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Good To Know" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Your questions, <em class='serif-it'>answered</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext" },
+    { "type": "checkbox", "id": "open_first", "label": "Open first question by default", "default": true },
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "Shop Now" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "text", "id": "support_text", "label": "Support text", "default": "Still have questions? Email us at hello@auvellebeauty.com" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How is this different from my regular electric toothbrush?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Auvelle uses true sonic vibration — 31,000 strokes per minute versus the 8,000–10,000 found in most rotating electric brushes. This creates a fluid dynamic that pushes toothpaste into the gaps between teeth, reaching where bristles can't.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "How is this different from my regular electric toothbrush?",
+            "answer": "<p>Auvelle uses true sonic vibration — 31,000 strokes per minute versus the 8,000–10,000 found in most rotating electric brushes. This creates a fluid dynamic that cleans between teeth and below the gumline, reaching where bristles can't.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long before I see whitening results?",
+            "answer": "<p>Most customers notice a difference within 7–10 days of using the Whitening mode daily. Full results — up to 5 shades whiter — typically develop over 14–30 days. Results may vary depending on the severity of existing stains.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Is it safe for sensitive teeth and gums?",
+            "answer": "<p>Yes. The Sensitive mode reduces vibration intensity by 40% while maintaining effective cleaning. The built-in pressure sensor prevents over-brushing, which is the leading cause of enamel erosion and gum recession.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long does the battery last?",
+            "answer": "<p>The battery lasts up to 30 days on a single 2-hour USB-C charge (based on 2 minutes twice daily). A low-battery LED indicator gives you advance notice before it needs charging.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a no-questions-asked 90-day money-back guarantee. If you're not completely satisfied, contact our team and we'll arrange a full refund — no need to return the brush.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How often should I replace the brush head?",
+            "answer": "<p>We recommend replacing your brush head every 3 months — the same as a manual toothbrush. The blue indicator bristles fade to white to let you know when it's time to replace.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

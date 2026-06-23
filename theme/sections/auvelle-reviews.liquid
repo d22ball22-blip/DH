@@ -1,0 +1,174 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-reviews">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+    </div>
+
+    {%- comment -%} Rating summary bar {%- endcomment -%}
+    {%- if section.settings.show_summary -%}
+      <div class="arev-summary reveal">
+        <div class="arev-summary__score">
+          <span class="arev-summary__num">{{ section.settings.overall_rating }}</span>
+          <div class="arev-summary__stars">★★★★★</div>
+          <span class="arev-summary__count">{{ section.settings.review_count }} verified reviews</span>
+        </div>
+        <div class="arev-summary__bars">
+          {%- for i in (1..5) -%}
+            {%- assign bar_id = 'bar_' | append: i -%}
+            {%- assign pct_id = 'pct_' | append: i -%}
+            <div class="arev-summary__bar-row">
+              <span class="arev-summary__bar-label">{{ i }}★</span>
+              <div class="arev-summary__bar-track">
+                <div class="arev-summary__bar-fill" style="width: {{ section.settings[pct_id] | default: 0 }}%"></div>
+              </div>
+              <span class="arev-summary__bar-pct">{{ section.settings[pct_id] | default: 0 }}%</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Review cards {%- endcomment -%}
+    <div class="arev-grid reveal">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <article class="arev" {{ block.shopify_attributes }}>
+            <div class="arev__head">
+              <div class="arev__avatar">
+                {%- if block.settings.avatar -%}
+                  <img src="{{ block.settings.avatar | image_url: width: 80 }}" alt="{{ block.settings.author | escape }}" width="80" height="80" loading="lazy">
+                {%- else -%}
+                  <span>{{ block.settings.author | slice: 0 }}</span>
+                {%- endif -%}
+              </div>
+              <div>
+                <div class="arev__author">{{ block.settings.author }}</div>
+                <div class="arev__meta">
+                  {%- if block.settings.verified -%}
+                    <span class="arev__verified">✓ Verified</span>
+                  {%- endif -%}
+                  <span>{{ block.settings.date }}</span>
+                </div>
+              </div>
+              <div class="arev__stars" style="margin-left:auto;">
+                {%- assign stars = block.settings.stars | times: 1 -%}
+                {%- for i in (1..5) -%}
+                  {%- if i <= stars -%}★{%- else -%}<span style="opacity:.25">★</span>{%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- if block.settings.title != blank -%}
+              <p class="arev__title">{{ block.settings.title }}</p>
+            {%- endif -%}
+            <p class="arev__body">{{ block.settings.body }}</p>
+            {%- if block.settings.photo -%}
+              <img class="arev__photo" src="{{ block.settings.photo | image_url: width: 300 }}" alt="Review photo" loading="lazy">
+            {%- endif -%}
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div style="text-align:center; margin-top: clamp(28px, 4vw, 44px);" class="reveal">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--ghost">{{ section.settings.cta_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  /* Rating summary */
+  .arev-summary { display: grid; grid-template-columns: auto 1fr; gap: 32px 48px; align-items: center; max-width: 640px; margin: clamp(28px,4vw,48px) auto; padding: clamp(20px,3vw,32px); background: var(--ivory); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  @media (max-width: 560px) { .arev-summary { grid-template-columns: 1fr; } }
+  .arev-summary__score { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .arev-summary__num { font-family: var(--display); font-size: 56px; font-weight: 500; line-height: 1; color: var(--bronze); }
+  .arev-summary__stars { font-size: 22px; color: var(--champagne-2); letter-spacing: .06em; }
+  .arev-summary__count { font-size: 12px; color: var(--ink-soft); }
+  .arev-summary__bars { display: flex; flex-direction: column; gap: 8px; }
+  .arev-summary__bar-row { display: flex; align-items: center; gap: 10px; }
+  .arev-summary__bar-label { font-size: 12px; font-weight: 500; width: 20px; text-align: right; flex-shrink: 0; }
+  .arev-summary__bar-track { flex: 1; height: 6px; background: var(--sand); border-radius: 3px; overflow: hidden; }
+  .arev-summary__bar-fill { height: 100%; background: var(--champagne-2); border-radius: 3px; }
+  .arev-summary__bar-pct { font-size: 11px; color: var(--ink-soft); width: 30px; flex-shrink: 0; }
+
+  /* Review grid */
+  .arev-grid { display: grid; grid-template-columns: 1fr; gap: clamp(16px, 2vw, 24px); margin-top: clamp(28px, 4vw, 48px); }
+  @media (min-width: 640px) { .arev-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .arev-grid { grid-template-columns: repeat(3, 1fr); } }
+  .arev { background: var(--ivory); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(20px, 2.5vw, 28px); display: flex; flex-direction: column; gap: 14px; }
+  .arev__head { display: flex; align-items: center; gap: 12px; }
+  .arev__avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; background: var(--sand); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 20px; font-weight: 500; color: var(--bronze); }
+  .arev__avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .arev__author { font-size: 14px; font-weight: 600; }
+  .arev__meta { font-size: 12px; color: var(--ink-soft); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+  .arev__verified { color: var(--forest); font-weight: 500; }
+  .arev__stars { font-size: 15px; color: var(--champagne-2); letter-spacing: .04em; }
+  .arev__title { font-weight: 600; font-size: 15px; }
+  .arev__body { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
+  .arev__photo { width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius); }
+  .btn--ghost { background: transparent; border: 1.5px solid var(--bronze); color: var(--bronze); padding: 16px 36px; }
+  .btn--ghost:hover { background: var(--bronze); color: var(--ivory); }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — Reviews",
+  "tag": "section",
+  "class": "shopify-section--auvelle-reviews",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What Our Customers Say" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Over 3,000 five-star <em class='serif-it'>smiles</em>." },
+    { "type": "header", "content": "Rating summary" },
+    { "type": "checkbox", "id": "show_summary", "label": "Show rating summary bar", "default": true },
+    { "type": "text", "id": "overall_rating", "label": "Overall rating", "default": "4.9" },
+    { "type": "text", "id": "review_count", "label": "Review count", "default": "3,241" },
+    { "type": "range", "id": "pct_5", "label": "5-star %", "min": 0, "max": 100, "step": 1, "default": 82 },
+    { "type": "range", "id": "pct_4", "label": "4-star %", "min": 0, "max": 100, "step": 1, "default": 12 },
+    { "type": "range", "id": "pct_3", "label": "3-star %", "min": 0, "max": 100, "step": 1, "default": 4 },
+    { "type": "range", "id": "pct_2", "label": "2-star %", "min": 0, "max": 100, "step": 1, "default": 1 },
+    { "type": "range", "id": "pct_1", "label": "1-star %", "min": 0, "max": 100, "step": 1, "default": 1 },
+    { "type": "header", "content": "CTA" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Read all reviews" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "image_picker", "id": "avatar", "label": "Avatar photo (optional)" },
+        { "type": "text", "id": "author", "label": "Reviewer name", "default": "Sarah M." },
+        { "type": "text", "id": "date", "label": "Date", "default": "June 2025" },
+        { "type": "select", "id": "stars", "label": "Star rating", "options": [
+            { "value": "5", "label": "5 stars" },
+            { "value": "4", "label": "4 stars" },
+            { "value": "3", "label": "3 stars" }
+          ], "default": "5" },
+        { "type": "checkbox", "id": "verified", "label": "Verified purchase", "default": true },
+        { "type": "text", "id": "title", "label": "Review title", "default": "Game changer for my morning routine" },
+        { "type": "textarea", "id": "body", "label": "Review body", "default": "I noticed a difference in the first week — my teeth feel so much cleaner than with my old electric toothbrush. The whitening mode is incredible." },
+        { "type": "image_picker", "id": "photo", "label": "Review photo (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Reviews",
+      "blocks": [
+        { "type": "review", "settings": { "author": "Sarah M.", "date": "May 2025", "stars": "5", "verified": true, "title": "Game changer", "body": "First week and my teeth are visibly whiter. The pressure sensor stopped my aggressive brushing habit too. Absolutely love it." } },
+        { "type": "review", "settings": { "author": "James T.", "date": "April 2025", "stars": "5", "verified": true, "title": "Worth every penny", "body": "Switched from Oral-B and I'll never go back. The battery lasts forever and the gum care mode has stopped my bleeding gums in 2 weeks." } },
+        { "type": "review", "settings": { "author": "Priya K.", "date": "June 2025", "stars": "5", "verified": true, "title": "My dentist was impressed", "body": "At my last cleaning my hygienist asked what I'd changed. When I told her she said she'd seen it in several patients recently. Says it all." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

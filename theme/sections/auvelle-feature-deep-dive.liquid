@@ -1,0 +1,148 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-features">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="lede">{{ section.settings.sub }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="afeat-list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'feature' -%}
+          <div class="afeat reveal {% cycle 'afeat--normal', 'afeat--flip' %}" {{ block.shopify_attributes }}>
+            <div class="afeat__media">
+              {%- if block.settings.image -%}
+                <img src="{{ block.settings.image | image_url: width: 900 }}"
+                     alt="{{ block.settings.title | escape }}"
+                     loading="lazy" width="900" height="675">
+              {%- else -%}
+                <div class="afeat__ph"></div>
+              {%- endif -%}
+              {%- if block.settings.badge != blank -%}
+                <span class="afeat__badge">{{ block.settings.badge }}</span>
+              {%- endif -%}
+            </div>
+            <div class="afeat__copy">
+              {%- if block.settings.eyebrow != blank -%}
+                <span class="eyebrow">{{ block.settings.eyebrow }}</span>
+              {%- endif -%}
+              <h3 class="display-sm">{{ block.settings.title }}</h3>
+              <div class="afeat__body">{{ block.settings.body }}</div>
+              {%- if block.settings.cta_label != blank -%}
+                <a href="{{ block.settings.cta_link }}" class="btn btn--primary" style="margin-top:8px;">{{ block.settings.cta_label }}</a>
+              {%- endif -%}
+              {%- comment -%} Sub-bullets {%- endcomment -%}
+              {%- if block.settings.bullet_1 != blank or block.settings.bullet_2 != blank or block.settings.bullet_3 != blank -%}
+                <ul class="afeat__bullets">
+                  {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
+                  {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
+                  {%- if block.settings.bullet_3 != blank -%}<li>{{ block.settings.bullet_3 }}</li>{%- endif -%}
+                  {%- if block.settings.bullet_4 != blank -%}<li>{{ block.settings.bullet_4 }}</li>{%- endif -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .afeat-list { display: flex; flex-direction: column; gap: clamp(56px, 8vw, 100px); margin-top: clamp(48px, 6vw, 80px); }
+  .afeat { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+  @media (min-width: 768px) { .afeat { grid-template-columns: 1fr 1fr; } .afeat--flip .afeat__media { order: 2; } .afeat--flip .afeat__copy { order: 1; } }
+  .afeat__media { position: relative; border-radius: var(--radius-lg); overflow: hidden; }
+  .afeat__media img { width: 100%; display: block; }
+  .afeat__ph { aspect-ratio: 4/3; background: var(--sand); }
+  .afeat__badge { position: absolute; top: 16px; right: 16px; background: var(--bronze); color: var(--ivory); font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; }
+  .afeat__copy { display: flex; flex-direction: column; gap: 16px; }
+  .afeat__copy .eyebrow { display: block; }
+  .afeat__body { font-size: 15px; color: var(--ink-soft); line-height: 1.75; }
+  .afeat__body p { margin-top: 12px; }
+  .afeat__body p:first-child { margin-top: 0; }
+  .afeat__bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; padding: 0; }
+  .afeat__bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; }
+  .afeat__bullets li::before { content: '✓'; color: var(--forest); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — Feature Deep Dive",
+  "tag": "section",
+  "class": "shopify-section--auvelle-features",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Technology" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Built different, <em class='serif-it'>by design</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature spotlight",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Feature image" },
+        { "type": "text", "id": "badge", "label": "Image badge (optional)" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (optional)" },
+        { "type": "text", "id": "title", "label": "Feature title", "default": "Sonic Vibration Technology" },
+        { "type": "richtext", "id": "body", "label": "Body copy", "default": "<p>Our proprietary sonic drive delivers 31,000 brush strokes per minute — over twice the cleaning power of standard electric toothbrushes.</p>" },
+        { "type": "text", "id": "bullet_1", "label": "Bullet 1" },
+        { "type": "text", "id": "bullet_2", "label": "Bullet 2" },
+        { "type": "text", "id": "bullet_3", "label": "Bullet 3" },
+        { "type": "text", "id": "bullet_4", "label": "Bullet 4" },
+        { "type": "text", "id": "cta_label", "label": "CTA label (optional)" },
+        { "type": "url", "id": "cta_link", "label": "CTA link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Feature Deep Dive",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "Sonic Power",
+            "title": "31,000 Strokes Per Minute",
+            "body": "<p>Our patented sonic drive creates micro-vibrations that reach between teeth and along the gumline — areas a manual brush simply can't access.</p>",
+            "bullet_1": "Removes up to 10× more plaque than manual brushing",
+            "bullet_2": "Reduces stains from coffee, tea & wine",
+            "bullet_3": "Stimulates gum circulation for healthier tissue"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "Smart Sensing",
+            "title": "Real-Time Pressure Protection",
+            "body": "<p>Brush too hard and the handle pulses to alert you — protecting your enamel and gums from the damage caused by aggressive brushing.</p>",
+            "bullet_1": "LED indicator changes colour under excess pressure",
+            "bullet_2": "Speed automatically reduces to safe level",
+            "bullet_3": "Prevents irreversible gum recession"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "All-Day Power",
+            "title": "One Charge. 30 Days.",
+            "body": "<p>The high-density lithium cell delivers a full month of twice-daily brushing from a single charge. USB-C for universal compatibility.</p>",
+            "bullet_1": "30-day battery from a 2-hour charge",
+            "bullet_2": "USB-C travel case included",
+            "bullet_3": "Low-battery LED indicator"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,167 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-comparison">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="lede">{{ section.settings.sub }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="acmp reveal">
+      {%- comment -%} Header row {%- endcomment -%}
+      <div class="acmp__row acmp__head">
+        <div class="acmp__feat"></div>
+        <div class="acmp__us">
+          {%- if section.settings.us_logo -%}
+            <img src="{{ section.settings.us_logo | image_url: width: 120 }}" alt="{{ section.settings.us_label | escape }}" width="120" height="40" style="height:40px;width:auto;object-fit:contain;">
+          {%- else -%}
+            {{ section.settings.us_label }}
+          {%- endif -%}
+          {%- if section.settings.us_badge != blank -%}
+            <span class="acmp__us-badge">{{ section.settings.us_badge }}</span>
+          {%- endif -%}
+        </div>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'competitor_col' -%}
+            <div class="acmp__them" {{ block.shopify_attributes }}>{{ block.settings.label }}</div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Feature rows {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'feature' -%}
+          <div class="acmp__row" {{ block.shopify_attributes }}>
+            <div class="acmp__feat">
+              {{ block.settings.feature }}
+              {%- if block.settings.tooltip != blank -%}
+                <span class="acmp__tooltip" title="{{ block.settings.tooltip | escape }}">?</span>
+              {%- endif -%}
+            </div>
+            <div class="acmp__us acmp__us--check">
+              {%- if block.settings.us_value != blank -%}
+                <span class="acmp__val">{{ block.settings.us_value }}</span>
+              {%- else -%}
+                {%- render 'icon', icon: 'check' -%}
+              {%- endif -%}
+            </div>
+            {%- comment -%} Competitor columns — match order {%- endcomment -%}
+            {%- assign comp_i = 0 -%}
+            {%- for b2 in section.blocks -%}
+              {%- if b2.type == 'competitor_col' -%}
+                <div class="acmp__them">
+                  {%- assign has_key = 'them_' | append: comp_i | append: '_has' -%}
+                  {%- assign val_key = 'them_' | append: comp_i | append: '_value' -%}
+                  {%- if block.settings[val_key] != blank -%}
+                    <span class="acmp__val acmp__val--them">{{ block.settings[val_key] }}</span>
+                  {%- elsif block.settings[has_key] -%}
+                    {%- render 'icon', icon: 'check' -%}
+                  {%- else -%}
+                    {%- render 'icon', icon: 'close' -%}
+                  {%- endif -%}
+                </div>
+                {%- assign comp_i = comp_i | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div style="text-align:center; margin-top: clamp(28px, 3.5vw, 44px);" class="reveal">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+        {%- if section.settings.cta_sub != blank -%}
+          <p style="margin-top:10px; font-size:13px; color:var(--ink-soft);">{{ section.settings.cta_sub }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .acmp { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; overflow-x: auto; margin-top: clamp(36px, 5vw, 56px); }
+  .acmp__row { display: grid; grid-template-columns: 2fr 1.4fr 1fr 1fr; min-width: 560px; }
+  .acmp__row + .acmp__row { border-top: 1px solid var(--line); }
+  .acmp__head { background: var(--forest); color: var(--ivory); font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .acmp__feat, .acmp__us, .acmp__them { padding: clamp(12px, 1.8vw, 20px) clamp(12px, 2vw, 22px); display: flex; align-items: center; }
+  .acmp__feat { font-size: 14px; color: var(--ink); gap: 6px; }
+  .acmp__us { background: rgba(45,74,62,.04); border-left: 1px solid var(--line); justify-content: center; flex-direction: column; gap: 4px; }
+  .acmp__head .acmp__us { background: rgba(255,255,255,.08); color: var(--champagne); border-color: rgba(255,255,255,.1); }
+  .acmp__us--check svg { width: 20px; height: 20px; color: var(--forest); }
+  .acmp__them { border-left: 1px solid var(--line); justify-content: center; color: var(--ink-soft); }
+  .acmp__them svg { width: 18px; height: 18px; }
+  .acmp__them svg path:first-child { color: #dc3545; }
+  .acmp__us-badge { font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; background: var(--champagne); color: var(--ink); padding: 2px 7px; border-radius: 10px; }
+  .acmp__val { font-size: 13px; font-weight: 600; color: var(--forest); }
+  .acmp__val--them { color: var(--ink-soft); font-weight: 400; }
+  .acmp__tooltip { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: var(--sand); font-size: 10px; cursor: help; color: var(--ink-soft); flex-shrink: 0; }
+  .acmp__row:nth-child(even) { background: var(--ivory-2); }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — Comparison Table",
+  "tag": "section",
+  "class": "shopify-section--auvelle-comparison",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Difference" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Why Auvelle <em class='serif-it'>wins</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext" },
+    { "type": "image_picker", "id": "us_logo", "label": "Our brand logo (optional)" },
+    { "type": "text", "id": "us_label", "label": "Our column label", "default": "Auvelle" },
+    { "type": "text", "id": "us_badge", "label": "Our column badge", "default": "Best Choice" },
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "Shop Auvelle" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "text", "id": "cta_sub", "label": "CTA sub-text", "default": "Free shipping · 90-day guarantee" }
+  ],
+  "blocks": [
+    {
+      "type": "competitor_col",
+      "name": "Competitor column",
+      "limit": 2,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Competitor name", "default": "Brand X" }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Feature row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature name", "default": "Sonic technology" },
+        { "type": "text", "id": "tooltip", "label": "Tooltip (optional)" },
+        { "type": "text", "id": "us_value", "label": "Our value (blank = checkmark)", "default": "" },
+        { "type": "checkbox", "id": "them_0_has", "label": "Competitor 1 has this", "default": false },
+        { "type": "text", "id": "them_0_value", "label": "Competitor 1 value (blank = icon)" },
+        { "type": "checkbox", "id": "them_1_has", "label": "Competitor 2 has this", "default": false },
+        { "type": "text", "id": "them_1_value", "label": "Competitor 2 value (blank = icon)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Comparison Table",
+      "blocks": [
+        { "type": "competitor_col", "settings": { "label": "Oral-B" } },
+        { "type": "competitor_col", "settings": { "label": "Philips" } },
+        { "type": "feature", "settings": { "feature": "Sonic 31,000 strokes/min", "them_0_has": false, "them_1_has": false } },
+        { "type": "feature", "settings": { "feature": "5 smart modes", "them_0_has": false, "them_1_has": false } },
+        { "type": "feature", "settings": { "feature": "Pressure sensor", "them_0_has": true, "them_1_has": true } },
+        { "type": "feature", "settings": { "feature": "30-day battery", "them_0_has": false, "them_1_has": false } },
+        { "type": "feature", "settings": { "feature": "USB-C charging", "them_0_has": false, "them_1_has": true } },
+        { "type": "feature", "settings": { "feature": "IPX7 waterproof", "them_0_has": true, "them_1_has": true } },
+        { "type": "feature", "settings": { "feature": "Tongue cleaner mode", "them_0_has": false, "them_1_has": false } },
+        { "type": "feature", "settings": { "feature": "90-day guarantee", "them_0_has": false, "them_1_has": false } }
+      ]
+    }
+  ]
+}
+{% endschema %}

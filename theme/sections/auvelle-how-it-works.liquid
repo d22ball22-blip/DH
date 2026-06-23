@@ -1,0 +1,116 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-how">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="lede">{{ section.settings.sub }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ahow-steps reveal">
+      {%- assign step_count = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+          {%- assign step_count = step_count | plus: 1 -%}
+          <div class="ahow-step {% if section.settings.style == 'timeline' %}ahow-step--timeline{% endif %}" {{ block.shopify_attributes }}>
+            <div class="ahow-step__media">
+              <span class="ahow-step__num">{{ step_count }}</span>
+              {%- if block.settings.image -%}
+                <img src="{{ block.settings.image | image_url: width: 640 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="640" height="480">
+              {%- else -%}
+                <div class="ahow-step__ph"></div>
+              {%- endif -%}
+            </div>
+            <div class="ahow-step__copy">
+              {%- if block.settings.eyebrow != blank -%}
+                <span class="eyebrow">{{ block.settings.eyebrow }}</span>
+              {%- endif -%}
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+              {%- if block.settings.tip != blank -%}
+                <p class="ahow-step__tip"><strong>Pro tip:</strong> {{ block.settings.tip }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- unless forloop.last -%}
+            <div class="ahow-divider" aria-hidden="true">
+              <svg viewBox="0 0 24 40" fill="none"><path d="M12 0v32M6 26l6 8 6-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div style="text-align:center; margin-top: clamp(32px, 4vw, 48px);" class="reveal">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .ahow-steps { display: flex; flex-direction: column; gap: 0; margin-top: clamp(36px, 5vw, 64px); }
+  .ahow-step { display: grid; grid-template-columns: 1fr; gap: 24px; padding: clamp(24px, 3vw, 40px) 0; }
+  @media (min-width: 768px) { .ahow-step { grid-template-columns: 1fr 1fr; align-items: center; } .ahow-step:nth-child(4n+1) { direction: rtl; } .ahow-step:nth-child(4n+1) > * { direction: ltr; } }
+  .ahow-step__media { position: relative; }
+  .ahow-step__num { position: absolute; top: -14px; left: -14px; width: 40px; height: 40px; background: var(--bronze); color: var(--ivory); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 18px; font-weight: 500; z-index: 1; box-shadow: var(--shadow-sm); }
+  .ahow-step__media img { width: 100%; height: 320px; object-fit: cover; border-radius: var(--radius-lg); }
+  .ahow-step__ph { width: 100%; height: 280px; background: var(--sand); border-radius: var(--radius-lg); }
+  .ahow-step__copy { display: flex; flex-direction: column; gap: 12px; }
+  .ahow-step__copy h3 { font-family: var(--display); font-size: clamp(22px, 3vw, 32px); font-weight: 500; }
+  .ahow-step__copy p { font-size: 15px; color: var(--ink-soft); line-height: 1.7; }
+  .ahow-step__tip { background: rgba(167,107,61,.08); border-left: 3px solid var(--bronze); padding: 10px 14px; border-radius: 0 var(--radius) var(--radius) 0; font-size: 14px !important; color: var(--ink) !important; }
+  .ahow-divider { display: flex; justify-content: center; color: var(--champagne); opacity: .5; padding: 8px 0; }
+  .ahow-divider svg { width: 24px; height: 40px; }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — How It Works",
+  "tag": "section",
+  "class": "shopify-section--auvelle-how",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Ritual" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "60 seconds to a <em class='serif-it'>cleaner smile</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext" },
+    { "type": "select", "id": "style", "label": "Layout style", "options": [
+        { "value": "alternating", "label": "Alternating (image + text)" },
+        { "value": "timeline", "label": "Timeline" }
+      ], "default": "alternating" },
+    { "type": "text", "id": "cta_label", "label": "CTA button label" },
+    { "type": "url", "id": "cta_link", "label": "CTA button link" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Step image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (optional)" },
+        { "type": "text", "id": "title", "label": "Step title", "default": "Apply the tip" },
+        { "type": "textarea", "id": "text", "label": "Step description", "default": "Wet the tip and apply a small amount of toothpaste. No foaming needed." },
+        { "type": "text", "id": "tip", "label": "Pro tip (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle How It Works",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Apply & Prep", "text": "Wet the brush tip and add a pea-sized amount of your favourite toothpaste. No special toothpaste required.", "tip": "Use our whitening gel for 2× faster results." } },
+        { "type": "step", "settings": { "title": "Select Your Mode", "text": "Choose from 5 smart modes: Daily Clean, Whitening, Sensitive, Gum Care, or Tongue Cleaner. Your last mode is remembered." } },
+        { "type": "step", "settings": { "title": "Brush for 2 Minutes", "text": "The built-in timer pulses every 30 seconds to guide you through each quadrant — ensuring a complete, even clean every time.", "tip": "Let the sonic vibration do the work. Use gentle pressure only." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

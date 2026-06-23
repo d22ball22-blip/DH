@@ -1,0 +1,432 @@
+<section class="apdp section--{{ section.settings.bg }}" id="apdp-hero">
+  <div class="wrap">
+    <div class="apdp__breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a><span>/</span>
+      <a href="{{ collections.all.url }}">Shop</a><span>/</span>
+      {{ product.title }}
+    </div>
+
+    <div class="apdp__grid">
+      {%- comment -%} ── Gallery ── {%- endcomment -%}
+      <div class="apdp__gallery">
+        <div class="apdp__thumbs">
+          {%- if product.media.size > 0 -%}
+            {%- for media in product.media limit: 6 -%}
+              <button class="apdp__thumb {% if forloop.first %}is-active{% endif %}"
+                      data-media="{{ media | image_url: width: 1200 }}"
+                      aria-label="View image {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 160 }}" alt="" loading="lazy" width="160" height="160">
+              </button>
+            {%- endfor -%}
+          {%- else -%}
+            {%- if section.settings.fallback_image -%}
+              <div class="apdp__thumb is-active">
+                <img src="{{ section.settings.fallback_image | image_url: width: 160 }}" alt="" loading="lazy">
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+
+        <div class="apdp__main-wrap">
+          {%- if section.settings.badge_text != blank -%}
+            <span class="apdp__badge">{{ section.settings.badge_text }}</span>
+          {%- endif -%}
+          {%- if product.media.size > 0 -%}
+            <img id="apdpMainImg"
+                 src="{{ product.featured_image | image_url: width: 1200 }}"
+                 alt="{{ product.title | escape }}"
+                 width="1200" height="1200">
+          {%- elsif section.settings.fallback_image -%}
+            <img id="apdpMainImg"
+                 src="{{ section.settings.fallback_image | image_url: width: 1200 }}"
+                 alt="{{ product.title | escape }}">
+          {%- else -%}
+            <div class="apdp__ph"></div>
+          {%- endif -%}
+
+          {%- if section.settings.show_trust_strip -%}
+            <div class="apdp__trust-strip">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'trust_badge' -%}
+                  <div class="apdp__trust-item" {{ block.shopify_attributes }}>
+                    {%- render 'icon', icon: block.settings.icon -%}
+                    <span>{{ block.settings.text }}</span>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} ── Info panel ── {%- endcomment -%}
+      <div class="apdp__info">
+        <div class="apdp__rating">
+          <span class="apdp__stars">★★★★★</span>
+          <small>
+            <strong>{{ product.metafields.custom.rating | default: section.settings.rating }}</strong>
+            &nbsp;·&nbsp;
+            <a href="#auvelle-reviews">
+              {{ product.metafields.custom.review_count | default: section.settings.review_count }} reviews
+            </a>
+          </small>
+        </div>
+
+        <h1 class="apdp__title">{{ product.title }}</h1>
+
+        {%- assign sub = product.metafields.custom.subtitle | default: section.settings.subtitle -%}
+        {%- if sub != blank -%}
+          <p class="apdp__subtitle">{{ sub }}</p>
+        {%- endif -%}
+
+        <div class="apdp__price-row">
+          <span class="apdp__price" id="apdpPrice">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="apdp__compare">{{ product.compare_at_price | money }}</span>
+            <span class="apdp__save">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.pay_text != blank -%}
+          <p class="apdp__pay">{{ section.settings.pay_text }}</p>
+        {%- endif -%}
+
+        {%- comment -%} key bullets {%- endcomment -%}
+        {%- if section.settings.show_bullets -%}
+          <ul class="apdp__bullets">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'bullet' -%}
+                <li {{ block.shopify_attributes }}>
+                  <span class="apdp__bullet-check">✓</span>
+                  {{ block.settings.text }}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- comment -%} Product form {%- endcomment -%}
+        {%- form 'product', product, id: 'apdp-form', class: 'apdp__form' -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="apdp__opt-group" data-option-index="{{ forloop.index0 }}">
+                <div class="apdp__opt-label">{{ option.name }}</div>
+                <div class="apdp__opt-row">
+                  {%- for value in option.values -%}
+                    <button type="button"
+                            class="apdp__opt {% if option.selected_value == value %}is-active{% endif %}"
+                            data-option="{{ forloop.parentloop.index0 }}"
+                            data-value="{{ value | escape }}">
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <select name="id" id="apdpVariantSelect" class="visually-hidden" style="display:none;">
+            {%- for variant in product.variants -%}
+              <option value="{{ variant.id }}"
+                      {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}
+                      data-price="{{ variant.price | money }}">
+                {{ variant.title }}
+              </option>
+            {%- endfor -%}
+          </select>
+
+          <div class="apdp__buy-row">
+            <div class="apdp-qty">
+              <button type="button" data-apdp-qty="dec" aria-label="Decrease quantity">−</button>
+              <input type="number" name="quantity" id="apdpQty" value="1" min="1" inputmode="numeric" aria-label="Quantity">
+              <button type="button" data-apdp-qty="inc" aria-label="Increase quantity">+</button>
+            </div>
+            <button type="submit" name="add" class="btn btn--primary apdp__add" id="apdpAdd"
+                    {% unless product.available %}disabled{% endunless %}>
+              {%- if product.available -%}
+                {{ section.settings.add_to_cart_label | default: 'Add to Cart' }} — <span id="apdpBtnPrice">{{ product.price | money }}</span>
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+          </div>
+
+          {%- if section.settings.show_buy_now -%}
+            <button type="submit" name="checkout" class="btn btn--dark btn--block apdp__express">
+              {{ section.settings.buy_now_label | default: 'Buy It Now' }}
+            </button>
+          {%- endif -%}
+        {%- endform -%}
+
+        {%- assign scar = product.metafields.custom.scarcity | default: section.settings.scarcity -%}
+        {%- if scar != blank -%}
+          <div class="apdp__scarcity">
+            <span class="apdp__dot"></span>{{ scar }}
+          </div>
+        {%- endif -%}
+
+        <div class="apdp__assure">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'assurance' -%}
+              <div class="apdp__assure-item" {{ block.shopify_attributes }}>
+                {%- render 'icon', icon: block.settings.icon -%}
+                <span>{{ block.settings.text }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Sticky ATC (mobile) {%- endcomment -%}
+{%- if section.settings.show_sticky_atc -%}
+  <div class="apdp-sticky" id="apdpSticky">
+    <div class="apdp-sticky__info">
+      <strong>{{ product.title }}</strong>
+      <span>{{ product.price | money }}</span>
+    </div>
+    <button class="btn btn--primary btn--sm" data-apdp-sticky-add>
+      {{ section.settings.add_to_cart_label | default: 'Add to Cart' }}
+    </button>
+  </div>
+{%- endif -%}
+
+<style>
+  .apdp { padding-block: clamp(32px, 5vw, 72px); }
+  .apdp__breadcrumb { font-size: 13px; color: var(--ink-soft); margin-bottom: 28px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .apdp__breadcrumb span { opacity: .4; }
+  .apdp__grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
+  @media (min-width: 900px) { .apdp__grid { grid-template-columns: 1fr 1fr; } }
+
+  /* Gallery */
+  .apdp__gallery { display: flex; flex-direction: column; gap: 16px; }
+  @media (min-width: 600px) { .apdp__gallery { flex-direction: row; } }
+  .apdp__thumbs { display: flex; flex-direction: row; gap: 8px; overflow-x: auto; }
+  @media (min-width: 600px) { .apdp__thumbs { flex-direction: column; width: 72px; flex-shrink: 0; overflow-x: visible; overflow-y: auto; max-height: 560px; } }
+  .apdp__thumb { width: 64px; height: 64px; flex-shrink: 0; border: 2px solid transparent; border-radius: var(--radius); overflow: hidden; padding: 0; background: var(--ivory-2); cursor: pointer; transition: border-color .25s; }
+  .apdp__thumb.is-active, .apdp__thumb:hover { border-color: var(--bronze); }
+  .apdp__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .apdp__main-wrap { position: relative; flex: 1; border-radius: var(--radius-lg); overflow: hidden; background: var(--ivory-2); }
+  .apdp__main-wrap img { width: 100%; height: auto; display: block; }
+  .apdp__ph { aspect-ratio: 1; background: var(--sand); }
+  .apdp__badge { position: absolute; top: 16px; left: 16px; background: var(--bronze); color: var(--ivory); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; padding: 5px 12px; border-radius: var(--radius); z-index: 1; }
+
+  /* Trust strip */
+  .apdp__trust-strip { display: flex; flex-wrap: wrap; gap: 12px 20px; padding: 14px 16px; background: var(--ivory); border-top: 1px solid var(--line); }
+  .apdp__trust-item { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 500; color: var(--ink-soft); }
+  .apdp__trust-item svg { width: 16px; height: 16px; color: var(--bronze); flex-shrink: 0; }
+
+  /* Info */
+  .apdp__info { display: flex; flex-direction: column; gap: 20px; }
+  .apdp__rating { display: flex; align-items: center; gap: 10px; font-size: 13.5px; }
+  .apdp__stars { color: var(--champagne-2); font-size: 16px; letter-spacing: .04em; }
+  .apdp__rating a { color: var(--bronze); text-decoration: underline; }
+  .apdp__title { font-family: var(--display); font-size: clamp(28px, 4vw, 48px); font-weight: 500; line-height: 1.05; letter-spacing: -.01em; }
+  .apdp__subtitle { font-size: 15px; color: var(--ink-soft); font-weight: 300; line-height: 1.6; }
+  .apdp__price-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .apdp__price { font-family: var(--display); font-size: 32px; font-weight: 500; }
+  .apdp__compare { font-size: 18px; color: var(--ink-soft); text-decoration: line-through; opacity: .7; }
+  .apdp__save { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--forest); background: rgba(45,74,62,.1); padding: 3px 10px; border-radius: 20px; }
+  .apdp__pay { font-size: 13px; color: var(--ink-soft); }
+
+  /* Bullets */
+  .apdp__bullets { display: flex; flex-direction: column; gap: 8px; padding: 0; list-style: none; }
+  .apdp__bullets li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; }
+  .apdp__bullet-check { color: var(--forest); font-weight: 700; flex-shrink: 0; }
+
+  /* Form */
+  .apdp__form { display: flex; flex-direction: column; gap: 16px; }
+  .apdp__opt-group { display: flex; flex-direction: column; gap: 8px; }
+  .apdp__opt-label { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .apdp__opt-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .apdp__opt { padding: 9px 18px; border: 1.5px solid var(--line); border-radius: var(--radius); font-size: 13px; cursor: pointer; transition: all .2s; }
+  .apdp__opt.is-active, .apdp__opt:hover { border-color: var(--bronze); background: var(--bronze); color: var(--ivory); }
+  .apdp__buy-row { display: flex; gap: 12px; align-items: stretch; }
+  .apdp-qty { display: flex; align-items: stretch; border: 1.5px solid var(--line); border-radius: var(--radius); overflow: hidden; flex-shrink: 0; }
+  .apdp-qty button { width: 40px; font-size: 18px; background: none; color: var(--ink); border: none; cursor: pointer; transition: background .2s; }
+  .apdp-qty button:hover { background: var(--ivory-2); }
+  .apdp-qty input { width: 44px; text-align: center; border: none; border-inline: 1.5px solid var(--line); background: none; font-size: 15px; font-family: var(--body); color: var(--ink); -moz-appearance: textfield; }
+  .apdp-qty input::-webkit-inner-spin-button, .apdp-qty input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .apdp__add { flex: 1; font-size: 13px; }
+  .btn--block { width: 100%; }
+  .apdp__express { width: 100%; background: var(--forest); color: var(--ivory); margin-top: 4px; }
+
+  /* Scarcity */
+  .apdp__scarcity { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--forest); }
+  .apdp__dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF50; flex-shrink: 0; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(76,175,80,.4); } 50% { box-shadow: 0 0 0 6px rgba(76,175,80,0); } }
+
+  /* Assurance */
+  .apdp__assure { display: flex; flex-wrap: wrap; gap: 12px 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .apdp__assure-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500; }
+  .apdp__assure-item svg { width: 18px; height: 18px; color: var(--bronze); flex-shrink: 0; }
+
+  /* Sticky ATC */
+  .apdp-sticky { position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; background: var(--ivory); border-top: 1px solid var(--line); padding: 12px var(--pad-x); display: flex; align-items: center; justify-content: space-between; gap: 16px; transform: translateY(100%); transition: transform .3s var(--ease); box-shadow: 0 -8px 24px rgba(0,0,0,.08); }
+  .apdp-sticky.is-visible { transform: translateY(0); }
+  .apdp-sticky__info { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+  .apdp-sticky__info span { font-size: 13px; color: var(--ink-soft); }
+</style>
+
+<script>
+(function(){
+  // Thumb gallery switcher
+  document.querySelectorAll('.apdp__thumb').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var src = this.dataset.media;
+      if(!src) return;
+      var img = document.getElementById('apdpMainImg');
+      if(img){ img.src = src; }
+      document.querySelectorAll('.apdp__thumb').forEach(function(b){ b.classList.remove('is-active'); });
+      this.classList.add('is-active');
+    });
+  });
+
+  // Qty stepper
+  var qtyInput = document.getElementById('apdpQty');
+  document.querySelectorAll('[data-apdp-qty]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var v = parseInt(qtyInput.value) || 1;
+      if(this.dataset.apdpQty === 'inc') qtyInput.value = v + 1;
+      else if(v > 1) qtyInput.value = v - 1;
+    });
+  });
+
+  // Variant selector
+  var varSel = document.getElementById('apdpVariantSelect');
+  var opts = document.querySelectorAll('.apdp__opt');
+  opts.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = this.dataset.option;
+      document.querySelectorAll('[data-option="'+idx+'"]').forEach(function(b){ b.classList.remove('is-active'); });
+      this.classList.add('is-active');
+      updateVariant();
+    });
+  });
+  function updateVariant(){
+    var selected = [];
+    document.querySelectorAll('.apdp__opt-group').forEach(function(grp){
+      var active = grp.querySelector('.apdp__opt.is-active');
+      if(active) selected.push(active.dataset.value);
+    });
+    var options = varSel ? varSel.options : [];
+    for(var i=0;i<options.length;i++){
+      if(options[i].text === selected.join(' / ')){
+        varSel.selectedIndex = i;
+        var price = options[i].dataset.price;
+        var p = document.getElementById('apdpPrice');
+        var bp = document.getElementById('apdpBtnPrice');
+        if(p && price) p.textContent = price;
+        if(bp && price) bp.textContent = price;
+        break;
+      }
+    }
+  }
+
+  // Sticky ATC
+  var sticky = document.getElementById('apdpSticky');
+  var hero = document.getElementById('apdp-hero');
+  if(sticky && hero){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        sticky.classList.toggle('is-visible', !e.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    observer.observe(hero);
+  }
+  // Sticky add fires main form
+  var stickyAdd = document.querySelector('[data-apdp-sticky-add]');
+  if(stickyAdd){
+    stickyAdd.addEventListener('click', function(){
+      var mainAdd = document.getElementById('apdpAdd');
+      if(mainAdd) mainAdd.click();
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Auvelle — Product Hero",
+  "tag": "section",
+  "class": "shopify-section--apdp-hero",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "tint", "label": "Tint" },
+        { "value": "sand", "label": "Sand" }
+      ], "default": "" },
+    { "type": "header", "content": "Product copy (metafields override when set)" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Professional-grade sonic cleaning technology for a dentist-fresh smile at home." },
+    { "type": "text", "id": "badge_text", "label": "Image badge", "default": "Best Seller" },
+    { "type": "text", "id": "rating", "label": "Rating fallback", "default": "4.9" },
+    { "type": "text", "id": "review_count", "label": "Review count fallback", "default": "3,241" },
+    { "type": "text", "id": "pay_text", "label": "Payment line", "default": "or 4 interest-free payments of $19.99 · Klarna available" },
+    { "type": "text", "id": "scarcity", "label": "Scarcity line", "default": "Selling fast — only 12 left" },
+    { "type": "text", "id": "add_to_cart_label", "label": "Add to Cart button text", "default": "Add to Cart" },
+    { "type": "text", "id": "buy_now_label", "label": "Buy Now button text", "default": "Buy It Now" },
+    { "type": "header", "content": "Toggles" },
+    { "type": "checkbox", "id": "show_bullets", "label": "Show benefit bullets", "default": true },
+    { "type": "checkbox", "id": "show_trust_strip", "label": "Show trust strip under image", "default": true },
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show Buy Now button", "default": true },
+    { "type": "checkbox", "id": "show_sticky_atc", "label": "Show sticky Add to Cart (mobile)", "default": true },
+    { "type": "header", "content": "Fallback image" },
+    { "type": "image_picker", "id": "fallback_image", "label": "Fallback product image (if no product media)" }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Benefit bullet",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Removes 99.9% of plaque in one use" }
+      ]
+    },
+    {
+      "type": "assurance",
+      "name": "Assurance badge",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "check", "label": "Check" },
+            { "value": "star", "label": "Star" }
+          ], "default": "shield" },
+        { "type": "text", "id": "text", "label": "Text", "default": "90-Day Guarantee" }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust strip badge",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "check", "label": "Check" },
+            { "value": "star", "label": "Star" }
+          ], "default": "check" },
+        { "type": "text", "id": "text", "label": "Text", "default": "FDA Cleared" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Product Hero",
+      "blocks": [
+        { "type": "bullet", "settings": { "text": "Removes 99.9% of plaque & stains in one use" } },
+        { "type": "bullet", "settings": { "text": "5 smart modes — whitening, sensitive, gum care & more" } },
+        { "type": "bullet", "settings": { "text": "Dentist-grade sonic vibration, 31,000 strokes/min" } },
+        { "type": "assurance", "settings": { "icon": "shield", "text": "90-Day Money-Back Guarantee" } },
+        { "type": "assurance", "settings": { "icon": "leaf", "text": "BPA-Free & Vegan" } },
+        { "type": "assurance", "settings": { "icon": "check", "text": "Free Shipping" } },
+        { "type": "trust_badge", "settings": { "icon": "shield", "text": "FDA Cleared" } },
+        { "type": "trust_badge", "settings": { "icon": "check", "text": "ADA Accepted" } },
+        { "type": "trust_badge", "settings": { "icon": "leaf", "text": "Cruelty-Free" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

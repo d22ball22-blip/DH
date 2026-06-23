@@ -1,0 +1,177 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-results">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="lede">{{ section.settings.sub }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Before/After sliders {%- endcomment -%}
+    {%- if section.settings.show_before_after -%}
+      <div class="ares-ba-wrap reveal">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'before_after' -%}
+            <div class="ares-ba" data-ba {{ block.shopify_attributes }}>
+              <div class="ares-ba__layer ares-ba__after">
+                <img src="{%- if block.settings.after -%}{{ block.settings.after | image_url: width: 900 }}{%- else -%}{{ 'ba-after-1.jpg' | asset_url }}{%- endif -%}" alt="After" loading="lazy">
+              </div>
+              <div class="ares-ba__layer ares-ba__before">
+                <img src="{%- if block.settings.before -%}{{ block.settings.before | image_url: width: 900 }}{%- else -%}{{ 'ba-before-1.jpg' | asset_url }}{%- endif -%}" alt="Before" loading="lazy">
+              </div>
+              <span class="ares-ba__tag ares-ba__tag--before">Before</span>
+              <span class="ares-ba__tag ares-ba__tag--after">{{ block.settings.after_label | default: 'After' }}</span>
+              <div class="ares-ba__handle"></div>
+              <div class="ares-ba__knob">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="m9 6-6 6 6 6M15 6l6 6-6 6"/>
+                </svg>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} UGC / lifestyle grid {%- endcomment -%}
+    {%- if section.settings.show_ugc_grid -%}
+      <div class="ares-ugc reveal">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'ugc_photo' -%}
+            <div class="ares-ugc__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.image -%}
+                <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.caption | default: 'Customer photo' | escape }}" loading="lazy" width="500" height="500">
+              {%- else -%}
+                <div class="ares-ugc__ph"></div>
+              {%- endif -%}
+              {%- if block.settings.caption != blank -%}
+                <div class="ares-ugc__caption">
+                  {%- if block.settings.handle != blank -%}
+                    <span class="ares-ugc__handle">@{{ block.settings.handle }}</span>
+                  {%- endif -%}
+                  <span>{{ block.settings.caption }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <div style="text-align:center;margin-top:clamp(28px,4vw,48px);" class="reveal">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  /* Before/After */
+  .ares-ba-wrap { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: clamp(36px, 5vw, 56px); }
+  @media (min-width: 640px) { .ares-ba-wrap { grid-template-columns: repeat(2, 1fr); } }
+  .ares-ba { position: relative; overflow: hidden; border-radius: var(--radius-lg); cursor: col-resize; aspect-ratio: 4/3; user-select: none; }
+  .ares-ba__layer { position: absolute; inset: 0; }
+  .ares-ba__layer img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+  .ares-ba__before { clip-path: inset(0 50% 0 0); }
+  .ares-ba__tag { position: absolute; bottom: 12px; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,.55); color: #fff; backdrop-filter: blur(4px); }
+  .ares-ba__tag--before { left: 12px; }
+  .ares-ba__tag--after { right: 12px; }
+  .ares-ba__handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-50%); pointer-events: none; }
+  .ares-ba__knob { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .ares-ba__knob svg { width: 20px; height: 20px; color: var(--ink); }
+
+  /* UGC Grid */
+  .ares-ugc { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: clamp(24px, 3vw, 40px); }
+  @media (min-width: 640px) { .ares-ugc { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) { .ares-ugc { grid-template-columns: repeat(4, 1fr); } }
+  .ares-ugc__item { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 1; background: var(--sand); }
+  .ares-ugc__item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--ease); }
+  .ares-ugc__item:hover img { transform: scale(1.05); }
+  .ares-ugc__ph { width: 100%; height: 100%; background: var(--sand-deep); }
+  .ares-ugc__caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 12px; background: linear-gradient(to top, rgba(0,0,0,.6), transparent); color: #fff; font-size: 12px; line-height: 1.4; }
+  .ares-ugc__handle { display: block; font-weight: 600; font-size: 11px; opacity: .85; }
+</style>
+
+<script>
+(function(){
+  document.querySelectorAll('[data-ba]').forEach(function(el){
+    var before = el.querySelector('.ares-ba__before');
+    var handle = el.querySelector('.ares-ba__handle');
+    var knob = el.querySelector('.ares-ba__knob');
+    var dragging = false;
+    function setPos(x){
+      var rect = el.getBoundingClientRect();
+      var pct = Math.min(Math.max((x - rect.left) / rect.width * 100, 0), 100);
+      before.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+      handle.style.left = pct + '%';
+      knob.style.left = pct + '%';
+    }
+    el.addEventListener('mousedown', function(e){ dragging = true; setPos(e.clientX); e.preventDefault(); });
+    el.addEventListener('touchstart', function(e){ dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mousemove', function(e){ if(dragging) setPos(e.clientX); });
+    window.addEventListener('touchmove', function(e){ if(dragging) setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mouseup', function(){ dragging = false; });
+    window.addEventListener('touchend', function(){ dragging = false; });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Auvelle — Results Gallery",
+  "tag": "section",
+  "class": "shopify-section--auvelle-results",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real Results" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "The Auvelle <em class='serif-it'>transformation</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "Drag to reveal. Real customers, real results, zero filters." },
+    { "type": "checkbox", "id": "show_before_after", "label": "Show before/after sliders", "default": true },
+    { "type": "checkbox", "id": "show_ugc_grid", "label": "Show UGC photo grid", "default": true },
+    { "type": "text", "id": "cta_label", "label": "CTA button label" },
+    { "type": "url", "id": "cta_link", "label": "CTA button link" }
+  ],
+  "blocks": [
+    {
+      "type": "before_after",
+      "name": "Before / After",
+      "limit": 4,
+      "settings": [
+        { "type": "image_picker", "id": "before", "label": "Before image" },
+        { "type": "image_picker", "id": "after", "label": "After image" },
+        { "type": "text", "id": "after_label", "label": "After label", "default": "After 14 days" }
+      ]
+    },
+    {
+      "type": "ugc_photo",
+      "name": "UGC photo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "handle", "label": "Instagram handle (without @)" },
+        { "type": "text", "id": "caption", "label": "Caption" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Results Gallery",
+      "blocks": [
+        { "type": "before_after", "settings": { "after_label": "After 14 days" } },
+        { "type": "before_after", "settings": { "after_label": "After 30 days" } },
+        { "type": "ugc_photo" },
+        { "type": "ugc_photo" },
+        { "type": "ugc_photo" },
+        { "type": "ugc_photo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

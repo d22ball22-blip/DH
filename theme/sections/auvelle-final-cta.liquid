@@ -1,0 +1,117 @@
+<section class="afinal" id="auvelle-final-cta">
+  <div class="afinal__bg">
+    {%- if section.settings.bg_image -%}
+      <img src="{{ section.settings.bg_image | image_url: width: 1800 }}" alt="" aria-hidden="true" width="1800" height="900" loading="lazy">
+    {%- else -%}
+      <div class="afinal__color-bg"></div>
+    {%- endif -%}
+  </div>
+  <div class="afinal__scrim"></div>
+
+  <div class="afinal__inner wrap reveal">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow" style="color:var(--champagne);">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+
+    <h2 class="display-lg">{{ section.settings.heading }}</h2>
+
+    {%- if section.settings.body != blank -%}
+      <p class="afinal__body">{{ section.settings.body }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.show_rating -%}
+      <div class="afinal__rating">
+        <span class="afinal__stars">★★★★★</span>
+        <span>{{ section.settings.rating_text }}</span>
+      </div>
+    {%- endif -%}
+
+    <div class="afinal__ctas">
+      {%- if section.settings.primary_label != blank -%}
+        <a href="{{ section.settings.primary_link }}" class="btn btn--light">{{ section.settings.primary_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.secondary_label != blank -%}
+        <a href="{{ section.settings.secondary_link }}" class="btn afinal__btn-outline">{{ section.settings.secondary_label }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_trust -%}
+      <div class="afinal__trust">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'trust' -%}
+            <div class="afinal__trust-item" {{ block.shopify_attributes }}>
+              {%- render 'icon', icon: block.settings.icon -%}
+              <span>{{ block.settings.text }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .afinal { position: relative; overflow: hidden; min-height: 60vh; display: flex; align-items: center; }
+  .afinal__bg { position: absolute; inset: 0; }
+  .afinal__bg img { width: 100%; height: 100%; object-fit: cover; }
+  .afinal__color-bg { width: 100%; height: 100%; background: var(--forest-deep); }
+  .afinal__scrim { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,18,10,.85) 0%, rgba(45,74,62,.6) 100%); }
+  .afinal__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(16px, 2.5vw, 24px); padding-block: clamp(72px, 10vw, 140px); color: var(--ivory); }
+  .afinal__body { font-size: clamp(16px, 1.4vw, 19px); color: rgba(248,244,238,.82); max-width: 54ch; line-height: 1.7; font-weight: 300; }
+  .afinal__rating { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(248,244,238,.75); }
+  .afinal__stars { font-size: 18px; color: var(--champagne); letter-spacing: .06em; }
+  .afinal__ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn--light { background: var(--ivory); color: var(--ink); }
+  .btn--light:hover { background: var(--champagne); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+  .afinal__btn-outline { background: transparent; border: 1.5px solid rgba(248,244,238,.5); color: var(--ivory); padding: 16px 36px; }
+  .afinal__btn-outline:hover { border-color: var(--ivory); background: rgba(248,244,238,.1); }
+  .afinal__trust { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: center; padding-top: 8px; border-top: 1px solid rgba(248,244,238,.15); width: 100%; }
+  .afinal__trust-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: rgba(248,244,238,.7); }
+  .afinal__trust-item svg { width: 16px; height: 16px; color: var(--champagne); flex-shrink: 0; }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — Final CTA",
+  "tag": "section",
+  "class": "shopify-section--auvelle-final-cta",
+  "settings": [
+    { "type": "image_picker", "id": "bg_image", "label": "Background image (leave blank for solid colour)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your Smile Awaits" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "The smile you've always<br><em class='serif-it'>wanted</em>." },
+    { "type": "textarea", "id": "body", "label": "Body text", "default": "Join over 30,000 customers who've upgraded their oral care routine with Auvelle — the professional standard, at home." },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Shop the Tooth Cleaner" },
+    { "type": "url", "id": "primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "See all bundles" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary button link" },
+    { "type": "checkbox", "id": "show_rating", "label": "Show star rating", "default": true },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · Over 3,000 five-star reviews" },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust badges", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust badge",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "check", "label": "Check" },
+            { "value": "star", "label": "Star" }
+          ], "default": "shield" },
+        { "type": "text", "id": "text", "label": "Text", "default": "90-Day Guarantee" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Final CTA",
+      "blocks": [
+        { "type": "trust", "settings": { "icon": "shield", "text": "90-Day Guarantee" } },
+        { "type": "trust", "settings": { "icon": "leaf", "text": "Free Returns" } },
+        { "type": "trust", "settings": { "icon": "check", "text": "Free Shipping" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

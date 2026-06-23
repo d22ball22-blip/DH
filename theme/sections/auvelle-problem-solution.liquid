@@ -1,0 +1,145 @@
+<section class="section {{ section.settings.bg }}" id="auvelle-problem">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="display-md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="lede">{{ section.settings.sub }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ps-grid reveal">
+      {%- comment -%} Problems column {%- endcomment -%}
+      <div class="ps-col ps-col--problem">
+        <div class="ps-col__head">
+          <span class="ps-col__icon ps-col__icon--bad">✗</span>
+          <h3>{{ section.settings.problem_heading }}</h3>
+        </div>
+        <ul class="ps-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'problem' -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="ps-ic ps-ic--bad">✗</span>
+                {{ block.settings.text }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- comment -%} Divider arrow {%- endcomment -%}
+      <div class="ps-arrow">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M16 24h16M28 18l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{{ section.settings.arrow_label }}</span>
+      </div>
+
+      {%- comment -%} Solutions column {%- endcomment -%}
+      <div class="ps-col ps-col--solution">
+        <div class="ps-col__head">
+          <span class="ps-col__icon ps-col__icon--good">✓</span>
+          <h3>{{ section.settings.solution_heading }}</h3>
+        </div>
+        <ul class="ps-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'solution' -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="ps-ic ps-ic--good">✓</span>
+                {{ block.settings.text }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="ps-cta reveal" style="text-align:center; margin-top: clamp(32px, 4vw, 56px);">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .ps-grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: clamp(36px, 5vw, 64px); align-items: center; }
+  @media (min-width: 768px) { .ps-grid { grid-template-columns: 1fr auto 1fr; gap: 24px; } }
+  .ps-col { background: var(--ivory); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(24px, 3vw, 40px); }
+  .ps-col--solution { background: var(--forest); color: var(--ivory); border-color: transparent; }
+  .ps-col--solution .eyebrow { color: var(--champagne); }
+  .ps-col__head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .ps-col__head h3 { font-family: var(--display); font-size: clamp(20px, 2.5vw, 28px); font-weight: 500; }
+  .ps-col__icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .ps-col__icon--bad { background: rgba(220,53,69,.12); color: #dc3545; }
+  .ps-col__icon--good { background: rgba(45,74,62,.2); color: var(--champagne); }
+  .ps-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .ps-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.5; }
+  .ps-ic { font-weight: 700; flex-shrink: 0; margin-top: 2px; font-size: 13px; }
+  .ps-ic--bad { color: #dc3545; }
+  .ps-ic--good { color: var(--champagne); }
+  .ps-col--solution .ps-list li { color: rgba(248,244,238,.88); }
+  .ps-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--bronze); }
+  .ps-arrow svg { width: 48px; height: 48px; }
+  @media (max-width: 767px) { .ps-arrow svg { transform: rotate(90deg); } }
+  .ps-arrow span { font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--bronze); white-space: nowrap; }
+</style>
+
+{% schema %}
+{
+  "name": "Auvelle — Problem / Solution",
+  "tag": "section",
+  "class": "shopify-section--auvelle-ps",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [
+        { "value": "", "label": "Ivory" },
+        { "value": "section--tint", "label": "Tint" },
+        { "value": "section--sand", "label": "Sand" }
+      ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Problem" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Your toothbrush is <em class='serif-it'>failing you</em>." },
+    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "Manual brushing misses 40% of tooth surfaces — leaving plaque, stains, and bacteria behind." },
+    { "type": "text", "id": "problem_heading", "label": "Problems column heading", "default": "Without Auvelle" },
+    { "type": "text", "id": "solution_heading", "label": "Solutions column heading", "default": "With Auvelle" },
+    { "type": "text", "id": "arrow_label", "label": "Arrow label", "default": "The upgrade" },
+    { "type": "text", "id": "cta_label", "label": "CTA button label" },
+    { "type": "url", "id": "cta_link", "label": "CTA button link" }
+  ],
+  "blocks": [
+    {
+      "type": "problem",
+      "name": "Problem item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Problem text", "default": "Yellow stains that won't budge" }
+      ]
+    },
+    {
+      "type": "solution",
+      "name": "Solution item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Solution text", "default": "5 shades whiter in 14 days" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Problem / Solution",
+      "blocks": [
+        { "type": "problem", "settings": { "text": "Yellow stains that won't budge" } },
+        { "type": "problem", "settings": { "text": "Bleeding gums & sensitivity" } },
+        { "type": "problem", "settings": { "text": "Manual brushing misses 40% of surfaces" } },
+        { "type": "problem", "settings": { "text": "Plaque buildup between dental visits" } },
+        { "type": "problem", "settings": { "text": "Expensive whitening treatments" } },
+        { "type": "solution", "settings": { "text": "5 shades whiter in 14 days" } },
+        { "type": "solution", "settings": { "text": "Gum-care mode reduces bleeding in 7 days" } },
+        { "type": "solution", "settings": { "text": "31,000 sonic strokes/min reaches every surface" } },
+        { "type": "solution", "settings": { "text": "Clinically proven plaque removal in 60 seconds" } },
+        { "type": "solution", "settings": { "text": "Professional results at home — for life" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
