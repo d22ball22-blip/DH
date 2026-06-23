@@ -842,7 +842,7 @@
                     {%- for value in option.values -%}
                       <label>
                         <input type="radio" name="{{ option.name }}" value="{{ value | escape }}" data-au-option="{{ option.position }}" {% if option.selected_value == value %}checked{% endif %} style="display:none;">
-                        <span class="au-variants__btn{% if option.selected_value == value %} is-active{% endif %}" tabindex="0" role="radio" aria-checked="{{ option.selected_value == value }}">{{ value }}</span>
+                        <span class="au-variants__btn{% if option.selected_value == value %} is-active{% endif %}" tabindex="0" role="radio" aria-checked="{% if option.selected_value == value %}true{% else %}false{% endif %}">{{ value }}</span>
                       </label>
                     {%- endfor -%}
                   </div>
