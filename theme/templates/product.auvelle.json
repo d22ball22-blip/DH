@@ -1,0 +1,211 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a1": { "type": "assurance", "settings": { "icon": "shield", "text": "90-Day\nGuarantee" } },
+        "a2": { "type": "assurance", "settings": { "icon": "leaf", "text": "Vegan &\nCruelty-Free" } },
+        "a3": { "type": "assurance", "settings": { "icon": "check", "text": "Dermatologist\nTested" } },
+        "b1": { "type": "bullet", "settings": { "text": "Clinically proven to brighten in 14 days" } },
+        "b2": { "type": "bullet", "settings": { "text": "Marine collagen + Vitamin C complex" } },
+        "b3": { "type": "bullet", "settings": { "text": "Zero harsh chemicals — 100% vegan" } },
+        "k1": { "type": "key_icon", "settings": { "label": "Vegan" } },
+        "k2": { "type": "key_icon", "settings": { "label": "Cruelty-Free" } },
+        "k3": { "type": "key_icon", "settings": { "label": "Gluten-Free" } },
+        "k4": { "type": "key_icon", "settings": { "label": "Non-GMO" } }
+      },
+      "block_order": ["a1","a2","a3","b1","b2","b3","k1","k2","k3","k4"],
+      "settings": {
+        "show_rating": true,
+        "rating": "4.9",
+        "review_count": "2,400+",
+        "subtitle": "Clinically proven beauty from within",
+        "badge": "Best Seller",
+        "show_desc": true,
+        "atc_label": "Add to Bag",
+        "pay_text": "or 4 interest-free payments · Klarna available",
+        "scarcity": "Selling fast — limited stock remaining",
+        "show_express": true,
+        "express_label": "Buy It Now",
+        "ship_note": "Free shipping on orders $50+",
+        "show_zoom": true
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "leaf", "title": "Marine Collagen", "text": "2,500mg of Type I & III collagen peptides for visible skin improvement in 14 days." } },
+        "b2": { "type": "benefit", "settings": { "icon": "star", "title": "Vitamin C Complex", "text": "Triple-action antioxidant that brightens, protects, and amplifies collagen synthesis." } },
+        "b3": { "type": "benefit", "settings": { "icon": "check", "title": "Hyaluronic Acid", "text": "Attracts and locks moisture at the cellular level for plump, dewy skin all day." } },
+        "b4": { "type": "benefit", "settings": { "icon": "shield", "title": "Zero Nasties", "text": "No parabens, sulphates, artificial colours, or animal-derived ingredients." } }
+      },
+      "block_order": ["b1","b2","b3","b4"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "Why Auvelle",
+        "heading": "Beauty that starts <em class='serif-it'>from within</em>.",
+        "sub": "Clinically formulated to deliver visible results inside and out."
+      }
+    },
+    "ingredients": {
+      "type": "product-ingredients",
+      "blocks": {
+        "i1": { "type": "ingredient", "settings": { "name": "Marine Collagen Peptides", "amount": "2,500mg", "description": "Type I & III peptides clinically proven to improve skin elasticity and reduce fine lines within 8 weeks.", "featured": true } },
+        "i2": { "type": "ingredient", "settings": { "name": "Vitamin C (Ascorbic Acid)", "amount": "500mg", "description": "Potent antioxidant that stimulates collagen synthesis and brightens uneven skin tone." } },
+        "i3": { "type": "ingredient", "settings": { "name": "Hyaluronic Acid", "amount": "100mg", "description": "Binds up to 1,000× its weight in water to plump skin cells from within." } },
+        "i4": { "type": "ingredient", "settings": { "name": "Biotin (Vitamin B7)", "amount": "5,000mcg", "description": "Supports the keratin infrastructure for stronger nails and lustrous hair." } }
+      },
+      "block_order": ["i1","i2","i3","i4"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "The Formula",
+        "heading": "Every ingredient has a <em class='serif-it'>purpose</em>.",
+        "subtext": "Clinical-grade actives at effective concentrations — nothing more, nothing less.",
+        "full_list_label": "View full ingredient list"
+      }
+    },
+    "results": {
+      "type": "before-after",
+      "blocks": {
+        "r1": { "type": "ba", "settings": { "label": "After · 30 days" } },
+        "r2": { "type": "ba", "settings": { "label": "After · 60 days" } }
+      },
+      "block_order": ["r1","r2"],
+      "settings": {
+        "eyebrow": "Real Results",
+        "heading": "The Auvelle <em class='serif-it'>transformation</em>.",
+        "sub": "Drag to reveal the glow. Real skin, no filters."
+      }
+    },
+    "how": {
+      "type": "product-how",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Mix", "text": "Add one scoop to 250ml of water, juice, or your morning smoothie." } },
+        "s2": { "type": "step", "settings": { "title": "Drink", "text": "Enjoy daily — preferably on an empty stomach for optimal absorption." } },
+        "s3": { "type": "step", "settings": { "title": "Glow", "text": "See your skin transform from the inside out in as little as 14 days." } }
+      },
+      "block_order": ["s1","s2","s3"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "The Ritual",
+        "heading": "Three steps to <em class='serif-it'>radiance</em>."
+      }
+    },
+    "comparison": {
+      "type": "product-comparison",
+      "blocks": {
+        "c1": { "type": "feature", "settings": { "feature": "Marine Collagen (2,500mg)", "them_has": false } },
+        "c2": { "type": "feature", "settings": { "feature": "Clinical Vitamin C", "them_has": false } },
+        "c3": { "type": "feature", "settings": { "feature": "Hyaluronic Acid", "them_has": false } },
+        "c4": { "type": "feature", "settings": { "feature": "100% Vegan", "them_has": false } },
+        "c5": { "type": "feature", "settings": { "feature": "No Artificial Fillers", "them_has": false } },
+        "c6": { "type": "feature", "settings": { "feature": "90-Day Money-Back Guarantee", "them_has": false } }
+      },
+      "block_order": ["c1","c2","c3","c4","c5","c6"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "How We Compare",
+        "heading": "Auvelle vs. <em class='serif-it'>the rest</em>.",
+        "sub": "Not all beauty supplements are created equal.",
+        "us_label": "Auvelle",
+        "them_label": "Other brands"
+      }
+    },
+    "fbt": {
+      "type": "product-fbt",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "label": "This Product" } },
+        "p2": { "type": "product", "settings": { "label": "Complete The Ritual" } }
+      },
+      "block_order": ["p1","p2"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "Complete The Ritual",
+        "heading": "Better <em class='serif-it'>together</em>.",
+        "total_label": "Bundle price",
+        "button_label": "Add all to bag"
+      }
+    },
+    "ugc": {
+      "type": "product-ugc",
+      "blocks": {
+        "u1": { "type": "ugc_card", "settings": { "platform": "Instagram" } },
+        "u2": { "type": "ugc_card", "settings": { "platform": "TikTok" } },
+        "u3": { "type": "ugc_card", "settings": { "platform": "Instagram" } },
+        "u4": { "type": "ugc_card", "settings": { "platform": "Instagram" } },
+        "u5": { "type": "ugc_card", "settings": { "platform": "TikTok" } },
+        "u6": { "type": "ugc_card", "settings": { "platform": "Instagram" } }
+      },
+      "block_order": ["u1","u2","u3","u4","u5","u6"],
+      "settings": {
+        "bg": "",
+        "eyebrow": "As Seen On",
+        "heading": "The Auvelle <em class='serif-it'>community</em>.",
+        "subtext": "Real glow, shared daily.",
+        "cta_text": "Follow us on Instagram"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "v1": { "type": "review", "settings": { "quote": "My skin has never looked better. After 3 weeks I was getting so many compliments — people thought I'd had a facial!", "name": "Sophia R.", "tag": "Verified Buyer · 30-day pack" } },
+        "v2": { "type": "review", "settings": { "quote": "The glow is real. I was sceptical but now I won't go without it. My nails are so much stronger too.", "name": "Emma T.", "tag": "Verified Buyer · 90-day pack" } },
+        "v3": { "type": "review", "settings": { "quote": "Honestly the best supplement I've ever taken. My skin looks plumper and the fine lines around my eyes have visibly softened.", "name": "Olivia M.", "tag": "Verified Buyer · Subscription" } },
+        "v4": { "type": "review", "settings": { "quote": "Love that it's vegan and actually works. So many brands make empty promises — Auvelle delivers every time.", "name": "Priya S.", "tag": "Verified Buyer · 60-day pack" } }
+      },
+      "block_order": ["v1","v2","v3","v4"],
+      "settings": {
+        "eyebrow": "Loved By Thousands",
+        "heading": "2,400+ five-star <em class='serif-it'>glow</em> stories.",
+        "score": "4.9",
+        "score_sub": "Based on 2,400+ verified reviews"
+      }
+    },
+    "guarantee": {
+      "type": "guarantee",
+      "settings": {
+        "days": "90",
+        "seal_text": "Day Glow Promise",
+        "eyebrow": "Risk-Free",
+        "heading": "Love your glow, or your money back.",
+        "text": "Try Auvelle for a full 90 days. If you're not completely radiant, we'll refund every cent — no questions asked.",
+        "btn_label": "Shop Risk-Free"
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "When will I see results?", "answer": "Most customers notice improvements in skin hydration and glow within 14 days. Full collagen benefits typically appear after 8–12 weeks of consistent daily use." } },
+        "q2": { "type": "qa", "settings": { "question": "How do I take Auvelle?", "answer": "Mix one scoop into 250ml of water, juice, or your favourite smoothie each morning. Best taken on an empty stomach for optimal absorption." } },
+        "q3": { "type": "qa", "settings": { "question": "Is Auvelle suitable for vegans?", "answer": "Our Marine Collagen formula uses marine-sourced ingredients. Check the product label to confirm it's right for your lifestyle." } },
+        "q4": { "type": "qa", "settings": { "question": "What is your return policy?", "answer": "We offer a 90-day money-back guarantee. If you're not completely satisfied, contact our team and we'll arrange a full refund — no questions asked." } },
+        "q5": { "type": "qa", "settings": { "question": "Can I take Auvelle with other supplements?", "answer": "Yes. Auvelle is formulated to complement your existing routine. If you're on medication or have health concerns, consult your healthcare provider first." } }
+      },
+      "block_order": ["q1","q2","q3","q4","q5"],
+      "settings": {
+        "bg": "section--tint",
+        "eyebrow": "Good To Know",
+        "heading": "Your questions, <em class='serif-it'>answered</em>.",
+        "open_first": true
+      }
+    },
+    "trustoo": {
+      "type": "trustoo-reviews",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "benefits",
+    "ingredients",
+    "results",
+    "how",
+    "comparison",
+    "fbt",
+    "ugc",
+    "reviews",
+    "guarantee",
+    "faq",
+    "trustoo"
+  ]
+}

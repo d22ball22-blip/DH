@@ -1,20 +1,82 @@
+{% style %}
+.pdp__bullets{display:grid;gap:10px;margin-bottom:26px;padding-bottom:26px;border-bottom:1px solid var(--line-soft)}
+.pdp__bullets li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink-soft)}
+.pdp__bullets li svg{color:var(--bronze);flex:none;margin-top:2px}
+.pdp__icons{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--line-soft)}
+.pdp__icon-item{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.pdp__icon-item svg,.pdp__icon-item img{color:var(--bronze)}
+.pdp__ship{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--forest);margin-top:16px}
+.pdp__ship svg{flex:none}
+.pdp__zoom{position:absolute;bottom:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(248,244,238,.9);color:var(--ink);display:grid;place-items:center;z-index:3;transition:background .3s}
+.pdp__zoom:hover{background:var(--ivory)}
+.pdp-zoom-modal{position:fixed;inset:0;z-index:300;background:rgba(43,35,28,.92);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .35s}
+.pdp-zoom-modal.is-open{opacity:1;visibility:visible}
+.pdp-zoom-modal__close{position:absolute;top:20px;right:20px;width:46px;height:46px;border-radius:50%;background:rgba(248,244,238,.15);display:grid;place-items:center;color:var(--ivory);transition:background .3s;cursor:pointer;border:none}
+.pdp-zoom-modal__close:hover{background:rgba(248,244,238,.3)}
+.pdp-zoom-modal img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:var(--radius-lg)}
+{% endstyle %}
+
 <section class="pdp"><div class="wrap">
-  <div class="breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="{{ collections.all.url }}">Shop</a><span>/</span>{{ product.title }}</div>
+  <div class="breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a><span>/</span>
+    {%- if collection -%}<a href="{{ collection.url }}">{{ collection.title }}</a><span>/</span>{%- endif -%}
+    {{ product.title }}
+  </div>
   <div class="pdp__grid" id="pdpBuy">
     <div class="pdp__gallery">
       <div class="pdp__thumbs">
         {% for media in product.media limit: 5 %}<div class="pdp__thumb {% if forloop.first %}is-active{% endif %}" data-media="{{ media | image_url: width: 1000 }}"><img src="{{ media | image_url: width: 160 }}" alt="" loading="lazy"></div>{% endfor %}
       </div>
-      <div class="pdp__main">{% if product.metafields.custom.badge %}<span class="card__tag">{{ product.metafields.custom.badge }}</span>{% elsif section.settings.badge != blank %}<span class="card__tag">{{ section.settings.badge }}</span>{% endif %}<img id="pdpMainImg" src="{{ product.featured_image | image_url: width: 1100 }}" alt="{{ product.title | escape }}"></div>
+      <div class="pdp__main">
+        {%- if product.metafields.custom.badge != blank -%}<span class="card__tag">{{ product.metafields.custom.badge }}</span>{%- elsif section.settings.badge != blank -%}<span class="card__tag">{{ section.settings.badge }}</span>{%- endif -%}
+        <img id="pdpMainImg" src="{{ product.featured_image | image_url: width: 1100 }}" alt="{{ product.title | escape }}" fetchpriority="high">
+        {%- if section.settings.show_zoom -%}
+          <button class="pdp__zoom" id="pdpZoom" aria-label="Zoom image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+          </button>
+        {%- endif -%}
+      </div>
     </div>
     <div class="pdp__info">
-      <div class="pdp__rating"><span class="stars">★★★★★</span><small><b>{{ product.metafields.custom.rating | default: section.settings.rating }}</b> · <a href="#customer-reviews">{{ product.metafields.custom.review_count | default: section.settings.review_count }} reviews</a></small></div>
+      {%- if section.settings.show_rating -%}
+        <div class="pdp__rating"><span class="stars">★★★★★</span><small><b>{{ product.metafields.custom.rating | default: section.settings.rating }}</b> · <a href="#customer-reviews">{{ product.metafields.custom.review_count | default: section.settings.review_count }} reviews</a></small></div>
+      {%- endif -%}
       <h1 class="pdp__name">{{ product.title }}</h1>
-      {% assign sub = product.metafields.custom.subtitle | default: section.settings.subtitle %}
-      {% if sub != blank %}<p class="pdp__sub">{{ sub }}</p>{% endif %}
-      <div class="pdp__pricerow"><span class="pdp__price" id="pdpPrice">{{ product.price | money }}</span>{% if product.compare_at_price > product.price %}<span class="pdp__compare">{{ product.compare_at_price | money }}</span><span class="pdp__save-tag">Save {{ product.compare_at_price | minus: product.price | money }}</span>{% endif %}</div>
-      {% if section.settings.pay_text != blank %}<p class="pdp__pay">{{ section.settings.pay_text }}</p>{% endif %}
-      <div class="pdp__desc">{{ product.description }}</div>
+      {%- assign sub = product.metafields.custom.subtitle | default: section.settings.subtitle -%}
+      {%- if sub != blank -%}<p class="pdp__sub">{{ sub }}</p>{%- endif -%}
+
+      {%- comment -%} Key icons from blocks {%- endcomment -%}
+      {%- assign has_icons = false -%}{%- for block in section.blocks -%}{%- if block.type == 'key_icon' -%}{%- assign has_icons = true -%}{%- endif -%}{%- endfor -%}
+      {%- if has_icons -%}
+        <div class="pdp__icons">
+          {%- for block in section.blocks -%}{%- if block.type == 'key_icon' -%}
+            <span class="pdp__icon-item" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon_img != blank -%}<img src="{{ block.settings.icon_img | image_url: width: 40 }}" alt="" width="18" height="18" loading="lazy">{%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>{%- endif -%}
+              {{ block.settings.label }}
+            </span>
+          {%- endif -%}{%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="pdp__pricerow"><span class="pdp__price" id="pdpPrice">{{ product.price | money }}</span>{%- if product.compare_at_price > product.price -%}<span class="pdp__compare">{{ product.compare_at_price | money }}</span><span class="pdp__save-tag">Save {{ product.compare_at_price | minus: product.price | money }}</span>{%- endif -%}</div>
+      {%- if section.settings.pay_text != blank -%}<p class="pdp__pay">{{ section.settings.pay_text }}</p>{%- endif -%}
+
+      {%- comment -%} Short description (metafield overrides) {%- endcomment -%}
+      {%- if product.metafields.custom.short_desc != blank -%}
+        <div class="pdp__desc">{{ product.metafields.custom.short_desc }}</div>
+      {%- elsif section.settings.show_desc -%}
+        <div class="pdp__desc">{{ product.description }}</div>
+      {%- endif -%}
+
+      {%- comment -%} Bullet benefit points from blocks {%- endcomment -%}
+      {%- assign has_bullets = false -%}{%- for block in section.blocks -%}{%- if block.type == 'bullet' -%}{%- assign has_bullets = true -%}{%- endif -%}{%- endfor -%}
+      {%- if has_bullets -%}
+        <ul class="pdp__bullets">
+          {%- for block in section.blocks -%}{%- if block.type == 'bullet' -%}
+            <li {{ block.shopify_attributes }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="m5 12 5 5L20 7"/></svg>{{ block.settings.text }}</li>
+          {%- endif -%}{%- endfor -%}
+        </ul>
+      {%- endif -%}
 
       {% form 'product', product, id: 'product-form', class: 'pdp__form' %}
         {% unless product.has_only_default_variant %}
@@ -34,34 +96,84 @@
         </select>
         <div class="buy-row">
           <div class="pdp-qty"><button type="button" data-pqty="dec" aria-label="Decrease">−</button><input type="number" name="quantity" id="pdpQtyVal" value="1" min="1" inputmode="numeric"><button type="button" data-pqty="inc" aria-label="Increase">+</button></div>
-          <button type="submit" class="btn btn--primary" id="pdpAdd" {% unless product.available %}disabled{% endunless %}>{% if product.available %}Add to Bag — {{ product.price | money }}{% else %}Sold Out{% endif %}</button>
+          <button type="submit" class="btn btn--primary" id="pdpAdd" {% unless product.available %}disabled{% endunless %}>{% if product.available %}{{ section.settings.atc_label }}{% else %}Sold Out{% endif %}</button>
         </div>
-        {% if section.settings.show_express %}<button type="submit" name="checkout" class="pdp__express">Buy It Now</button>{% endif %}
+        {% if section.settings.show_express %}<button type="submit" name="checkout" class="pdp__express">{{ section.settings.express_label }}</button>{% endif %}
       {% endform %}
-      {% assign scar = product.metafields.custom.scarcity | default: section.settings.scarcity %}
-      {% if scar != blank %}<div class="pdp__scarcity scarcity"><span class="dot"></span>{{ scar }}</div>{% endif %}
+
+      {%- assign scar = product.metafields.custom.scarcity | default: section.settings.scarcity -%}
+      {%- if scar != blank -%}<div class="pdp__scarcity scarcity"><span class="dot"></span>{{ scar }}</div>{%- endif -%}
+
+      {%- comment -%} Assurance badges (multi-block) {%- endcomment -%}
       <div class="pdp__assure">
         {% for block in section.blocks %}
-          <div {{ block.shopify_attributes }}>{% render 'icon', icon: block.settings.icon %}<span>{{ block.settings.text }}</span></div>
+          {%- if block.type == 'assurance' -%}
+            <div {{ block.shopify_attributes }}>{% render 'icon', icon: block.settings.icon %}<span>{{ block.settings.text | newline_to_br }}</span></div>
+          {%- endif -%}
         {% endfor %}
       </div>
+
+      {%- if section.settings.ship_note != blank -%}
+        <p class="pdp__ship">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          {{ section.settings.ship_note }}
+        </p>
+      {%- endif -%}
     </div>
   </div>
 </div></section>
-<div class="sticky-atc" id="stickyAtc"><div class="sticky-atc__info"><b>{{ product.title }}</b><span class="p">{{ product.price | money }}</span></div><button class="btn btn--primary btn--sm" data-sticky-add>Add to Bag</button></div>
+
+<div class="sticky-atc" id="stickyAtc">
+  <div class="sticky-atc__info"><b>{{ product.title }}</b><span class="p">{{ product.price | money }}</span></div>
+  <button class="btn btn--primary btn--sm" data-sticky-add>{{ section.settings.atc_label }}</button>
+</div>
+
+{%- if section.settings.show_zoom -%}
+<div class="pdp-zoom-modal" id="pdpZoomModal" role="dialog" aria-modal="true" aria-label="Enlarged product image">
+  <button class="pdp-zoom-modal__close" id="pdpZoomClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <img id="pdpZoomImg" src="" alt="{{ product.title | escape }}">
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('pdpZoom'),modal=document.getElementById('pdpZoomModal'),
+      cls=document.getElementById('pdpZoomClose'),zi=document.getElementById('pdpZoomImg'),
+      mi=document.getElementById('pdpMainImg');
+  if(!btn||!modal)return;
+  function open(){zi.src=mi.src;modal.classList.add('is-open');document.body.style.overflow='hidden';}
+  function close(){modal.classList.remove('is-open');document.body.style.overflow='';}
+  btn.addEventListener('click',open);
+  cls.addEventListener('click',close);
+  modal.addEventListener('click',function(e){if(e.target===modal)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Product",
   "tag": "section",
   "settings": [
-    { "type": "header", "content": "Supporting copy (product metafields override these when set)" },
-    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Customisable glow serum" },
-    { "type": "text", "id": "badge", "label": "Image badge", "default": "Best Seller" },
+    { "type": "header", "content": "Meta & ratings" },
+    { "type": "checkbox", "id": "show_rating", "label": "Show star rating", "default": true },
     { "type": "text", "id": "rating", "label": "Rating fallback", "default": "4.9" },
     { "type": "text", "id": "review_count", "label": "Review count fallback", "default": "2,418" },
+    { "type": "header", "content": "Product copy (metafields override)" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Clinically proven beauty from within" },
+    { "type": "text", "id": "badge", "label": "Image badge", "default": "Best Seller" },
+    { "type": "header", "content": "Description" },
+    { "type": "checkbox", "id": "show_desc", "label": "Show full product description", "default": true },
+    { "type": "header", "content": "Buy box" },
+    { "type": "text", "id": "atc_label", "label": "Add to cart label", "default": "Add to Bag" },
     { "type": "text", "id": "pay_text", "label": "Payment line", "default": "or 4 interest-free payments · Klarna available" },
     { "type": "text", "id": "scarcity", "label": "Scarcity line", "default": "Selling fast — limited stock" },
-    { "type": "checkbox", "id": "show_express", "label": "Show express \"Buy It Now\" button", "default": true }
+    { "type": "checkbox", "id": "show_express", "label": "Show Buy It Now button", "default": true },
+    { "type": "text", "id": "express_label", "label": "Buy It Now label", "default": "Buy It Now" },
+    { "type": "header", "content": "Shipping & gallery" },
+    { "type": "text", "id": "ship_note", "label": "Shipping note", "default": "Free shipping on orders $50+" },
+    { "type": "checkbox", "id": "show_zoom", "label": "Enable image zoom", "default": true }
   ],
   "blocks": [
     {
@@ -69,7 +181,22 @@
       "name": "Assurance badge",
       "settings": [
         { "type": "select", "id": "icon", "label": "Icon", "options": [ {"value":"shield","label":"Shield"},{"value":"leaf","label":"Leaf"},{"value":"check","label":"Check"},{"value":"star","label":"Star"} ], "default": "shield" },
-        { "type": "text", "id": "text", "label": "Text", "default": "90-Day Guarantee" }
+        { "type": "text", "id": "text", "label": "Text", "default": "90-Day\nGuarantee" }
+      ]
+    },
+    {
+      "type": "bullet",
+      "name": "Benefit bullet",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Clinically proven formula" }
+      ]
+    },
+    {
+      "type": "key_icon",
+      "name": "Key icon badge",
+      "settings": [
+        { "type": "image_picker", "id": "icon_img", "label": "Icon image (optional)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Vegan" }
       ]
     }
   ]

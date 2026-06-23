@@ -1,0 +1,105 @@
+{% style %}
+.ugc-grid{display:grid;gap:12px;margin-top:48px}
+.ugc-grid--2,.ugc-grid--3,.ugc-grid--4,.ugc-grid--5,.ugc-grid--6,.ugc-grid--7,.ugc-grid--8,.ugc-grid--9{grid-template-columns:repeat(3,1fr)}
+@media(min-width:900px){
+  .ugc-grid--4,.ugc-grid--8{grid-template-columns:repeat(4,1fr)}
+  .ugc-grid--5,.ugc-grid--6,.ugc-grid--7,.ugc-grid--8,.ugc-grid--9{grid-template-columns:repeat(3,1fr)}
+  .ugc-grid--6{grid-template-columns:repeat(6,1fr)}
+}
+.ugc-card{position:relative;overflow:hidden;border-radius:var(--radius)}
+.ugc-card__media{display:block;aspect-ratio:1/1;overflow:hidden;background:var(--sand);border-radius:var(--radius)}
+.ugc-card__media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.ugc-card:hover .ugc-card__media img{transform:scale(1.06)}
+.ugc-card__platform{position:absolute;top:10px;left:10px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ivory);background:rgba(43,35,28,.55);padding:5px 10px;border-radius:2px;backdrop-filter:blur(4px)}
+.ugc-card__caption{font-size:12.5px;color:var(--ink-soft);margin-top:10px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ugc-card__handle{font-size:11px;letter-spacing:.06em;color:var(--bronze);display:block;margin-top:4px}
+{% endstyle %}
+
+<section class="section {{ section.settings.bg }}" id="ugc-{{ section.id }}">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="display-md" style="margin-top:14px;">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subtext != blank -%}<p class="lede">{{ section.settings.subtext }}</p>{%- endif -%}
+    </div>
+
+    <div class="ugc-grid ugc-grid--{{ section.blocks.size }}">
+      {%- for block in section.blocks -%}
+        <div class="ugc-card reveal" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <a class="ugc-card__media"
+               {%- if block.settings.link != blank -%} href="{{ block.settings.link }}" target="_blank" rel="noopener noreferrer"{%- else -%} href="#"{%- endif -%}>
+              <img src="{{ block.settings.image | image_url: width: 600 }}"
+                   alt="{{ block.settings.caption | escape | default: '' }}"
+                   width="600" loading="lazy">
+              {%- if block.settings.platform != blank -%}
+                <span class="ugc-card__platform">{{ block.settings.platform }}</span>
+              {%- endif -%}
+            </a>
+          {%- else -%}
+            <div class="ugc-card__media">
+              <div class="card__ph" style="height:100%;background:linear-gradient(135deg,var(--sand),var(--champagne));"></div>
+              {%- if block.settings.platform != blank -%}
+                <span class="ugc-card__platform">{{ block.settings.platform }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if block.settings.caption != blank -%}<p class="ugc-card__caption">{{ block.settings.caption }}</p>{%- endif -%}
+          {%- if block.settings.handle != blank -%}<span class="ugc-card__handle">@{{ block.settings.handle }}</span>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div style="text-align:center;margin-top:40px;">
+        <a href="{{ section.settings.cta_url | default: '#' }}" class="btn btn--ghost"
+           {%- if section.settings.cta_url != blank -%} target="_blank" rel="noopener noreferrer"{%- endif -%}>
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "UGC / Social feed",
+  "tag": "section",
+  "class": "shopify-section--product-ugc",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "As Seen On" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "The Auvelle <em class='serif-it'>community</em>." },
+    { "type": "text", "id": "subtext", "label": "Subtext", "default": "Real glow, shared daily." },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Follow us on Instagram" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "ugc_card",
+      "name": "Photo card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "caption", "label": "Caption" },
+        { "type": "text", "id": "handle", "label": "Creator handle (without @)" },
+        { "type": "text", "id": "platform", "label": "Platform label", "default": "Instagram" },
+        { "type": "url", "id": "link", "label": "Link to post" }
+      ]
+    }
+  ],
+  "max_blocks": 9,
+  "presets": [
+    {
+      "name": "UGC / Social feed",
+      "blocks": [
+        { "type": "ugc_card", "settings": { "platform": "Instagram" } },
+        { "type": "ugc_card", "settings": { "platform": "TikTok" } },
+        { "type": "ugc_card", "settings": { "platform": "Instagram" } },
+        { "type": "ugc_card", "settings": { "platform": "Instagram" } },
+        { "type": "ugc_card", "settings": { "platform": "TikTok" } },
+        { "type": "ugc_card", "settings": { "platform": "Instagram" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

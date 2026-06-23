@@ -1,0 +1,104 @@
+{% style %}
+.ingr-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,96px);align-items:center}
+.ingr-layout__image img{width:100%;border-radius:var(--radius-lg);object-fit:cover}
+.ingr-list{display:grid;gap:16px;margin-top:32px}
+.ingr-item{padding:20px 24px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--ivory);transition:border-color .3s,box-shadow .3s}
+.section--tint .ingr-item{background:#fff}
+.ingr-item:hover{border-color:var(--champagne);box-shadow:var(--shadow-sm)}
+.ingr-item--featured{border-color:var(--champagne);background:linear-gradient(135deg,#fff 0%,var(--ivory) 100%)}
+.ingr-item__top{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.ingr-item__img{width:42px;height:42px;border-radius:50%;object-fit:cover;background:var(--sand);flex:none}
+.ingr-item__name{font-family:var(--display);font-size:20px;line-height:1.1}
+.ingr-item__amount{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--bronze);font-weight:600;display:block;margin-top:2px}
+.ingr-item__desc{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+.ingr-full{margin-top:24px;border-top:1px solid var(--line-soft);padding-top:16px}
+.ingr-full summary{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--bronze);font-weight:600;cursor:pointer;user-select:none}
+.ingr-full__content{font-size:12.5px;color:var(--ink-soft);line-height:1.7;margin-top:12px}
+@media(max-width:860px){.ingr-layout{grid-template-columns:1fr}.ingr-layout__image{order:-1}}
+{% endstyle %}
+
+<section class="section {{ section.settings.bg }}" id="ingredients-{{ section.id }}">
+  <div class="wrap">
+    <div class="ingr-layout">
+      <div class="ingr-layout__text reveal">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="display-md" style="margin-top:16px;">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subtext != blank -%}<p class="lede" style="margin-top:16px;">{{ section.settings.subtext }}</p>{%- endif -%}
+        <div class="ingr-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'ingredient' -%}
+              <div class="ingr-item {% if block.settings.featured %}ingr-item--featured{% endif %}" {{ block.shopify_attributes }}>
+                <div class="ingr-item__top">
+                  {%- if block.settings.image != blank -%}
+                    <img class="ingr-item__img" src="{{ block.settings.image | image_url: width: 84 }}" alt="{{ block.settings.name | escape }}" width="42" height="42" loading="lazy">
+                  {%- endif -%}
+                  <div>
+                    <div class="ingr-item__name">{{ block.settings.name }}</div>
+                    {%- if block.settings.amount != blank -%}<span class="ingr-item__amount">{{ block.settings.amount }}</span>{%- endif -%}
+                  </div>
+                </div>
+                {%- if block.settings.description != blank -%}
+                  <p class="ingr-item__desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if section.settings.full_list != blank -%}
+          <details class="ingr-full">
+            <summary>{{ section.settings.full_list_label }}</summary>
+            <div class="ingr-full__content">{{ section.settings.full_list }}</div>
+          </details>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.image != blank -%}
+        <div class="ingr-layout__image reveal">
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.image_alt | escape }}" width="900" loading="lazy">
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredients",
+  "tag": "section",
+  "class": "shopify-section--product-ingredients",
+  "settings": [
+    { "type": "select", "id": "bg", "label": "Background", "options": [ {"value":"","label":"Ivory"},{"value":"section--tint","label":"Tint"},{"value":"section--sand","label":"Sand"} ], "default": "section--tint" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Formula" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Every ingredient has a <em class='serif-it'>purpose</em>." },
+    { "type": "text", "id": "subtext", "label": "Subtext", "default": "Clinical-grade actives at effective concentrations — nothing more, nothing less." },
+    { "type": "image_picker", "id": "image", "label": "Side image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Auvelle formula" },
+    { "type": "textarea", "id": "full_list", "label": "Full ingredient list (collapsed)", "info": "Will be shown in an expandable section" },
+    { "type": "text", "id": "full_list_label", "label": "Full list toggle label", "default": "View full ingredient list" }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Icon / photo" },
+        { "type": "text", "id": "name", "label": "Ingredient name", "default": "Marine Collagen Peptides" },
+        { "type": "text", "id": "amount", "label": "Amount / concentration", "default": "2,500mg" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Type I & III collagen peptides clinically proven to improve skin elasticity and reduce fine lines within 8 weeks." },
+        { "type": "checkbox", "id": "featured", "label": "Featured (highlighted)", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Ingredients",
+      "blocks": [
+        { "type": "ingredient", "settings": { "name": "Marine Collagen Peptides", "amount": "2,500mg", "description": "Type I & III peptides clinically proven to improve skin elasticity and reduce fine lines within 8 weeks.", "featured": true } },
+        { "type": "ingredient", "settings": { "name": "Vitamin C (Ascorbic Acid)", "amount": "500mg", "description": "Potent antioxidant that stimulates collagen synthesis, brightens uneven tone, and neutralises free radicals." } },
+        { "type": "ingredient", "settings": { "name": "Hyaluronic Acid", "amount": "100mg", "description": "Binds up to 1,000× its weight in water to plump skin cells from within." } },
+        { "type": "ingredient", "settings": { "name": "Biotin (Vitamin B7)", "amount": "5,000mcg", "description": "Supports the keratin infrastructure for stronger nails and lustrous hair." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
