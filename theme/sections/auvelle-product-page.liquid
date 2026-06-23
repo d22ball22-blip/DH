@@ -1,0 +1,2553 @@
+{% comment %}
+  ============================================================
+  Auvelle Beauty — Product Page Section
+  File: sections/auvelle-product-page.liquid
+  Compatible with Shopify Online Store 2.0
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign product = product
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'auvelle-product-form-' | append: section.id
+  assign section_bg    = section.settings.section_bg_color
+  assign text_color    = section.settings.text_color
+  assign accent_color  = section.settings.accent_color
+  assign btn_bg        = section.settings.button_color
+  assign btn_text      = section.settings.button_text_color
+-%}
+
+<style>
+  /* ── Reset & base ─────────────────────────────── */
+  #auvelle-{{ section.id }} *,
+  #auvelle-{{ section.id }} *::before,
+  #auvelle-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  #auvelle-{{ section.id }} {
+    --au-bg:        {{ section_bg | default: '#FAFAF8' }};
+    --au-text:      {{ text_color | default: '#1A1A1A' }};
+    --au-accent:    {{ accent_color | default: '#C9A96E' }};
+    --au-btn:       {{ btn_bg | default: '#1A1A1A' }};
+    --au-btn-text:  {{ btn_text | default: '#FFFFFF' }};
+    --au-border:    #E8E4DF;
+    --au-soft:      #F5F1EC;
+    --au-radius:    12px;
+    --au-gap:       {{ section.settings.section_padding | default: 60 }}px;
+    background-color: var(--au-bg);
+    color: var(--au-text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Typography ───────────────────────────────── */
+  #auvelle-{{ section.id }} .au-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--au-accent);
+  }
+  #auvelle-{{ section.id }} h1,
+  #auvelle-{{ section.id }} .au-h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  #auvelle-{{ section.id }} h2,
+  #auvelle-{{ section.id }} .au-h2 {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  #auvelle-{{ section.id }} h3,
+  #auvelle-{{ section.id }} .au-h3 {
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  #auvelle-{{ section.id }} p { line-height: 1.65; font-size: 15px; }
+  #auvelle-{{ section.id }} a { color: inherit; }
+
+  /* ── Layout helpers ───────────────────────────── */
+  #auvelle-{{ section.id }} .au-container {
+    max-width: 1260px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  #auvelle-{{ section.id }} .au-section {
+    padding-top: var(--au-gap);
+    padding-bottom: var(--au-gap);
+  }
+  #auvelle-{{ section.id }} .au-section--alt { background: var(--au-soft); }
+  #auvelle-{{ section.id }} .au-section--dark {
+    background: var(--au-text);
+    color: var(--au-bg);
+  }
+  #auvelle-{{ section.id }} .au-section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  #auvelle-{{ section.id }} .au-section-header p {
+    max-width: 560px;
+    margin: 12px auto 0;
+    opacity: 0.7;
+  }
+
+  /* ── Buttons ──────────────────────────────────── */
+  #auvelle-{{ section.id }} .au-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--au-btn);
+    color: var(--au-btn-text);
+    border: 2px solid var(--au-btn);
+    border-radius: 100px;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    text-decoration: none;
+    white-space: nowrap;
+    width: 100%;
+  }
+  #auvelle-{{ section.id }} .au-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  #auvelle-{{ section.id }} .au-btn:active { transform: translateY(0); }
+  #auvelle-{{ section.id }} .au-btn--outline {
+    background: transparent;
+    color: var(--au-btn);
+  }
+  #auvelle-{{ section.id }} .au-btn--accent {
+    background: var(--au-accent);
+    border-color: var(--au-accent);
+    color: #fff;
+  }
+  #auvelle-{{ section.id }} .au-btn[disabled],
+  #auvelle-{{ section.id }} .au-btn[aria-disabled='true'] {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  /* ── Stars ────────────────────────────────────── */
+  #auvelle-{{ section.id }} .au-stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--au-accent);
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  /* ── Badges ───────────────────────────────────── */
+  #auvelle-{{ section.id }} .au-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  #auvelle-{{ section.id }} .au-badge--popular {
+    background: var(--au-accent);
+    color: #fff;
+  }
+  #auvelle-{{ section.id }} .au-badge--value {
+    background: #2D6A4F;
+    color: #fff;
+  }
+  #auvelle-{{ section.id }} .au-badge--new {
+    background: var(--au-text);
+    color: var(--au-bg);
+  }
+
+  /* ──────────────────────────────────────────────── */
+  /* 1. HERO                                          */
+  /* ──────────────────────────────────────────────── */
+  .au-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    padding-top: 40px;
+    padding-bottom: 60px;
+  }
+  .au-hero__media { position: relative; }
+  .au-hero__badge-wrap {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+  }
+  .au-gallery__main {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--au-radius);
+    display: block;
+    background: var(--au-soft);
+  }
+  .au-gallery__thumbs {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .au-gallery__thumbs::-webkit-scrollbar { display: none; }
+  .au-gallery__thumb {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .au-gallery__thumb.is-active { border-color: var(--au-text); }
+  .au-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Hero info */
+  .au-hero__info { display: flex; flex-direction: column; gap: 20px; }
+  .au-hero__meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .au-hero__rating { display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: 0.7; }
+  .au-hero__price-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .au-hero__price {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .au-hero__compare {
+    font-size: 18px;
+    opacity: 0.4;
+    text-decoration: line-through;
+  }
+  .au-hero__save {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2D6A4F;
+    background: #D8F3DC;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* Variants */
+  .au-variants { display: flex; flex-direction: column; gap: 12px; }
+  .au-variants__label { font-size: 13px; font-weight: 600; }
+  .au-variants__options { display: flex; gap: 8px; flex-wrap: wrap; }
+  .au-variants__option {
+    padding: 8px 18px;
+    border: 1.5px solid var(--au-border);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    background: transparent;
+    color: var(--au-text);
+  }
+  .au-variants__option.is-active,
+  .au-variants__option:focus-visible {
+    border-color: var(--au-text);
+    background: var(--au-text);
+    color: var(--au-bg);
+    outline: none;
+  }
+
+  /* Quantity */
+  .au-qty { display: flex; flex-direction: column; gap: 10px; }
+  .au-qty__label { font-size: 13px; font-weight: 600; }
+  .au-qty__stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid var(--au-border);
+    border-radius: 100px;
+    overflow: hidden;
+    width: fit-content;
+  }
+  .au-qty__btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.15s;
+    color: var(--au-text);
+  }
+  .au-qty__btn:hover { background: var(--au-soft); }
+  .au-qty__input {
+    width: 48px;
+    text-align: center;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    color: var(--au-text);
+    -moz-appearance: textfield;
+  }
+  .au-qty__input::-webkit-outer-spin-button,
+  .au-qty__input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  /* ATC area */
+  .au-hero__cta { display: flex; flex-direction: column; gap: 12px; }
+  .au-hero__atc { font-size: 16px; padding: 16px 32px; }
+  .au-hero__dynamic { text-align: center; }
+
+  /* Trust strip */
+  .au-trust-strip {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+    border-top: 1px solid var(--au-border);
+    border-bottom: 1px solid var(--au-border);
+  }
+  .au-trust-strip__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    flex: 1 1 140px;
+  }
+  .au-trust-strip__icon { font-size: 16px; }
+
+  /* Shipping progress */
+  .au-shipping-bar {
+    background: var(--au-soft);
+    border-radius: 100px;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .au-shipping-bar__label { font-size: 12px; font-weight: 600; text-align: center; }
+  .au-shipping-bar__track {
+    height: 6px;
+    background: var(--au-border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .au-shipping-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--au-accent), #8B6914);
+    border-radius: 100px;
+    transition: width 0.6s ease;
+  }
+
+  /* ──────────────────────────────────────────────── */
+  /* 4. BENEFIT ICONS                                 */
+  /* ──────────────────────────────────────────────── */
+  .au-benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px; }
+  .au-benefit-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+  .au-benefit-card__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--au-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+  .au-benefit-card__title { font-size: 14px; font-weight: 700; }
+  .au-benefit-card__text { font-size: 13px; opacity: 0.65; }
+
+  /* ──────────────────────────────────────────────── */
+  /* 5. BUNDLE SELECTOR                               */
+  /* ──────────────────────────────────────────────── */
+  .au-bundles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .au-bundle-card {
+    border: 2px solid var(--au-border);
+    border-radius: var(--au-radius);
+    padding: 24px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    background: #fff;
+  }
+  .au-bundle-card.is-selected,
+  .au-bundle-card:focus-within {
+    border-color: var(--au-text);
+    box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+  }
+  .au-bundle-card__badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .au-bundle-card__name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .au-bundle-card__price { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .au-bundle-card__compare { font-size: 13px; opacity: 0.4; text-decoration: line-through; }
+  .au-bundle-card__perks { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .au-bundle-card__perk { font-size: 13px; display: flex; align-items: center; gap: 6px; }
+  .au-bundle-card__perk::before {
+    content: '✓';
+    color: #2D6A4F;
+    font-weight: 700;
+  }
+
+  /* ──────────────────────────────────────────────── */
+  /* 6. STICKY ATC                                    */
+  /* ──────────────────────────────────────────────── */
+  .au-sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #fff;
+    border-top: 1px solid var(--au-border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .au-sticky-atc.is-visible { transform: translateY(0); }
+  .au-sticky-atc__product { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+  .au-sticky-atc__img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--au-soft);
+  }
+  .au-sticky-atc__name {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .au-sticky-atc__price { font-size: 14px; font-weight: 700; }
+  .au-sticky-atc__btn {
+    flex-shrink: 0;
+    padding: 12px 28px;
+    font-size: 14px;
+    width: auto;
+  }
+  @media (max-width: 600px) {
+    .au-sticky-atc__product { display: none; }
+    .au-sticky-atc__btn { width: 100%; }
+  }
+
+  /* ──────────────────────────────────────────────── */
+  /* 7. SOCIAL PROOF / REVIEWS                        */
+  /* ──────────────────────────────────────────────── */
+  .au-reviews-summary {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    padding: 32px;
+    background: #fff;
+    border-radius: var(--au-radius);
+    border: 1px solid var(--au-border);
+  }
+  .au-reviews-summary__score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .au-reviews-summary__number {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .au-reviews-summary__count { font-size: 12px; opacity: 0.55; }
+  .au-reviews-summary__bars { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 6px; }
+  .au-bar-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+  .au-bar-row__track {
+    flex: 1;
+    height: 6px;
+    background: var(--au-border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .au-bar-row__fill {
+    height: 100%;
+    background: var(--au-accent);
+    border-radius: 100px;
+  }
+  .au-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .au-review-card {
+    background: #fff;
+    border: 1px solid var(--au-border);
+    border-radius: var(--au-radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .au-review-card__header { display: flex; align-items: center; justify-content: space-between; }
+  .au-review-card__author { font-size: 14px; font-weight: 700; }
+  .au-review-card__verified { font-size: 11px; color: #2D6A4F; font-weight: 600; }
+  .au-review-card__title { font-size: 15px; font-weight: 600; }
+  .au-review-card__body { font-size: 14px; opacity: 0.7; line-height: 1.6; }
+  .au-review-card__img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  /* ──────────────────────────────────────────────── */
+  /* 8. HOW IT WORKS                                  */
+  /* ──────────────────────────────────────────────── */
+  .au-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; counter-reset: step-counter; }
+  .au-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    counter-increment: step-counter;
+  }
+  .au-step__number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--au-text);
+    color: var(--au-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .au-step__icon { font-size: 36px; }
+  .au-step__title { font-size: 15px; font-weight: 700; }
+  .au-step__text { font-size: 13px; opacity: 0.65; }
+
+  /* ──────────────────────────────────────────────── */
+  /* 9. BEFORE / AFTER                                */
+  /* ──────────────────────────────────────────────── */
+  .au-before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-radius: var(--au-radius); overflow: hidden; }
+  .au-ba__panel { position: relative; aspect-ratio: 4/5; }
+  .au-ba__panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .au-ba__label {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ──────────────────────────────────────────────── */
+  /* 10. UGC VIDEO GALLERY                            */
+  /* ──────────────────────────────────────────────── */
+  .au-ugc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .au-ugc-card { position: relative; border-radius: var(--au-radius); overflow: hidden; cursor: pointer; }
+  .au-ugc-card__thumb { width: 100%; aspect-ratio: 9/16; object-fit: cover; display: block; background: var(--au-soft); }
+  .au-ugc-card__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%);
+    color: #fff;
+  }
+  .au-ugc-card__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.88);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--au-text);
+    transition: transform 0.2s;
+  }
+  .au-ugc-card:hover .au-ugc-card__play { transform: translate(-50%, -50%) scale(1.08); }
+  .au-ugc-card__author { font-size: 12px; font-weight: 700; }
+  .au-ugc-card__views { font-size: 11px; opacity: 0.8; }
+
+  /* ──────────────────────────────────────────────── */
+  /* 11. COMPARISON TABLE                             */
+  /* ──────────────────────────────────────────────── */
+  .au-comparison {
+    border: 1px solid var(--au-border);
+    border-radius: var(--au-radius);
+    overflow: hidden;
+  }
+  .au-comparison table { width: 100%; border-collapse: collapse; }
+  .au-comparison th,
+  .au-comparison td {
+    padding: 14px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--au-border);
+    font-size: 14px;
+  }
+  .au-comparison th { font-weight: 700; font-size: 13px; background: var(--au-soft); }
+  .au-comparison th:first-child,
+  .au-comparison td:first-child { text-align: left; font-weight: 600; }
+  .au-comparison .au-col--ours { background: rgba(201,169,110,0.08); }
+  .au-comparison .au-col--ours th { color: var(--au-accent); }
+  .au-comparison td:last-child { border-bottom: none; }
+  .au-comparison tr:last-child td { border-bottom: none; }
+  .au-check { color: #2D6A4F; font-weight: 700; font-size: 16px; }
+  .au-cross { color: #C0392B; font-weight: 700; font-size: 16px; }
+
+  /* ──────────────────────────────────────────────── */
+  /* 12. WHAT'S INCLUDED                              */
+  /* ──────────────────────────────────────────────── */
+  .au-whats-included {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .au-whats-included__img { width: 100%; border-radius: var(--au-radius); }
+  .au-included-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .au-included-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--au-border);
+    border-radius: 10px;
+  }
+  .au-included-item__icon { font-size: 24px; flex-shrink: 0; }
+  .au-included-item__name { font-size: 14px; font-weight: 600; }
+  .au-included-item__desc { font-size: 12px; opacity: 0.6; }
+
+  /* ──────────────────────────────────────────────── */
+  /* 13. GUARANTEE                                    */
+  /* ──────────────────────────────────────────────── */
+  .au-guarantee {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+  }
+  .au-guarantee__item { display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1 1 160px; }
+  .au-guarantee__icon { font-size: 40px; }
+  .au-guarantee__title { font-size: 15px; font-weight: 700; }
+  .au-guarantee__text { font-size: 13px; opacity: 0.65; max-width: 160px; }
+
+  /* ──────────────────────────────────────────────── */
+  /* 14. FAQ                                          */
+  /* ──────────────────────────────────────────────── */
+  .au-faqs { max-width: 740px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+  .au-faq {
+    border-bottom: 1px solid var(--au-border);
+    overflow: hidden;
+  }
+  .au-faq__trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 4px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--au-text);
+    font-family: inherit;
+  }
+  .au-faq__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--au-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: transform 0.3s, background 0.2s;
+  }
+  .au-faq.is-open .au-faq__icon {
+    transform: rotate(45deg);
+    background: var(--au-text);
+    color: var(--au-bg);
+  }
+  .au-faq__body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+    padding: 0 4px;
+  }
+  .au-faq.is-open .au-faq__body {
+    max-height: 600px;
+    padding-bottom: 20px;
+  }
+  .au-faq__answer { font-size: 14px; opacity: 0.75; line-height: 1.7; }
+
+  /* ──────────────────────────────────────────────── */
+  /* 15. FINAL CTA                                    */
+  /* ──────────────────────────────────────────────── */
+  .au-final-cta {
+    text-align: center;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .au-final-cta__headline { max-width: 600px; }
+  .au-final-cta__sub { font-size: 16px; opacity: 0.65; max-width: 480px; }
+  .au-final-cta__actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .au-final-cta .au-btn { width: auto; }
+
+  /* ──────────────────────────────────────────────── */
+  /* Responsive                                       */
+  /* ──────────────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .au-hero {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-top: 24px;
+    }
+    .au-whats-included { grid-template-columns: 1fr; }
+    .au-whats-included__img { max-width: 480px; margin: 0 auto; }
+    .au-comparison { overflow-x: auto; }
+    .au-comparison table { min-width: 480px; }
+    .au-before-after { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .au-reviews-summary { flex-direction: column; }
+    .au-final-cta { padding: 60px 20px; }
+  }
+
+  /* ──────────────────────────────────────────────── */
+  /* Modal / Video lightbox                           */
+  /* ──────────────────────────────────────────────── */
+  .au-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.85);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .au-modal.is-open { display: flex; }
+  .au-modal__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .au-modal__inner {
+    max-width: 540px;
+    width: 100%;
+    aspect-ratio: 9/16;
+  }
+  .au-modal__inner iframe,
+  .au-modal__inner video {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--au-radius);
+    border: none;
+  }
+</style>
+
+<section id="auvelle-{{ section.id }}" aria-label="{{ section.settings.heading | default: product.title | escape }}">
+
+  {%- comment %} ── 1. HERO ─────────────────────────────── {% endcomment %}
+  <div class="au-container">
+    <div class="au-hero">
+
+      {%- comment %} ── Media gallery ── {% endcomment %}
+      <div class="au-hero__media" aria-label="Product images">
+        <div class="au-hero__badge-wrap">
+          {%- if section.settings.badge_text != blank -%}
+            <span class="au-badge au-badge--new">{{ section.settings.badge_text }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment %} Main image ── {% endcomment %}
+        {%- if section.settings.product_image != blank -%}
+          <img
+            id="au-gallery-main-{{ section.id }}"
+            class="au-gallery__main"
+            src="{{ section.settings.product_image | img_url: '800x800', crop: 'center' }}"
+            alt="{{ product.title | escape }}"
+            width="800"
+            height="800"
+            loading="eager"
+          >
+        {%- elsif product.featured_image -%}
+          <img
+            id="au-gallery-main-{{ section.id }}"
+            class="au-gallery__main"
+            src="{{ product.featured_image | img_url: '800x800', crop: 'center' }}"
+            alt="{{ product.title | escape }}"
+            width="800"
+            height="800"
+            loading="eager"
+          >
+        {%- else -%}
+          <div class="au-gallery__main" style="display:flex;align-items:center;justify-content:center;font-size:13px;opacity:.4;" aria-hidden="true">No image</div>
+        {%- endif -%}
+
+        {%- comment %} Thumbnails ── {% endcomment %}
+        {%- if product.images.size > 1 -%}
+          <div class="au-gallery__thumbs" role="list" aria-label="Product image thumbnails">
+            {%- for image in product.images limit: 6 -%}
+              <button
+                class="au-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                role="listitem"
+                aria-label="View image {{ forloop.index }}"
+                data-au-thumb
+                data-src="{{ image | img_url: '800x800', crop: 'center' }}"
+                data-alt="{{ image.alt | escape }}"
+              >
+                <img
+                  src="{{ image | img_url: '150x150', crop: 'center' }}"
+                  alt="{{ image.alt | escape }}"
+                  loading="lazy"
+                  width="72"
+                  height="72"
+                >
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment %} ── Hero info ── {% endcomment %}
+      <div class="au-hero__info">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="au-eyebrow">{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+          <h1 class="au-h1" style="margin-top:8px;">
+            {{ section.settings.heading | default: product.title }}
+          </h1>
+          {%- if section.settings.subheading != blank -%}
+            <p style="margin-top:12px;opacity:.7;">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- comment %} Rating ── {% endcomment %}
+        <div class="au-hero__meta">
+          <div class="au-stars" aria-label="{{ section.settings.review_rating | default: '4.9' }} out of 5 stars">
+            {%- assign rating_val = section.settings.review_rating | default: 4.9 | round -%}
+            {%- for i in (1..5) -%}
+              {%- if i <= rating_val -%}★{%- else -%}☆{%- endif -%}
+            {%- endfor -%}
+          </div>
+          <span class="au-hero__rating">
+            {{ section.settings.review_rating | default: '4.9' }}
+            &nbsp;·&nbsp;
+            {{ section.settings.review_count | default: '2,847 reviews' }}
+          </span>
+        </div>
+
+        {%- comment %} Price ── {% endcomment %}
+        <div class="au-hero__price-row">
+          <span class="au-hero__price">
+            {%- if current_variant.price -%}
+              {{ current_variant.price | money }}
+            {%- else -%}
+              {{ product.price | money }}
+            {%- endif -%}
+          </span>
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            <span class="au-hero__compare">{{ current_variant.compare_at_price | money }}</span>
+            {%- assign saved = current_variant.compare_at_price | minus: current_variant.price -%}
+            <span class="au-hero__save">Save {{ saved | money }}</span>
+          {%- elsif product.compare_at_price > product.price -%}
+            <span class="au-hero__compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment %} Product form ── {% endcomment %}
+        {%- form 'product', product, id: product_form_id, data-product-form: '' -%}
+
+          {%- comment %} Variants ── {% endcomment %}
+          {%- unless product.has_only_default_variant -%}
+            <div class="au-variants">
+              {%- for option in product.options_with_values -%}
+                <div>
+                  <p class="au-variants__label">{{ option.name }}: <strong>{{ option.selected_value }}</strong></p>
+                  <div class="au-variants__options" role="radiogroup" aria-label="{{ option.name }}">
+                    {%- for value in option.values -%}
+                      <label>
+                        <input
+                          type="radio"
+                          name="{{ option.name }}"
+                          value="{{ value | escape }}"
+                          data-au-option="{{ option.position }}"
+                          {% if option.selected_value == value %}checked{% endif %}
+                          style="display:none;"
+                        >
+                        <span class="au-variants__option{% if option.selected_value == value %} is-active{% endif %}">
+                          {{ value }}
+                        </span>
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+              <input type="hidden" name="id" id="au-variant-id-{{ section.id }}" value="{{ current_variant.id }}">
+            </div>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}">
+          {%- endunless -%}
+
+          {%- comment %} Quantity ── {% endcomment %}
+          <div class="au-qty">
+            <p class="au-qty__label">Quantity</p>
+            <div class="au-qty__stepper">
+              <button type="button" class="au-qty__btn" data-au-qty-minus aria-label="Decrease quantity">−</button>
+              <input
+                type="number"
+                name="quantity"
+                id="au-qty-{{ section.id }}"
+                class="au-qty__input"
+                value="1"
+                min="1"
+                aria-label="Quantity"
+              >
+              <button type="button" class="au-qty__btn" data-au-qty-plus aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
+          {%- comment %} CTA buttons ── {% endcomment %}
+          <div class="au-hero__cta">
+            <button
+              type="submit"
+              name="add"
+              class="au-btn au-hero__atc"
+              id="au-atc-{{ section.id }}"
+              {%- unless current_variant.available -%}disabled aria-disabled="true"{%- endunless -%}
+              aria-label="Add {{ product.title | escape }} to cart"
+            >
+              {%- if current_variant.available -%}
+                {{ section.settings.atc_text | default: 'Add to Cart' }}
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+
+            {%- if section.settings.show_dynamic_checkout -%}
+              <div class="au-hero__dynamic">
+                {{ form | payment_button }}
+              </div>
+            {%- endif -%}
+          </div>
+
+        {%- endform -%}
+
+        {%- comment %} Shipping progress bar ── {% endcomment %}
+        {%- if section.settings.show_shipping_bar -%}
+          {%- assign bar_pct = current_variant.price | times: 1.0 | divided_by: 5000 | times: 100 | round -%}
+          {%- if bar_pct > 100 -%}{%- assign bar_pct = 100 -%}{%- endif -%}
+          <div class="au-shipping-bar" aria-live="polite">
+            {%- if bar_pct >= 100 -%}
+              <p class="au-shipping-bar__label">🎉 You qualify for <strong>Free Shipping!</strong></p>
+            {%- else -%}
+              <p class="au-shipping-bar__label">Add <strong>{{ 5000 | minus: current_variant.price | money }}</strong> more for Free Shipping</p>
+            {%- endif -%}
+            <div class="au-shipping-bar__track" role="progressbar" aria-valuenow="{{ bar_pct }}" aria-valuemin="0" aria-valuemax="100">
+              <div class="au-shipping-bar__fill" style="width:{{ bar_pct }}%;"></div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Trust strip ── {% endcomment %}
+        <div class="au-trust-strip" aria-label="Trust signals">
+          <span class="au-trust-strip__item"><span class="au-trust-strip__icon">🔒</span> Secure Checkout</span>
+          <span class="au-trust-strip__item"><span class="au-trust-strip__icon">📦</span> Free Shipping $50+</span>
+          <span class="au-trust-strip__item"><span class="au-trust-strip__icon">↩️</span> 30-Day Returns</span>
+          <span class="au-trust-strip__item"><span class="au-trust-strip__icon">⭐</span> Verified Reviews</span>
+        </div>
+
+      </div>{%- comment %} /au-hero__info {% endcomment %}
+    </div>{%- comment %} /au-hero {% endcomment %}
+  </div>{%- comment %} /au-container {% endcomment %}
+
+  {%- comment %} ── 4. BENEFIT ICONS ─────────────────── {% endcomment %}
+  {%- assign benefit_blocks = section.blocks | where: 'type', 'benefit_item' -%}
+  {%- if benefit_blocks.size > 0 -%}
+    <div class="au-section au-section--alt">
+      <div class="au-container">
+        {%- if section.settings.benefits_heading != blank -%}
+          <div class="au-section-header">
+            <p class="au-eyebrow">{{ section.settings.benefits_eyebrow }}</p>
+            <h2 class="au-h2">{{ section.settings.benefits_heading }}</h2>
+            {%- if section.settings.benefits_subheading != blank -%}
+              <p>{{ section.settings.benefits_subheading }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="au-benefits" role="list">
+          {%- for block in benefit_blocks -%}
+            <div class="au-benefit-card" role="listitem" {{ block.shopify_attributes }}>
+              <div class="au-benefit-card__icon" aria-hidden="true">{{ block.settings.icon | default: '✨' }}</div>
+              <p class="au-benefit-card__title">{{ block.settings.title }}</p>
+              <p class="au-benefit-card__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 5. BUNDLE SELECTOR ───────────────── {% endcomment %}
+  {%- assign bundle_blocks = section.blocks | where: 'type', 'bundle_offer' -%}
+  {%- if bundle_blocks.size > 0 -%}
+    <div class="au-section">
+      <div class="au-container">
+        <div class="au-section-header">
+          <p class="au-eyebrow">{{ section.settings.bundle_eyebrow | default: 'Bundle & Save' }}</p>
+          <h2 class="au-h2">{{ section.settings.bundle_heading | default: 'Choose Your Kit' }}</h2>
+          {%- if section.settings.bundle_subheading != blank -%}
+            <p>{{ section.settings.bundle_subheading }}</p>
+          {%- endif -%}
+        </div>
+        <div class="au-bundles" role="list">
+          {%- for block in bundle_blocks -%}
+            <div class="au-bundle-card{% if forloop.first %} is-selected{% endif %}" role="listitem" tabindex="0" data-au-bundle {{ block.shopify_attributes }}>
+              {%- if block.settings.badge_label != blank -%}
+                <span class="au-bundle-card__badge au-badge {% if block.settings.badge_style == 'value' %}au-badge--value{% else %}au-badge--popular{% endif %}">
+                  {{ block.settings.badge_label }}
+                </span>
+              {%- endif -%}
+              <p class="au-bundle-card__name">{{ block.settings.name }}</p>
+              <p class="au-bundle-card__price">{{ block.settings.price }}</p>
+              {%- if block.settings.compare_price != blank -%}
+                <p class="au-bundle-card__compare">{{ block.settings.compare_price }}</p>
+              {%- endif -%}
+              <div class="au-bundle-card__perks">
+                {%- if block.settings.perk_1 != blank -%}<p class="au-bundle-card__perk">{{ block.settings.perk_1 }}</p>{%- endif -%}
+                {%- if block.settings.perk_2 != blank -%}<p class="au-bundle-card__perk">{{ block.settings.perk_2 }}</p>{%- endif -%}
+                {%- if block.settings.perk_3 != blank -%}<p class="au-bundle-card__perk">{{ block.settings.perk_3 }}</p>{%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 7. SOCIAL PROOF / REVIEWS ─────────── {% endcomment %}
+  {%- assign review_blocks = section.blocks | where: 'type', 'review_item' -%}
+  {%- if review_blocks.size > 0 -%}
+    <div class="au-section au-section--alt">
+      <div class="au-container">
+        <div class="au-section-header">
+          <p class="au-eyebrow">{{ section.settings.reviews_eyebrow | default: 'Verified Reviews' }}</p>
+          <h2 class="au-h2">{{ section.settings.reviews_heading | default: 'What Our Customers Say' }}</h2>
+        </div>
+
+        {%- comment %} Rating summary ── {% endcomment %}
+        <div class="au-reviews-summary">
+          <div class="au-reviews-summary__score">
+            <span class="au-reviews-summary__number">{{ section.settings.review_rating | default: '4.9' }}</span>
+            <div class="au-stars" aria-hidden="true">★★★★★</div>
+            <span class="au-reviews-summary__count">{{ section.settings.review_count | default: '2,847 reviews' }}</span>
+          </div>
+          <div class="au-reviews-summary__bars" aria-label="Rating breakdown">
+            {%- assign bar_data = '98,96,82,60,40' | split: ',' -%}
+            {%- assign bar_labels = '5 stars,4 stars,3 stars,2 stars,1 star' | split: ',' -%}
+            {%- for pct in bar_data -%}
+              <div class="au-bar-row">
+                <span style="width:48px;">{{ bar_labels[forloop.index0] }}</span>
+                <div class="au-bar-row__track">
+                  <div class="au-bar-row__fill" style="width:{{ pct }}%;"></div>
+                </div>
+                <span>{{ pct }}%</span>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- comment %} Review cards ── {% endcomment %}
+        <div class="au-reviews-grid" role="list">
+          {%- for block in review_blocks -%}
+            <article class="au-review-card" role="listitem" {{ block.shopify_attributes }}>
+              <div class="au-review-card__header">
+                <span class="au-review-card__author">{{ block.settings.author | default: 'Verified Buyer' }}</span>
+                <span class="au-review-card__verified">✓ Verified</span>
+              </div>
+              <div class="au-stars" aria-label="{{ block.settings.rating | default: 5 }} out of 5">
+                {%- assign r = block.settings.rating | default: 5 | round -%}
+                {%- for i in (1..5) -%}{%- if i <= r -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+              </div>
+              {%- if block.settings.title != blank -%}
+                <p class="au-review-card__title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              <p class="au-review-card__body">{{ block.settings.body }}</p>
+              {%- if block.settings.image != blank -%}
+                <img class="au-review-card__img" src="{{ block.settings.image | img_url: '400x300', crop: 'center' }}" alt="Review photo by {{ block.settings.author | escape }}" loading="lazy" width="400" height="300">
+              {%- endif -%}
+            </article>
+          {%- endfor -%}
+        </div>
+
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 8. HOW IT WORKS ───────────────────── {% endcomment %}
+  {%- assign step_blocks = section.blocks | where: 'type', 'how_it_works_step' -%}
+  {%- if step_blocks.size > 0 -%}
+    <div class="au-section">
+      <div class="au-container">
+        <div class="au-section-header">
+          <p class="au-eyebrow">{{ section.settings.hiw_eyebrow | default: 'Simple & Effective' }}</p>
+          <h2 class="au-h2">{{ section.settings.hiw_heading | default: 'How It Works' }}</h2>
+          {%- if section.settings.hiw_subheading != blank -%}
+            <p>{{ section.settings.hiw_subheading }}</p>
+          {%- endif -%}
+        </div>
+        <div class="au-steps" role="list">
+          {%- for block in step_blocks -%}
+            <div class="au-step" role="listitem" {{ block.shopify_attributes }}>
+              <div class="au-step__number" aria-hidden="true">{{ forloop.index }}</div>
+              {%- if block.settings.icon != blank -%}
+                <div class="au-step__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+              {%- endif -%}
+              <p class="au-step__title">{{ block.settings.title }}</p>
+              <p class="au-step__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 9. BEFORE & AFTER ─────────────────── {% endcomment %}
+  {%- assign ba_blocks = section.blocks | where: 'type', 'before_after' -%}
+  {%- if ba_blocks.size > 0 -%}
+    <div class="au-section au-section--alt">
+      <div class="au-container">
+        <div class="au-section-header">
+          <p class="au-eyebrow">{{ section.settings.ba_eyebrow | default: 'Real Results' }}</p>
+          <h2 class="au-h2">{{ section.settings.ba_heading | default: 'See the Difference' }}</h2>
+        </div>
+        {%- for block in ba_blocks limit: 1 -%}
+          <div class="au-before-after" {{ block.shopify_attributes }}>
+            <div class="au-ba__panel">
+              {%- if block.settings.before_image != blank -%}
+                <img src="{{ block.settings.before_image | img_url: '600x750', crop: 'center' }}" alt="Before using {{ product.title | escape }}" loading="lazy" width="600" height="750">
+              {%- else -%}
+                <div style="background:var(--au-soft);width:100%;aspect-ratio:4/5;border-radius:var(--au-radius);"></div>
+              {%- endif -%}
+              <span class="au-ba__label">Before</span>
+            </div>
+            <div class="au-ba__panel">
+              {%- if block.settings.after_image != blank -%}
+                <img src="{{ block.settings.after_image | img_url: '600x750', crop: 'center' }}" alt="After using {{ product.title | escape }}" loading="lazy" width="600" height="750">
+              {%- else -%}
+                <div style="background:var(--au-border);width:100%;aspect-ratio:4/5;border-radius:var(--au-radius);"></div>
+              {%- endif -%}
+              <span class="au-ba__label">After</span>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 10. UGC VIDEO GALLERY ─────────────── {% endcomment %}
+  {%- assign ugc_blocks = section.blocks | where: 'type', 'ugc_video' -%}
+  {%- if ugc_blocks.size > 0 -%}
+    <div class="au-section">
+      <div class="au-container">
+        <div class="au-section-header">
+          <p class="au-eyebrow">{{ section.settings.ugc_eyebrow | default: 'As Seen On Social' }}</p>
+          <h2 class="au-h2">{{ section.settings.ugc_heading | default: 'Real People. Real Results.' }}</h2>
+        </div>
+        <div class="au-ugc-grid" role="list">
+          {%- for block in ugc_blocks -%}
+            <div
+              class="au-ugc-card"
+              role="listitem"
+              data-au-ugc-trigger
+              data-video-url="{{ block.settings.video_url | escape }}"
+              aria-label="Play video by {{ block.settings.author | escape }}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.thumbnail != blank -%}
+                <img class="au-ugc-card__thumb" src="{{ block.settings.thumbnail | img_url: '400x711', crop: 'center' }}" alt="{{ block.settings.author | escape }} video thumbnail" loading="lazy" width="400" height="711">
+              {%- else -%}
+                <div class="au-ugc-card__thumb" style="background:var(--au-soft);"></div>
+              {%- endif -%}
+              <div class="au-ugc-card__overlay">
+                <div class="au-ugc-card__play" aria-hidden="true">▶</div>
+                <p class="au-ugc-card__author">{{ block.settings.author }}</p>
+                {%- if block.settings.views != blank -%}
+                  <p class="au-ugc-card__views">{{ block.settings.views }} views</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Video modal ── {% endcomment %}
+    <div class="au-modal" id="au-ugc-modal-{{ section.id }}" role="dialog" aria-modal="true" aria-label="Video player">
+      <button class="au-modal__close" data-au-modal-close aria-label="Close video">✕</button>
+      <div class="au-modal__inner" id="au-modal-content-{{ section.id }}"></div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 11. COMPARISON TABLE ──────────────── {% endcomment %}
+  {%- assign comp_blocks = section.blocks | where: 'type', 'comparison_row' -%}
+  {%- if comp_blocks.size > 0 -%}
+    <div class="au-section au-section--alt">
+      <div class="au-container">
+        <div class="au-section-header">
+          <p class="au-eyebrow">{{ section.settings.comp_eyebrow | default: 'Why Auvelle?' }}</p>
+          <h2 class="au-h2">{{ section.settings.comp_heading | default: 'How We Compare' }}</h2>
+        </div>
+        <div class="au-comparison">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col" class="au-col--ours">{{ section.settings.comp_our_label | default: 'Auvelle Cleaner' }}</th>
+                <th scope="col">{{ section.settings.comp_them_label | default: 'Traditional Methods' }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for block in comp_blocks -%}
+                <tr {{ block.shopify_attributes }}>
+                  <td>{{ block.settings.feature }}</td>
+                  <td class="au-col--ours">
+                    {%- if block.settings.ours_check -%}
+                      <span class="au-check" aria-label="Yes">✓</span>
+                    {%- else -%}
+                      <span class="au-cross" aria-label="No">✕</span>
+                    {%- endif -%}
+                    {%- if block.settings.ours_note != blank -%}
+                      <br><small>{{ block.settings.ours_note }}</small>
+                    {%- endif -%}
+                  </td>
+                  <td>
+                    {%- if block.settings.them_check -%}
+                      <span class="au-check" aria-label="Yes">✓</span>
+                    {%- else -%}
+                      <span class="au-cross" aria-label="No">✕</span>
+                    {%- endif -%}
+                  </td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 12. WHAT'S INCLUDED ───────────────── {% endcomment %}
+  {%- assign trust_blocks = section.blocks | where: 'type', 'trust_badge' -%}
+  {%- if section.settings.whats_included_heading != blank or trust_blocks.size > 0 -%}
+    <div class="au-section">
+      <div class="au-container">
+        <div class="au-whats-included">
+          {%- if section.settings.lifestyle_image != blank -%}
+            <img class="au-whats-included__img" src="{{ section.settings.lifestyle_image | img_url: '600x600', crop: 'center' }}" alt="{{ section.settings.whats_included_heading | default: "What's included" | escape }}" loading="lazy" width="600" height="600">
+          {%- endif -%}
+          <div>
+            {%- if section.settings.whats_included_eyebrow != blank -%}
+              <p class="au-eyebrow">{{ section.settings.whats_included_eyebrow }}</p>
+            {%- endif -%}
+            <h2 class="au-h2" style="margin-top:8px;">{{ section.settings.whats_included_heading | default: "Everything You Need" }}</h2>
+            {%- if section.settings.whats_included_text != blank -%}
+              <p style="margin-top:12px;opacity:.7;">{{ section.settings.whats_included_text }}</p>
+            {%- endif -%}
+            <div class="au-included-list" role="list">
+              {%- for block in trust_blocks -%}
+                <div class="au-included-item" role="listitem" {{ block.shopify_attributes }}>
+                  <span class="au-included-item__icon" aria-hidden="true">{{ block.settings.icon | default: '📦' }}</span>
+                  <div>
+                    <p class="au-included-item__name">{{ block.settings.title }}</p>
+                    {%- if block.settings.description != blank -%}
+                      <p class="au-included-item__desc">{{ block.settings.description }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 13. GUARANTEE ─────────────────────── {% endcomment %}
+  <div class="au-section au-section--alt">
+    <div class="au-container">
+      <div class="au-section-header">
+        <p class="au-eyebrow">{{ section.settings.guarantee_eyebrow | default: 'Risk-Free Purchase' }}</p>
+        <h2 class="au-h2">{{ section.settings.guarantee_heading | default: 'You Are Protected' }}</h2>
+        {%- if section.settings.guarantee_text != blank -%}
+          <p>{{ section.settings.guarantee_text }}</p>
+        {%- endif -%}
+      </div>
+      <div class="au-guarantee" role="list">
+        <div class="au-guarantee__item" role="listitem">
+          <span class="au-guarantee__icon" aria-hidden="true">🛡️</span>
+          <p class="au-guarantee__title">30-Day Money Back</p>
+          <p class="au-guarantee__text">Not happy? Full refund, no questions asked.</p>
+        </div>
+        <div class="au-guarantee__item" role="listitem">
+          <span class="au-guarantee__icon" aria-hidden="true">🚚</span>
+          <p class="au-guarantee__title">Free Shipping $50+</p>
+          <p class="au-guarantee__text">Fast, tracked delivery to your door.</p>
+        </div>
+        <div class="au-guarantee__item" role="listitem">
+          <span class="au-guarantee__icon" aria-hidden="true">🔒</span>
+          <p class="au-guarantee__title">Secure Checkout</p>
+          <p class="au-guarantee__text">256-bit SSL encryption on every order.</p>
+        </div>
+        <div class="au-guarantee__item" role="listitem">
+          <span class="au-guarantee__icon" aria-hidden="true">⭐</span>
+          <p class="au-guarantee__title">Verified Reviews</p>
+          <p class="au-guarantee__text">Every review is from a real customer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment %} ── 14. FAQ ACCORDION ─────────────────── {% endcomment %}
+  {%- assign faq_blocks = section.blocks | where: 'type', 'faq_item' -%}
+  {%- if faq_blocks.size > 0 -%}
+    <div class="au-section">
+      <div class="au-container">
+        <div class="au-section-header">
+          <p class="au-eyebrow">{{ section.settings.faq_eyebrow | default: 'Got Questions?' }}</p>
+          <h2 class="au-h2">{{ section.settings.faq_heading | default: 'Frequently Asked Questions' }}</h2>
+        </div>
+        <div class="au-faqs">
+          {%- for block in faq_blocks -%}
+            <div class="au-faq" {{ block.shopify_attributes }}>
+              <button
+                class="au-faq__trigger"
+                aria-expanded="false"
+                aria-controls="au-faq-body-{{ section.id }}-{{ forloop.index }}"
+                data-au-faq-trigger
+              >
+                {{ block.settings.question }}
+                <span class="au-faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div
+                class="au-faq__body"
+                id="au-faq-body-{{ section.id }}-{{ forloop.index }}"
+                role="region"
+              >
+                <p class="au-faq__answer">{{ block.settings.answer }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── 15. FINAL CTA ─────────────────────── {% endcomment %}
+  {%- assign cta_blocks = section.blocks | where: 'type', 'cta_banner' -%}
+  {%- assign show_final_cta = false -%}
+  {%- if section.settings.final_cta_heading != blank or cta_blocks.size > 0 -%}
+    {%- assign show_final_cta = true -%}
+  {%- endif -%}
+  {%- if show_final_cta -%}
+    <div class="au-section au-section--dark">
+      <div class="au-container">
+        <div class="au-final-cta">
+          {%- if section.settings.final_cta_eyebrow != blank -%}
+            <p class="au-eyebrow" style="color:var(--au-accent);">{{ section.settings.final_cta_eyebrow }}</p>
+          {%- endif -%}
+          <h2 class="au-h2 au-final-cta__headline">{{ section.settings.final_cta_heading | default: 'Your Brightest Smile Starts Today' }}</h2>
+          {%- if section.settings.final_cta_sub != blank -%}
+            <p class="au-final-cta__sub">{{ section.settings.final_cta_sub }}</p>
+          {%- endif -%}
+          <div class="au-final-cta__actions">
+            <a
+              href="{{ product.url }}"
+              class="au-btn"
+              style="background:var(--au-accent);border-color:var(--au-accent);"
+            >
+              {{ section.settings.final_cta_text | default: 'Shop Now — Free Shipping' }}
+            </a>
+            {%- if section.settings.final_cta_secondary_text != blank -%}
+              <a href="{{ section.settings.final_cta_secondary_url | default: '#' }}" class="au-btn au-btn--outline" style="color:#fff;border-color:rgba(255,255,255,0.4);">
+                {{ section.settings.final_cta_secondary_text }}
+              </a>
+            {%- endif -%}
+          </div>
+          <p style="font-size:12px;opacity:.45;margin-top:-8px;">
+            30-Day Money Back Guarantee · Free Shipping Over $50 · Secure Checkout
+          </p>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── STICKY ATC ───────────────────────── {% endcomment %}
+  {%- if section.settings.show_sticky_atc -%}
+    <div
+      class="au-sticky-atc"
+      id="au-sticky-{{ section.id }}"
+      role="region"
+      aria-label="Quick add to cart"
+    >
+      {%- if product.featured_image -%}
+        <div class="au-sticky-atc__product">
+          <img
+            class="au-sticky-atc__img"
+            src="{{ product.featured_image | img_url: '96x96', crop: 'center' }}"
+            alt="{{ product.title | escape }}"
+            loading="lazy"
+            width="48"
+            height="48"
+          >
+          <div>
+            <p class="au-sticky-atc__name">{{ product.title }}</p>
+            <p class="au-sticky-atc__price">{{ product.price | money }}</p>
+          </div>
+        </div>
+      {%- endif -%}
+      <button
+        class="au-btn au-sticky-atc__btn"
+        data-au-sticky-btn
+        aria-label="Add {{ product.title | escape }} to cart"
+      >
+        {{ section.settings.atc_text | default: 'Add to Cart' }}
+      </button>
+    </div>
+  {%- endif -%}
+
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  var sectionId = {{ section.id | json }};
+  var root = document.getElementById('auvelle-' + sectionId);
+  if (!root) return;
+
+  /* ── Gallery ─────────────────────────────────── */
+  var mainImg  = document.getElementById('au-gallery-main-' + sectionId);
+  var thumbBtns = root.querySelectorAll('[data-au-thumb]');
+
+  thumbBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (mainImg) {
+        mainImg.src = btn.dataset.src;
+        mainImg.alt = btn.dataset.alt || '';
+      }
+      thumbBtns.forEach(function (b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+    });
+  });
+
+  /* ── Quantity stepper ────────────────────────── */
+  var qtyInput = root.querySelector('#au-qty-' + sectionId);
+  root.querySelector('[data-au-qty-minus]') && root.querySelector('[data-au-qty-minus]').addEventListener('click', function () {
+    if (!qtyInput) return;
+    var v = parseInt(qtyInput.value, 10);
+    if (v > 1) qtyInput.value = v - 1;
+  });
+  root.querySelector('[data-au-qty-plus]') && root.querySelector('[data-au-qty-plus]').addEventListener('click', function () {
+    if (!qtyInput) return;
+    qtyInput.value = parseInt(qtyInput.value, 10) + 1;
+  });
+
+  /* ── Variant option highlighting ─────────────── */
+  root.querySelectorAll('[data-au-option]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      var group = radio.closest('[role="radiogroup"]');
+      if (!group) return;
+      group.querySelectorAll('.au-variants__option').forEach(function (span) {
+        span.classList.remove('is-active');
+      });
+      radio.nextElementSibling && radio.nextElementSibling.classList.add('is-active');
+    });
+  });
+
+  /* ── Bundle card selection ───────────────────── */
+  root.querySelectorAll('[data-au-bundle]').forEach(function (card) {
+    card.addEventListener('click', function () {
+      root.querySelectorAll('[data-au-bundle]').forEach(function (c) { c.classList.remove('is-selected'); });
+      card.classList.add('is-selected');
+    });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+  });
+
+  /* ── FAQ accordion ───────────────────────────── */
+  root.querySelectorAll('[data-au-faq-trigger]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var faq = btn.closest('.au-faq');
+      var isOpen = faq.classList.contains('is-open');
+      root.querySelectorAll('.au-faq.is-open').forEach(function (f) {
+        f.classList.remove('is-open');
+        f.querySelector('[data-au-faq-trigger]').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        faq.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ── UGC modal ───────────────────────────────── */
+  var ugcModal   = document.getElementById('au-ugc-modal-' + sectionId);
+  var ugcContent = document.getElementById('au-modal-content-' + sectionId);
+
+  root.querySelectorAll('[data-au-ugc-trigger]').forEach(function (card) {
+    card.addEventListener('click', function () {
+      var videoUrl = card.dataset.videoUrl;
+      if (!ugcModal || !ugcContent || !videoUrl) return;
+      ugcContent.innerHTML = '';
+      /* Supports mp4 files or embed URLs */
+      if (videoUrl.match(/\.(mp4|webm|ogg)(\?|$)/i)) {
+        var vid = document.createElement('video');
+        vid.src = videoUrl;
+        vid.controls = true;
+        vid.autoplay = true;
+        vid.playsInline = true;
+        ugcContent.appendChild(vid);
+      } else {
+        var iframe = document.createElement('iframe');
+        iframe.src = videoUrl;
+        iframe.allowFullscreen = true;
+        iframe.allow = 'autoplay; fullscreen';
+        ugcContent.appendChild(iframe);
+      }
+      ugcModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeUgcModal() {
+    if (!ugcModal) return;
+    ugcModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (ugcContent) ugcContent.innerHTML = '';
+  }
+
+  ugcModal && ugcModal.querySelector('[data-au-modal-close]') && ugcModal.querySelector('[data-au-modal-close]').addEventListener('click', closeUgcModal);
+  ugcModal && ugcModal.addEventListener('click', function (e) { if (e.target === ugcModal) closeUgcModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeUgcModal(); });
+
+  /* ── Sticky ATC ──────────────────────────────── */
+  var stickyBar = document.getElementById('au-sticky-' + sectionId);
+  var heroAtc   = root.querySelector('#au-atc-' + sectionId);
+
+  if (stickyBar && heroAtc) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) {
+          stickyBar.classList.add('is-visible');
+        } else {
+          stickyBar.classList.remove('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(heroAtc);
+  }
+
+  /* Sticky ATC click — scroll to / submit main form */
+  var stickyBtn = root.querySelector('[data-au-sticky-btn]');
+  if (stickyBtn) {
+    stickyBtn.addEventListener('click', function () {
+      if (heroAtc) {
+        heroAtc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(function () { heroAtc.click(); }, 600);
+      }
+    });
+  }
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Auvelle Product Page",
+  "tag": "section",
+  "class": "auvelle-product-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Background color",
+      "default": "#FAFAF8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#C9A96E"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Hero Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Auvelle Beauty"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Product heading",
+      "info": "Defaults to product title if blank"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading / short description",
+      "default": "Professional-grade ultrasonic cleaning technology. Clinically proven to remove plaque up to 3× more effectively than manual brushing."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Hero badge text",
+      "default": "New Formula"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Hero product image",
+      "info": "Overrides product featured image"
+    },
+    {
+      "type": "text",
+      "id": "atc_text",
+      "label": "Add to Cart button text",
+      "default": "Add to Cart — Free Shipping"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Reviews / Ratings"
+    },
+    {
+      "type": "text",
+      "id": "review_rating",
+      "label": "Overall star rating",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count label",
+      "default": "2,847 reviews"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Progress Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_bar",
+      "label": "Show shipping progress bar",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Sticky Add to Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_atc",
+      "label": "Enable sticky add to cart",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Benefits Section"
+    },
+    {
+      "type": "text",
+      "id": "benefits_eyebrow",
+      "label": "Benefits eyebrow",
+      "default": "Why It Works"
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Benefits heading",
+      "default": "Built for a Brighter Smile"
+    },
+    {
+      "type": "text",
+      "id": "benefits_subheading",
+      "label": "Benefits subheading"
+    },
+    {
+      "type": "header",
+      "content": "Bundle Section"
+    },
+    {
+      "type": "text",
+      "id": "bundle_eyebrow",
+      "label": "Bundle eyebrow",
+      "default": "Bundle & Save"
+    },
+    {
+      "type": "text",
+      "id": "bundle_heading",
+      "label": "Bundle heading",
+      "default": "Choose Your Kit"
+    },
+    {
+      "type": "text",
+      "id": "bundle_subheading",
+      "label": "Bundle subheading"
+    },
+    {
+      "type": "header",
+      "content": "Reviews Section"
+    },
+    {
+      "type": "text",
+      "id": "reviews_eyebrow",
+      "label": "Reviews eyebrow",
+      "default": "Verified Reviews"
+    },
+    {
+      "type": "text",
+      "id": "reviews_heading",
+      "label": "Reviews heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "header",
+      "content": "How It Works Section"
+    },
+    {
+      "type": "text",
+      "id": "hiw_eyebrow",
+      "label": "How it works eyebrow",
+      "default": "Simple & Effective"
+    },
+    {
+      "type": "text",
+      "id": "hiw_heading",
+      "label": "How it works heading",
+      "default": "How It Works"
+    },
+    {
+      "type": "text",
+      "id": "hiw_subheading",
+      "label": "How it works subheading"
+    },
+    {
+      "type": "header",
+      "content": "Before & After Section"
+    },
+    {
+      "type": "text",
+      "id": "ba_eyebrow",
+      "label": "Before/after eyebrow",
+      "default": "Real Results"
+    },
+    {
+      "type": "text",
+      "id": "ba_heading",
+      "label": "Before/after heading",
+      "default": "See the Difference"
+    },
+    {
+      "type": "header",
+      "content": "UGC Video Section"
+    },
+    {
+      "type": "text",
+      "id": "ugc_eyebrow",
+      "label": "UGC eyebrow",
+      "default": "As Seen On Social"
+    },
+    {
+      "type": "text",
+      "id": "ugc_heading",
+      "label": "UGC heading",
+      "default": "Real People. Real Results."
+    },
+    {
+      "type": "header",
+      "content": "Comparison Table"
+    },
+    {
+      "type": "text",
+      "id": "comp_eyebrow",
+      "label": "Comparison eyebrow",
+      "default": "Why Auvelle?"
+    },
+    {
+      "type": "text",
+      "id": "comp_heading",
+      "label": "Comparison heading",
+      "default": "How We Compare"
+    },
+    {
+      "type": "text",
+      "id": "comp_our_label",
+      "label": "Our product column label",
+      "default": "Auvelle Cleaner"
+    },
+    {
+      "type": "text",
+      "id": "comp_them_label",
+      "label": "Competitor column label",
+      "default": "Traditional Methods"
+    },
+    {
+      "type": "header",
+      "content": "What's Included Section"
+    },
+    {
+      "type": "text",
+      "id": "whats_included_eyebrow",
+      "label": "Included eyebrow",
+      "default": "In the Box"
+    },
+    {
+      "type": "text",
+      "id": "whats_included_heading",
+      "label": "Included heading",
+      "default": "Everything You Need"
+    },
+    {
+      "type": "textarea",
+      "id": "whats_included_text",
+      "label": "Included description",
+      "default": "Every Auvelle kit ships complete — no additional purchases required."
+    },
+    {
+      "type": "image_picker",
+      "id": "lifestyle_image",
+      "label": "Lifestyle / kit image"
+    },
+    {
+      "type": "header",
+      "content": "Guarantee Section"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_eyebrow",
+      "label": "Guarantee eyebrow",
+      "default": "Risk-Free Purchase"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_heading",
+      "label": "Guarantee heading",
+      "default": "You Are Protected"
+    },
+    {
+      "type": "textarea",
+      "id": "guarantee_text",
+      "label": "Guarantee description",
+      "default": "We stand behind every product. If you're not completely satisfied, we'll make it right."
+    },
+    {
+      "type": "header",
+      "content": "FAQ Section"
+    },
+    {
+      "type": "text",
+      "id": "faq_eyebrow",
+      "label": "FAQ eyebrow",
+      "default": "Got Questions?"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "FAQ heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "header",
+      "content": "Final CTA Section"
+    },
+    {
+      "type": "text",
+      "id": "final_cta_eyebrow",
+      "label": "Final CTA eyebrow",
+      "default": "Limited Time Offer"
+    },
+    {
+      "type": "text",
+      "id": "final_cta_heading",
+      "label": "Final CTA heading",
+      "default": "Your Brightest Smile Starts Today"
+    },
+    {
+      "type": "text",
+      "id": "final_cta_sub",
+      "label": "Final CTA subtext",
+      "default": "Join 50,000+ customers who've transformed their oral care routine."
+    },
+    {
+      "type": "text",
+      "id": "final_cta_text",
+      "label": "Final CTA primary button",
+      "default": "Shop Now — Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "final_cta_secondary_text",
+      "label": "Final CTA secondary button text"
+    },
+    {
+      "type": "url",
+      "id": "final_cta_secondary_url",
+      "label": "Final CTA secondary button URL"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section vertical padding",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit_item",
+      "name": "Benefit Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji icon",
+          "default": "✨"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefit title",
+          "default": "Ultrasonic Power"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Benefit description",
+          "default": "40,000 vibrations per second break down plaque instantly."
+        }
+      ]
+    },
+    {
+      "type": "bundle_offer",
+      "name": "Bundle Offer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Bundle name",
+          "default": "Starter Kit"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price display",
+          "default": "$49"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare price",
+          "default": "$65"
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Badge label",
+          "info": "e.g. Most Popular, Best Value"
+        },
+        {
+          "type": "select",
+          "id": "badge_style",
+          "label": "Badge style",
+          "options": [
+            { "value": "popular", "label": "Most Popular (Gold)" },
+            { "value": "value", "label": "Best Value (Green)" }
+          ],
+          "default": "popular"
+        },
+        {
+          "type": "text",
+          "id": "perk_1",
+          "label": "Perk 1",
+          "default": "1 × Ultrasonic Cleaner"
+        },
+        {
+          "type": "text",
+          "id": "perk_2",
+          "label": "Perk 2",
+          "default": "Free carrying case"
+        },
+        {
+          "type": "text",
+          "id": "perk_3",
+          "label": "Perk 3",
+          "default": "Free shipping"
+        }
+      ]
+    },
+    {
+      "type": "review_item",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Reviewer name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review headline",
+          "default": "Best purchase I've made all year"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review body",
+          "default": "I was skeptical at first, but the results after just one week were incredible. My teeth feel cleaner than after a dental visit."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Review photo (optional)"
+        }
+      ]
+    },
+    {
+      "type": "how_it_works_step",
+      "name": "How It Works Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji icon",
+          "default": "💧"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Wet & Apply"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Step description",
+          "default": "Wet the device and apply a small drop of toothpaste."
+        }
+      ]
+    },
+    {
+      "type": "before_after",
+      "name": "Before & After",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before image"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After image"
+        }
+      ]
+    },
+    {
+      "type": "ugc_video",
+      "name": "UGC Video",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Video thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "Direct .mp4 URL or embed URL (YouTube, TikTok embed, etc.)"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Creator name",
+          "default": "@auvellebeauty"
+        },
+        {
+          "type": "text",
+          "id": "views",
+          "label": "View count",
+          "default": "1.2M"
+        }
+      ]
+    },
+    {
+      "type": "comparison_row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature",
+          "label": "Feature name",
+          "default": "Removes 99% of plaque"
+        },
+        {
+          "type": "checkbox",
+          "id": "ours_check",
+          "label": "Ours: checkmark",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "ours_note",
+          "label": "Ours: extra note",
+          "info": "Optional small text under checkmark"
+        },
+        {
+          "type": "checkbox",
+          "id": "them_check",
+          "label": "Theirs: checkmark",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "What's Included Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji icon",
+          "default": "⚡"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Item name",
+          "default": "Ultrasonic Cleaner"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Item description",
+          "default": "Dual-mode, rechargeable via USB-C"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How is this different from a regular electric toothbrush?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Unlike standard electric brushes that rely on rotation, our ultrasonic technology uses 40,000 vibrations per second to break down plaque at a molecular level — reaching areas bristles simply can't."
+        }
+      ]
+    },
+    {
+      "type": "cta_banner",
+      "name": "CTA Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "CTA heading",
+          "default": "Ready to Transform Your Smile?"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Auvelle Product Page",
+      "blocks": [
+        {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "⚡",
+            "title": "Ultrasonic Power",
+            "text": "40,000 vibrations per second break down plaque and stains instantly."
+          }
+        },
+        {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "🦷",
+            "title": "Dentist Approved",
+            "text": "Clinically tested and recommended by dental professionals."
+          }
+        },
+        {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "🌿",
+            "title": "Gentle on Enamel",
+            "text": "Safe for daily use — no abrasives, no damage."
+          }
+        },
+        {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "🔋",
+            "title": "30-Day Battery",
+            "text": "One USB-C charge lasts a full month of daily use."
+          }
+        },
+        {
+          "type": "bundle_offer",
+          "settings": {
+            "name": "Starter Kit",
+            "price": "$49",
+            "compare_price": "$65",
+            "perk_1": "1 × Ultrasonic Cleaner",
+            "perk_2": "Free carrying case",
+            "perk_3": "Free shipping"
+          }
+        },
+        {
+          "type": "bundle_offer",
+          "settings": {
+            "name": "Pro Kit",
+            "price": "$79",
+            "compare_price": "$110",
+            "badge_label": "Most Popular",
+            "badge_style": "popular",
+            "perk_1": "1 × Ultrasonic Cleaner",
+            "perk_2": "2 × Replacement heads",
+            "perk_3": "Travel case + free shipping"
+          }
+        },
+        {
+          "type": "bundle_offer",
+          "settings": {
+            "name": "Family Kit",
+            "price": "$129",
+            "compare_price": "$195",
+            "badge_label": "Best Value",
+            "badge_style": "value",
+            "perk_1": "3 × Ultrasonic Cleaners",
+            "perk_2": "6 × Replacement heads",
+            "perk_3": "Priority shipping + free gift"
+          }
+        },
+        {
+          "type": "review_item",
+          "settings": {
+            "author": "Jessica T.",
+            "rating": 5,
+            "title": "Absolutely obsessed!",
+            "body": "I've tried every whitening product on the market. Nothing comes close to this. My dentist noticed the difference at my last cleaning."
+          }
+        },
+        {
+          "type": "review_item",
+          "settings": {
+            "author": "Marcus R.",
+            "rating": 5,
+            "title": "Worth every penny",
+            "body": "The ultrasonic technology is real — you can actually feel it working. Two weeks in and my coffee stains are basically gone."
+          }
+        },
+        {
+          "type": "review_item",
+          "settings": {
+            "author": "Priya K.",
+            "rating": 5,
+            "title": "My whole family uses it now",
+            "body": "Bought the family kit and we're all converts. Easy to use, feels premium, and the results speak for themselves."
+          }
+        },
+        {
+          "type": "how_it_works_step",
+          "settings": {
+            "icon": "💧",
+            "title": "Wet & Apply",
+            "text": "Wet the device and apply a small drop of your favourite toothpaste."
+          }
+        },
+        {
+          "type": "how_it_works_step",
+          "settings": {
+            "icon": "⚡",
+            "title": "Power On",
+            "text": "Press the button to activate 40,000 ultrasonic vibrations per second."
+          }
+        },
+        {
+          "type": "how_it_works_step",
+          "settings": {
+            "icon": "✨",
+            "title": "Glide & Clean",
+            "text": "Gently glide along your teeth for 2 minutes. No scrubbing needed."
+          }
+        },
+        {
+          "type": "how_it_works_step",
+          "settings": {
+            "icon": "🦷",
+            "title": "Reveal Results",
+            "text": "Rinse and see the difference. Most customers notice results within 3 days."
+          }
+        },
+        {
+          "type": "before_after",
+          "settings": {}
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Removes 99% of plaque",
+            "ours_check": true,
+            "them_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Ultrasonic technology",
+            "ours_check": true,
+            "them_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Safe for sensitive teeth",
+            "ours_check": true,
+            "them_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "30-day money back guarantee",
+            "ours_check": true,
+            "them_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Rechargeable battery",
+            "ours_check": true,
+            "them_check": false
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "⚡",
+            "title": "Ultrasonic Cleaner",
+            "description": "Dual-mode, rechargeable via USB-C"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "🪥",
+            "title": "2 × Replacement Heads",
+            "description": "Soft-bristle, BPA-free"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "🔌",
+            "title": "USB-C Charging Cable",
+            "description": "Universal compatibility"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "👜",
+            "title": "Travel Carrying Case",
+            "description": "Premium matte finish"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is this different from a regular electric toothbrush?",
+            "answer": "Unlike standard electric brushes that rely on rotation, our ultrasonic technology uses 40,000 vibrations per second to break down plaque at a molecular level — reaching areas bristles simply can't."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is it safe for sensitive teeth and gums?",
+            "answer": "Yes. The ultrasonic mode is gentler than traditional brushing. It's suitable for sensitive teeth, braces, crowns, and veneers. Always consult your dentist if you have specific dental conditions."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does the battery last?",
+            "answer": "A single USB-C charge provides up to 30 days of daily use (2 minutes per session). A full charge takes approximately 90 minutes."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "When will I see results?",
+            "answer": "Most customers notice visibly cleaner teeth within 3–5 days. Stain reduction from coffee and tea typically becomes noticeable within 2 weeks of consistent use."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "We offer a full 30-day money-back guarantee. If you're not completely satisfied, contact our support team and we'll arrange a full refund — no questions asked."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "Yes! Orders over $50 qualify for free tracked shipping. Standard orders ship within 1–2 business days."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
